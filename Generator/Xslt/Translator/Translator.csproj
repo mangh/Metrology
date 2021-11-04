@@ -1,0 +1,55 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- Assembly properties -->
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <LangVersion>preview</LangVersion>
+    <Nullable>enable</Nullable>
+    <AssemblyName>Mangh.Metrology.UnitTranslatorXslt</AssemblyName>
+    <RootNamespace>Mangh.Metrology</RootNamespace>
+    <ApplicationIcon>Icon.ico</ApplicationIcon>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <SignAssembly>True</SignAssembly>
+    <AssemblyOriginatorKeyFile>C:\Users\Marek\source\repos\Metrology\metrology.snk</AssemblyOriginatorKeyFile>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <FileVersion>1.0.0.0</FileVersion>
+    <DebugType>embedded</DebugType>
+  </PropertyGroup>
+
+  <!-- NuGet properties -->
+  <PropertyGroup>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Version>1.0.0-final</Version>
+    <Authors>MAN</Authors>
+    <Company>MAN</Company>
+    <Description>Metrology Xslt-based Unit Translator</Description>
+    <Copyright>Copyright © MAN</Copyright>
+    <PackageProjectUrl>https://github.com/mangh/Metrology</PackageProjectUrl>
+    <PackageIcon>Icon.png</PackageIcon>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <RepositoryUrl>https://github.com/mangh/Metrology</RepositoryUrl>
+    <PackageTags>unit;scale;measure;metrology</PackageTags>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="Icon.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\..\Icon.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Update="README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Mangh.Metrology.DefinitionParser" Version="1.0.0-final" />
+  </ItemGroup>
+
+</Project>
