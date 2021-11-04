@@ -5,7 +5,12 @@ VisualStudioVersion = 17.0.31825.309
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Generator", "Generator", "{F2AADC68-36F3-4717-90E0-0241E9DE04D9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Parser", "Generator\Parser\Parser.csproj", "{7DED8B02-42D1-4889-880B-CA7A84C3A002}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Parser", "Generator\Parser\Parser.csproj", "{7DED8B02-42D1-4889-880B-CA7A84C3A002}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Xslt", "Xslt", "{26E539F4-D78A-4E3A-963B-03311E4EBDF9}"
+	ProjectSection(SolutionItems) = preProject
+		Generator\Xslt\README.md = Generator\Xslt\README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,6 +28,7 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{7DED8B02-42D1-4889-880B-CA7A84C3A002} = {F2AADC68-36F3-4717-90E0-0241E9DE04D9}
+		{26E539F4-D78A-4E3A-963B-03311E4EBDF9} = {F2AADC68-36F3-4717-90E0-0241E9DE04D9}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {54F7E0AD-7097-4699-AE43-65D796031F54}
