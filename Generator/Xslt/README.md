@@ -1,3 +1,4 @@
 # Xslt-based generator components:
-* `UnitTranslatorXslt`: translates units information (received from the `DefinitionParser`) into C# structs (in-memory texts),
-* `SourceGeneratorXslt`: passes those C# structs to the C# compiler (at a compile-time).
+* `UnitTranslatorXslt`: gets unit/scale information read by the `DefinitionParser` and translates them into C#  (in-memory) structs, according to XSLT-templates,
+* `SourceGeneratorXslt`: relays those structs to the C# compiler (at compile-time).
+* `ConsoleGeneratorXslt`: console application to be used in design time; it does basically the same as `SourceGeneratorXslt` but saves the C# structs into files.
