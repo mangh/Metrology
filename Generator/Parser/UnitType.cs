@@ -11,7 +11,7 @@
 ********************************************************************************/
 using System.Collections.Generic;
 
-namespace Man.Metrology
+namespace Mangh.Metrology
 {
     /// <summary>
     /// Unit type info.

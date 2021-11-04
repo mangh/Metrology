@@ -12,7 +12,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Man.Metrology
+namespace Mangh.Metrology
 {
     /// <summary>
     /// TODO: Update summary.

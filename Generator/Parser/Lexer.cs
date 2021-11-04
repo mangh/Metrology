@@ -12,7 +12,7 @@
 using System;
 using System.IO;
 
-namespace Man.Metrology
+namespace Mangh.Metrology
 {
     public partial class Lexer
     {

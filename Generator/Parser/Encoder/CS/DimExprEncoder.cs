@@ -12,7 +12,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Man.Metrology.CS
+namespace Mangh.Metrology.CS
 {
     /// <summary>
     /// Encoder for dimensional expressions.

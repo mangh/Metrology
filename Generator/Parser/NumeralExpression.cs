@@ -10,7 +10,7 @@
 
 ********************************************************************************/
 
-namespace Man.Metrology
+namespace Mangh.Metrology
 {
     /// <summary>
     /// Numeral expression.

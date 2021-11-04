@@ -13,7 +13,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 
-namespace Man.Metrology.CS
+namespace Mangh.Metrology.CS
 {
     /// <summary>
     /// Encoder for numeral expressions.

@@ -10,7 +10,7 @@
 
 ********************************************************************************/
 
-namespace Man.Metrology.CS
+namespace Mangh.Metrology.CS
 {
     /// <summary>
     /// Constant numeral expressions for C#.

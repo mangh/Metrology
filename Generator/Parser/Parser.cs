@@ -14,7 +14,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 
-namespace Man.Metrology
+namespace Mangh.Metrology
 {
     using ErrorLogger = Action<TextSpan, LinePositionSpan, string>;
 

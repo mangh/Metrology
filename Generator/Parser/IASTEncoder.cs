@@ -13,7 +13,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Man.Metrology/*.Parser*/
+namespace Mangh.Metrology/*.Parser*/
 {
     /// <summary>
     /// TODO: Update summary.

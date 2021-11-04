@@ -12,7 +12,7 @@
 using System;
 using System.Globalization;
 
-namespace Man.Metrology
+namespace Mangh.Metrology
 {
     /// <summary>
     /// Numeral abstract type.

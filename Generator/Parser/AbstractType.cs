@@ -10,7 +10,7 @@
 
 ********************************************************************************/
 
-namespace Man.Metrology
+namespace Mangh.Metrology
 {
     /// <summary>
     /// Abstract type for deriving parser generated types (units, scales, numerals etc).

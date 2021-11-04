@@ -5,20 +5,20 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <LangVersion>preview</LangVersion>
     <Nullable>enable</Nullable>
-    <RootNamespace>Man.Metrology</RootNamespace>
-    <AssemblyName>Man.Metrology.DefinitionParser</AssemblyName>
+    <RootNamespace>Mangh.Metrology</RootNamespace>
+    <AssemblyName>Mangh.Metrology.DefinitionParser</AssemblyName>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <SignAssembly>True</SignAssembly>
     <AssemblyOriginatorKeyFile>C:\Users\Marek\source\repos\Metrology\metrology.snk</AssemblyOriginatorKeyFile>
-    <AssemblyVersion>1.0.0.1</AssemblyVersion>
-    <FileVersion>1.0.0.1</FileVersion>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <FileVersion>1.0.0.0</FileVersion>
     <DebugType>embedded</DebugType>
   </PropertyGroup>
 
   <!-- NuGet properties -->
   <PropertyGroup>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <Version>1.0.0-rc1</Version>
+    <Version>1.0.0-final</Version>
     <Authors>MAN</Authors>
     <Company>MAN</Company>
     <Description>Metrology Unit Definition Parser</Description>
@@ -26,7 +26,7 @@
     <PackageProjectUrl>https://github.com/mangh/metrology</PackageProjectUrl>
     <PackageIcon>Icon.png</PackageIcon>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <RepositoryUrl>https://github.com/mangh/metrology</RepositoryUrl>
+    <RepositoryUrl>https://github.com/mangh/Metrology</RepositoryUrl>
     <PackageTags>unit;scale;measure;metrology</PackageTags>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>

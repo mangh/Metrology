@@ -12,7 +12,7 @@
 
 using Microsoft.CodeAnalysis.Text;
 
-namespace Man.Metrology
+namespace Mangh.Metrology
 {
     public partial class Lexer
     {

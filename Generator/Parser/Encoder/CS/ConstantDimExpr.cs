@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Man.Metrology.CS
+namespace Mangh.Metrology.CS
 {
     /// <summary>
     /// Constant dimensional expressions for C#.

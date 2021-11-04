@@ -10,7 +10,7 @@
 
 ********************************************************************************/
 
-namespace Man.Metrology
+namespace Mangh.Metrology
 {
     /// <summary>
     /// Binary operation components.

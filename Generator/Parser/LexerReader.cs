@@ -14,7 +14,7 @@ using System;
 using System.IO;
 using System.Text;
 
-namespace Man.Metrology
+namespace Mangh.Metrology
 {
     public partial class Lexer
     {
