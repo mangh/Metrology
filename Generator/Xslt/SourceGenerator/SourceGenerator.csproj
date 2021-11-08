@@ -34,8 +34,9 @@
     <PackageTags>unit;scale;measure;metrology</PackageTags>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <Version>1.0.0-final</Version>
+    <Version>1.0.0-finalXml</Version>
     <ApplicationIcon>Icon.ico</ApplicationIcon>
+    <PackageReleaseNotes>Missing XML-documentation appended</PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -68,8 +69,8 @@
 
     <!-- The dependencies goes to the "lib" directory as well, 
          for they are required apart of the generator too (e.g. in UnitsOfMeasurement/RuntimeLoader). -->
-    <None Include="$(PkgMangh_Metrology_UnitTranslatorXslt)\lib\netstandard2.0\*.dll" Pack="true" PackagePath="lib/netstandard2.0" Visible="false" />
-    <None Include="$(PkgMangh_Metrology_DefinitionParser)\lib\netstandard2.0\*.dll" Pack="true" PackagePath="lib/netstandard2.0" Visible="false" />
+    <None Include="$(PkgMangh_Metrology_UnitTranslatorXslt)\lib\netstandard2.0\*.*" Pack="true" PackagePath="lib/netstandard2.0" Visible="false" />
+    <None Include="$(PkgMangh_Metrology_DefinitionParser)\lib\netstandard2.0\*.*" Pack="true" PackagePath="lib/netstandard2.0" Visible="false" />
 
   </ItemGroup>
 
