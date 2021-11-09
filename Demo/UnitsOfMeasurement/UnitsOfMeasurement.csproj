@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <!--<ImplicitUsings>enable</ImplicitUsings>-->
+    <Nullable>enable</Nullable>
+    <RootNamespace>Demo.UnitsOfMeasurement</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <AdditionalFiles Include=".\Templates\definitions.txt" />
+    <AdditionalFiles Include=".\Templates\catalog.xslt" />
+    <AdditionalFiles Include=".\Templates\aliases.xslt" />
+    <AdditionalFiles Include=".\Templates\report.xslt" />
+    <AdditionalFiles Include=".\Templates\scale.xslt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AdditionalFiles>
+    <AdditionalFiles Include=".\Templates\unit.xslt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AdditionalFiles>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Mangh.Metrology.SourceGeneratorXslt" Version="1.0.0-finalXml" />
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.0.0-6.final" />
+  </ItemGroup>
+
+</Project>
