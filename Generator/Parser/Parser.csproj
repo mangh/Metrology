@@ -3,14 +3,15 @@
   <!-- Assemmbly properties -->
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <LangVersion>preview</LangVersion>
+	<LangVersion>latestMajor</LangVersion>
+    <ImplicitUsings>disable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <RootNamespace>Mangh.Metrology</RootNamespace>
     <AssemblyName>Mangh.Metrology.DefinitionParser</AssemblyName>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <SignAssembly>True</SignAssembly>
     <AssemblyOriginatorKeyFile>C:\Users\Marek\source\repos\Metrology\metrology.snk</AssemblyOriginatorKeyFile>
-    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <AssemblyVersion>1.0.0.1</AssemblyVersion>
     <FileVersion>1.0.0.0</FileVersion>
     <DebugType>embedded</DebugType>
   </PropertyGroup>
@@ -18,7 +19,7 @@
   <!-- NuGet properties -->
   <PropertyGroup>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <Version>1.0.0-final</Version>
+    <Version>1.0.1</Version>
     <Authors>MAN</Authors>
     <Company>MAN</Company>
     <Description>Metrology Unit Definition Parser</Description>
@@ -31,6 +32,7 @@
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
     <ApplicationIcon>Icon.ico</ApplicationIcon>
+    <PackageReleaseNotes>Updated dependencies: Microsoft.CodeAnalysis.Common version 4.0.1 (previously 4.0.0-6.final).</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
@@ -45,7 +47,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.CodeAnalysis.Common" Version="4.0.0-6.final" />
+    <PackageReference Include="Microsoft.CodeAnalysis.Common" Version="4.0.1" />
   </ItemGroup>
 
   <ItemGroup>
