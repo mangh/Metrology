@@ -3,7 +3,7 @@
   <!-- Assembly properties -->
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <LangVersion>preview</LangVersion>
+    <LangVersion>latestMajor</LangVersion>
     <Nullable>enable</Nullable>
     <AssemblyName>Mangh.Metrology.SourceGeneratorXslt</AssemblyName>
     <RootNamespace>Mangh.Metrology</RootNamespace>
@@ -34,9 +34,9 @@
     <PackageTags>unit;scale;measure;metrology</PackageTags>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <Version>1.0.0-finalXml</Version>
+    <Version>1.0.1</Version>
     <ApplicationIcon>Icon.ico</ApplicationIcon>
-    <PackageReleaseNotes>Missing XML-documentation appended</PackageReleaseNotes>
+    <PackageReleaseNotes>Dependencies updated: Mangh.Metrology.UnitTranslatorXslt version 1.0.1 (previously 1.0.0-final).</PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -60,8 +60,8 @@
     <!-- Generator dependencies:
         * PrivateAssets="none": all assets (apart of being consumed by the generator) can flow to the parent project,
         * GeneratePathProperty="true": dependencies can be referenced via the "global-packages" folder (i.e. via Pkg... property) -->
-    <PackageReference Include="Mangh.Metrology.UnitTranslatorXslt" Version="1.0.0-final" GeneratePathProperty="true" PrivateAssets="none" />
-    <PackageReference Include="Mangh.Metrology.DefinitionParser" Version="1.0.0-final" GeneratePathProperty="true" PrivateAssets="none" />
+    <PackageReference Include="Mangh.Metrology.UnitTranslatorXslt" Version="1.0.1" GeneratePathProperty="true" PrivateAssets="none" />
+    <PackageReference Include="Mangh.Metrology.DefinitionParser" Version="1.0.1" GeneratePathProperty="true" PrivateAssets="none" />
 
     <!-- The dependencies must be in the same location as the generator i.e. in the "analyzers" folder -->
     <None Include="$(PkgMangh_Metrology_UnitTranslatorXslt)\lib\netstandard2.0\*.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
@@ -83,7 +83,7 @@
          for symbols from the "Microsoft.CodeAnalysis.Common" package. The build itself can succeed
          without that reference (explicitly specified) as the package is referenced anyway as a
          dependency of the "Mangh.Metrology.DefinitionParser". -->
-    <PackageReference Include="Microsoft.CodeAnalysis.Common" Version="4.0.0-6.final" PrivateAssets="none" />
+    <PackageReference Include="Microsoft.CodeAnalysis.Common" Version="4.0.1" PrivateAssets="none" />
   </ItemGroup>
 
 </Project>
