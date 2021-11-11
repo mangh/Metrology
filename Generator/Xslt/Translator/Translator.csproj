@@ -3,7 +3,7 @@
   <!-- Assembly properties -->
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <LangVersion>preview</LangVersion>
+    <LangVersion>latestMajor</LangVersion>
     <Nullable>enable</Nullable>
     <AssemblyName>Mangh.Metrology.UnitTranslatorXslt</AssemblyName>
     <RootNamespace>Mangh.Metrology</RootNamespace>
@@ -19,7 +19,7 @@
   <!-- NuGet properties -->
   <PropertyGroup>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <Version>1.0.0-final</Version>
+    <Version>1.0.1</Version>
     <Authors>MAN</Authors>
     <Company>MAN</Company>
     <Description>Metrology Xslt-based Unit Translator</Description>
@@ -31,6 +31,7 @@
     <PackageTags>unit;scale;measure;metrology</PackageTags>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+    <PackageReleaseNotes>Dependencies updated: Mangh.Metrology.DefinitionParser version 1.0.1 (previously 1.0.0-final).</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
@@ -49,7 +50,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Mangh.Metrology.DefinitionParser" Version="1.0.0-final" />
+    <PackageReference Include="Mangh.Metrology.DefinitionParser" Version="1.0.1" />
   </ItemGroup>
 
 </Project>
