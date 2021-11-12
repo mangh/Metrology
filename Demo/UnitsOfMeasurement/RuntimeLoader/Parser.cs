@@ -12,7 +12,6 @@
 
 using Microsoft.CodeAnalysis.Text;
 using System;
-using System.Collections.Generic;
 using System.IO;
 
 namespace Demo.UnitsOfMeasurement
@@ -23,28 +22,28 @@ namespace Demo.UnitsOfMeasurement
         {
             #region Fields
             private readonly RuntimeLoader m_loader;
-            private readonly IDefinitions m_catalog;
+            private readonly IDefinitions m_definitions;
             #endregion
 
             #region Properties
             #endregion
 
             #region Constructor(s)
-            public Parser(RuntimeLoader loader, IDefinitions catalog)
+            public Parser(RuntimeLoader loader, IDefinitions definitions)
             {
                 m_loader = loader;
-                m_catalog = catalog;
+                m_definitions = definitions;
             }
             #endregion
 
             #region Methods
-            public bool Parse(string definitionHint, TextReader input)
+            public bool Parse(string? definitionsPath, TextReader input)
             {
                 bool errorsFound = false;
                 try
                 {
                     Mangh.Metrology.Lexer lexer = new(input);
-                    Mangh.Metrology.Parser parser = new(lexer, ReportParseError, m_catalog.Units, m_catalog.Scales);
+                    Mangh.Metrology.Parser parser = new(lexer, ReportParseError, m_definitions.Units, m_definitions.Scales);
                     parser.Parse();
                     return !errorsFound;
                 }
@@ -62,22 +61,14 @@ namespace Demo.UnitsOfMeasurement
                 }
                 return false;
 
+                string FormatErrorMessage(string message) =>
+                    $"{(definitionsPath is null ? "D" : '"' + definitionsPath + '"' + ": d")}efinitions could not be read : {message}.";
+
                 void ReportParseError(TextSpan extent, LinePositionSpan span, string message)
                 {
                     errorsFound = true;
-                    m_loader.ReportError(
-                        string.Format("\"{0}({1})\": {2}", definitionHint, span, message)
-                    );
+                    m_loader.ReportError($"{definitionsPath ?? string.Empty}({span}): {message}.");
                 }
-
-                string FormatErrorMessage(string message) =>
-                    string.Format("{0}{1}{2}(\"{3}\", ...) : definitions could not be read : {4}", 
-                        nameof(RuntimeLoader),
-                        nameof(Parser),
-                        nameof(Parse),
-                        definitionHint, 
-                        message
-                    );
             }
             #endregion
         }

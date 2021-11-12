@@ -9,7 +9,6 @@
 
 
 ********************************************************************************/
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,7 +27,7 @@ namespace Demo.UnitsOfMeasurement
             int MaxFamilyFound { get; }
         }
 
-        public class Decompiler : IDefinitions
+        public class Definitions : IDefinitions
         {
             #region Fields
             private readonly List<Mangh.Metrology.UnitType> m_units;
@@ -43,7 +42,7 @@ namespace Demo.UnitsOfMeasurement
             #endregion
 
             #region Constructor(s)
-            public Decompiler()
+            public Definitions()
             {
                 m_units = new List<Mangh.Metrology.UnitType>();
                 m_scales = new List<Mangh.Metrology.ScaleType>();

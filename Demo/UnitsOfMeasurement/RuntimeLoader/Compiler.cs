@@ -41,20 +41,18 @@ namespace Demo.UnitsOfMeasurement
             }
             #endregion
 
-            #region Methods
-            public Assembly? CompileFromSource(string source, IEnumerable<Assembly> catalogAssemblies, string? targetAssemblyPath)
+            #region Main methods
+            public Assembly? CompileFromSource(string source, IEnumerable<Assembly> assemblies, string? targetAssemblyPath)
             {
-                string? assemblyName = targetAssemblyPath is null ? DEFAULT_ASSEMBLY_NAME : Path.GetFileNameWithoutExtension(targetAssemblyPath);
+                IEnumerable<PortableExecutableReference>? references = GetPortableExecutableReferences(assemblies);
+                if (references is null)
+                    return null;
 
-                SyntaxTree? syntaxTree = CSharpSyntaxTree.ParseText(source);
+                string? assemblyName = targetAssemblyPath is null ? DEFAULT_ASSEMBLY_NAME : m_loader.PathGetFileNameWithoutExtension(targetAssemblyPath);
+                if (assemblyName is null)
+                    return null;
 
-                // Required assemblies (with several excess items):
-                IEnumerable<Assembly>? compilationAssemblies = catalogAssemblies
-                    .Concat(System.Runtime.Loader.AssemblyLoadContext.Default.Assemblies);
-
-                IEnumerable<PortableExecutableReference>? references = compilationAssemblies
-                    .Where(ass => !ass.IsDynamic)
-                    .Select(ass => MetadataReference.CreateFromFile(ass.Location));
+                SyntaxTree syntaxTree = CSharpSyntaxTree.ParseText(source);
 
                 CSharpCompilationOptions compileOptions = new(OutputKind.DynamicallyLinkedLibrary);
 
@@ -72,9 +70,9 @@ namespace Demo.UnitsOfMeasurement
                     {
                         if (targetAssemblyPath is not null)
                         {
-                            m_loader.m_io.AssemblySave(peStream, targetAssemblyPath);
+                            AssemblySave(peStream, targetAssemblyPath);
                         }
-                        return m_loader.m_io.AssemblyLoad(peStream, targetAssemblyPath ?? DEFAULT_ASSEMBLY_NAME);
+                        return AssemblyLoad(peStream);
                     }
                     else
                     {
@@ -86,70 +84,141 @@ namespace Demo.UnitsOfMeasurement
                 }
                 return null;
             }
-
-            //private bool SaveAssembly(MemoryStream peStream, string? dllPath)
-            //{
-            //    try
-            //    {
-            //        using (FileStream dllStream = new(dllPath, FileMode.Create))
-            //        {
-            //            peStream.Position = 0;
-            //            peStream.CopyTo(dllStream);
-            //        }
-            //        return true;
-            //    }
-            //    //catch (ArgumentOutOfRangeException ex)
-            //    catch (ArgumentException ex)
-            //    {
-            //        m_errors.Add(FormatErrorMessage(ex.Message));
-            //    }
-            //    catch (NotSupportedException ex)
-            //    {
-            //        m_errors.Add(FormatErrorMessage(ex.Message));
-            //    }
-            //    catch (System.Security.SecurityException ex)
-            //    {
-            //        m_errors.Add(FormatErrorMessage(ex.Message));
-            //    }
-            //    catch (UnauthorizedAccessException ex)
-            //    {
-            //        m_errors.Add(FormatErrorMessage(ex.Message));
-            //    }
-            //    //catch (FileNotFoundException ex)
-            //    //catch (DirectoryNotFoundException ex)
-            //    //catch (PathTooLongException ex)
-            //    catch (IOException ex)
-            //    {
-            //        m_errors.Add(FormatErrorMessage(ex.Message));
-            //    }
-
-            //    return false;
-
-            //    string FormatErrorMessage(string message)
-            //        => string.Format("\"{0}\": DLL could not be saved :: {1}", dllPath, message);
-            //}
-
-            //private Assembly? LoadAssembly(MemoryStream peStream, string? dllPath)
-            //{
-            //    try
-            //    {
-            //        return Assembly.Load(peStream.GetBuffer());
-            //    }
-            //    catch (ArgumentNullException ex)
-            //    {
-            //        m_errors.Add(FormatErrorMessage(ex.Message));
-            //    }
-            //    catch (BadImageFormatException ex)
-            //    {
-            //        m_errors.Add(FormatErrorMessage(ex.Message));
-            //    }
-            //    return null;
-
-            //    string FormatErrorMessage(string message)
-            //        => string.Format("\"{0}\": DLL could not be loaded (from stream) :: {1}", dllPath is null ? "null" : dllPath, message);
-
-            //}
             #endregion
+
+            #region Assembly methods
+            private IEnumerable<PortableExecutableReference>? GetPortableExecutableReferences(IEnumerable<Assembly> assemblies)
+            {
+                // Required assemblies (with several excess items):
+                IEnumerable<Assembly>? compilationAssemblies = assemblies.Concat(System.Runtime.Loader.AssemblyLoadContext.Default.Assemblies);
+
+                try
+                {
+                    //IEnumerable<PortableExecutableReference>? references = compilationAssemblies
+                    //    .Where(asm => !asm.IsDynamic)
+                    //    .Select(asm => MetadataReference.CreateFromFile(asm.Location));
+
+                    return compilationAssemblies
+                        .Where(asm => !asm.IsDynamic)
+                        .Select(asm => AssemblyMetadata.CreateFromFile(asm.Location).GetReference());
+
+                }
+                catch (ArgumentException ex)
+                {
+                    m_loader.ReportError(FormatErrorMessage(ex.Message));
+                }
+                catch (IOException ex)
+                {
+                    m_loader.ReportError(FormatErrorMessage(ex.Message));
+                }
+                catch (NotSupportedException ex)
+                {
+                    m_loader.ReportError(FormatErrorMessage(ex.Message));
+                }
+                return null;
+
+                static string FormatErrorMessage(string message) =>
+                    $"{nameof(RuntimeLoader)}.{nameof(GetPortableExecutableReferences)}(): {message}.";
+            }
+
+            public Assembly? AssemblyLoadFrom(string assemblyPath)
+            {
+                try
+                {
+                    return Assembly.LoadFrom(assemblyPath);
+                }
+                // catch (ArgumentNullException ex) : ArgumentException
+                catch (ArgumentException ex)
+                {
+                    m_loader.ReportError(FormatErrorMessage(ex.Message));
+                }
+                // catch (FileNotFoundException ex) : IOException
+                // catch (FileLoadException ex) : IOException
+                // catch (PathTooLongException ex) : IOException
+                catch (IOException ex)
+                {
+                    m_loader.ReportError(FormatErrorMessage(ex.Message));
+                }
+                catch (BadImageFormatException ex)
+                {
+                    m_loader.ReportError(FormatErrorMessage(ex.Message));
+                }
+                catch (System.Security.SecurityException ex)
+                {
+                    m_loader.ReportError(FormatErrorMessage(ex.Message));
+                }
+                return null;
+
+                string FormatErrorMessage(string message) =>
+                    $"{nameof(RuntimeLoader)}.{nameof(AssemblyLoadFrom)}(\"{assemblyPath}\"): {message}.";
+            }
+
+            private Assembly? AssemblyLoad(MemoryStream portableExecutableStream)
+            {
+                try
+                {
+                    return Assembly.Load(portableExecutableStream.GetBuffer());
+                }
+                //catch (ArgumentNullException ex) : unlikely
+                catch (UnauthorizedAccessException ex)
+                {
+                    m_loader.ReportError(FormatErrorMessage(ex.Message));
+                }
+                catch (BadImageFormatException ex)
+                {
+                    m_loader.ReportError(FormatErrorMessage(ex.Message));
+                }
+                return null;
+
+                static string FormatErrorMessage(string message) =>
+                    $"{nameof(RuntimeLoader)}.{nameof(AssemblyLoad)}({nameof(portableExecutableStream)}): {message}.";
+            }
+
+            private bool AssemblySave(MemoryStream portableExecutableStream, string assemblyPath)
+            {
+                try
+                {
+                    using (FileStream dllStream = new(assemblyPath, FileMode.Create))
+                    {
+                        portableExecutableStream.Position = 0;
+                        portableExecutableStream.CopyTo(dllStream);
+                    }
+                    return true;
+                }
+                //catch (ObjectDisposedException ex) : unlikely
+                //catch (ArgumentNullException ex) : ArgumentException
+                //catch (ArgumentOutOfRangeException ex) : ArgumentException
+                catch (ArgumentException ex)
+                {
+                    m_loader.ReportError(FormatErrorMessage(ex.Message));
+                }
+                catch (NotSupportedException ex)
+                {
+                    m_loader.ReportError(FormatErrorMessage(ex.Message));
+                }
+                catch (System.Security.SecurityException ex)
+                {
+                    m_loader.ReportError(FormatErrorMessage(ex.Message));
+                }
+                catch (UnauthorizedAccessException ex)
+                {
+                    m_loader.ReportError(FormatErrorMessage(ex.Message));
+                }
+                //catch (FileNotFoundException ex) : IOException
+                //catch (DirectoryNotFoundException ex) : IOException
+                //catch (PathTooLongException ex) : IOException
+                catch (IOException ex)
+                {
+                    m_loader.ReportError(FormatErrorMessage(ex.Message));
+                }
+
+                return false;
+
+                string FormatErrorMessage(string message) =>
+                    $"{nameof(RuntimeLoader)}.{nameof(AssemblySave)}({nameof(portableExecutableStream)}, \"{assemblyPath}\"): {message}.";
+            }
+            #endregion
+
         }
     }
 }

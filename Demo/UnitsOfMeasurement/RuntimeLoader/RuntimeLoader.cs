@@ -9,9 +9,6 @@
 
 
 ********************************************************************************/
-
-using Microsoft.CodeAnalysis;
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -25,8 +22,7 @@ namespace Demo.UnitsOfMeasurement
     public partial class RuntimeLoader
     {
         #region Fields
-        private readonly IO m_io;                   // RuntimeLoader I/O routines
-        private readonly Decompiler m_decompiler;   // decompiles in-memory (compile-time) units
+        private readonly Definitions m_definitions; // in-memory (compile-time) units & scales
         private readonly Parser m_parser;           // parses late definitions
         private readonly Generator m_generator;     // generates C# source code from late definitions
         private readonly Compiler m_compiler;       // compiles new generated units & scales
@@ -47,51 +43,51 @@ namespace Demo.UnitsOfMeasurement
         {
             Errors = new();
 
-            m_io = new(this);
-            m_decompiler = new();
-            m_parser = new(this, m_decompiler);
-            m_generator = new(this);
+            m_definitions = new();
+            m_parser = new(this, m_definitions);
+            m_generator = new(this, m_definitions);
             m_compiler = new(this);
         }
         #endregion
 
         #region Methods
         /// <summary>Supplement the <see cref="Catalog"/> with late unit/scale definitions input from a text file.</summary>
-        /// <param name="lateDefinitionsTxtPath">path to the late definitions text file</param>
+        /// <param name="definitionsTxtPath">path to the late definitions text file</param>
         /// <returns><c>true</c> on success, <c>false</c> on failure.</returns>
-        public bool LoadFromFile(string lateDefinitionsTxtPath)
+        public bool LoadFromFile(string definitionsTxtPath)
         {
             Errors.Clear();
 
-            Assembly? supplement = null;
-            string? lateDefinitionsDllPath = m_io.ChangeExtension(lateDefinitionsTxtPath, "dll");
-            if (lateDefinitionsDllPath is not null)
+            string? definitionsDllPath = PathChangeExtension(definitionsTxtPath, "dll");
+            if (definitionsDllPath is not null)
             {
+                Assembly? supplement = null;
                 // Check whether the late units DLL saved on a previous run
                 // is older than the current definition file:
-                FileInfo textfile = new(lateDefinitionsTxtPath);
-                FileInfo assembly = new(lateDefinitionsDllPath);
+                FileInfo textfile = new(definitionsTxtPath);
+                FileInfo assembly = new(definitionsDllPath);
                 if (textfile.LastWriteTime < assembly.LastWriteTime)
                 {
                     // Load late units from the (still up to date) DLL previously saved:
-                    supplement = m_io.AssemblyLoad(lateDefinitionsDllPath);
+                    supplement = m_compiler.AssemblyLoadFrom(definitionsDllPath);
                 }
                 else
                 {
-                    // Compile (updated) late units and replace the outdated DLL with a new one:
-                    using StreamReader? definitionStream = m_io.FileOpen(lateDefinitionsTxtPath);
+                    // Compile late units and replace the outdated DLL with a new one:
+                    using StreamReader? definitionStream = FileOpenText(definitionsTxtPath);
                     if (definitionStream is not null)
                     {
-                        supplement = Compile(lateDefinitionsTxtPath, definitionStream, outputAssemblyPath: lateDefinitionsDllPath);
+                        supplement = Compile(definitionsTxtPath, definitionStream, outputAssemblyPath: definitionsDllPath);
                     }
                 }
-                // Supplement the Catalog
                 if (supplement is not null)
                 {
+                    // Supplement the Catalog
                     Catalog.AppendFromAssembly(supplement);
+                    return true;
                 }
             }
-            return supplement is not null;
+            return false;
         }
 
         /// <summary>Supplement the <see cref="Catalog"/> with late unit/scale definitions input from a text string.</summary>
@@ -101,64 +97,68 @@ namespace Demo.UnitsOfMeasurement
         /// will be NOT AVAILABLE as (<see cref="Assembly"/>) references
         /// when running the <see cref="RuntimeLoader"/> the next time.
         /// </remarks>
-        /// <param name="lateDefinitions">definition text string</param>
+        /// <param name="definitions">late definitions text string</param>
         /// <returns><c>true</c> on success, <c>false</c> on failure.</returns>
-        public bool LoadFromString(string lateDefinitions)
+        public bool LoadFromString(string definitions)
         {
             Errors.Clear();
 
-            using (StringReader definitionStream = new(lateDefinitions))
+            using (StringReader definitionStream = new(definitions))
             {
-                Assembly? supplement = Compile("<definition string>", definitionStream, outputAssemblyPath: null);
+                Assembly? supplement = Compile(null, definitionStream, outputAssemblyPath: null);
                 if (supplement is not null)
                 {
                     Catalog.AppendFromAssembly(supplement);
+                    return true;
                 }
-                return supplement is not null;
             }
+            return false;
         }
 
         /// <summary>
         /// Compile late unit/scale definitions into an assembly (DLL).
         /// </summary>
+        /// <param name="definitionPath">definition file path; <c>null</c> for definitions being loaded from a string</param>
         /// <param name="definitionStream">definition stream</param>
-        /// <param name="definitionHint">definition hint (path or other id)</param>
         /// <param name="outputAssemblyPath">path to the output assembly file; <c>null</c> if the assembly is not to be saved to a file (not recommended)</param>
         /// <returns>An assembly with late units/scales; <c>null</c> on failure.</returns>
-        private Assembly? Compile(string definitionHint, TextReader definitionStream, string? outputAssemblyPath)
+        private Assembly? Compile(string? definitionPath, TextReader definitionStream, string? outputAssemblyPath)
         {
             // Retrieve compile-time definitions of all Catalog entities:
-            m_decompiler.Decompile();
+            m_definitions.Decompile();
 
-            int unitCount = m_decompiler.Units.Count;   // start index for (possible) new units
-            int scaleCount = m_decompiler.Scales.Count; // start index for (possible) new scales
+            int unitCount = m_definitions.Units.Count;   // start index for (possible) new units
+            int scaleCount = m_definitions.Scales.Count; // start index for (possible) new scales
 
-            Assembly? supplement = null;
-
-            // Parse (append) new definitions:
-            if (m_parser.Parse(definitionHint, definitionStream) && ((m_decompiler.Units.Count > unitCount) || (m_decompiler.Scales.Count > scaleCount)))
+            // Parse (append) new definitions (if any) to the decompiler lists:
+            if (m_parser.Parse(definitionPath, definitionStream) &&
+               ((m_definitions.Units.Count > unitCount) ||
+                (m_definitions.Scales.Count > scaleCount)))
             {
                 // Generate source code (for the new definitions only):
-                string? generatedSourceCode = m_generator.Transform(m_decompiler, unitCount, scaleCount);
-                if (generatedSourceCode is not null)
+                string? generatedSource = m_generator.Transform(unitCount, scaleCount);
+                if (generatedSource is not null)
                 {
                     if (outputAssemblyPath is not null)
                     {
-                        m_io.FileSave(m_io.ChangeExtension(outputAssemblyPath, "cs"), generatedSourceCode);
+                        // Try to save the generated source code to file (ignore I/O exceptions):
+                        string? outputCSharpPath = PathChangeExtension(outputAssemblyPath, "cs");
+                        if (outputCSharpPath is not null)
+                        {
+                            FileSaveText(outputCSharpPath, generatedSource);
+                        }
                     }
-
                     // References to assemblies containing units & scales that might be referenced from the source.
-                    // NOTE: references to measures appended previously from a string (and not saved to a DLL) are not available!!!
+                    // NOTE: references to units/scales appended previously from a string (thus not saved to a DLL) are not available!!!
                     IEnumerable<Assembly>? catalogAssemblies = Catalog.All
                             .Select(m => m.Type.Assembly).Distinct()
-                            .Where(ass => !string.IsNullOrWhiteSpace(ass.Location));
+                            .Where(asm => !string.IsNullOrWhiteSpace(asm.Location));
 
                     // Compile the generated source code:
-                    supplement = m_compiler.CompileFromSource(generatedSourceCode, catalogAssemblies, outputAssemblyPath);
+                    return m_compiler.CompileFromSource(generatedSource, catalogAssemblies, outputAssemblyPath);
                 }
             }
-
-            return supplement;
+            return null;
         }
 
         private void ReportError(string message) => Errors.Add(message);
