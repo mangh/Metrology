@@ -67,7 +67,12 @@ namespace Demo.UnitsOfMeasurement
                 void ReportParseError(TextSpan extent, LinePositionSpan span, string message)
                 {
                     errorsFound = true;
-                    m_loader.ReportError($"{definitionsPath ?? string.Empty}({span}): {message}.");
+
+                    LinePositionSpan oneBasedSpan = new(
+                            new(span.Start.Line + 1, span.Start.Character + 1), 
+                            new(span.End.Line + 1, span.End.Character + 1));
+
+                    m_loader.ReportError($"{definitionsPath ?? string.Empty}({oneBasedSpan}): {message}");
                 }
             }
             #endregion

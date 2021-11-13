@@ -124,13 +124,21 @@ namespace Demo.UnitsOfMeasurement
         /// <returns>An assembly with late units/scales; <c>null</c> on failure.</returns>
         private Assembly? Compile(string? definitionPath, TextReader definitionStream, string? outputAssemblyPath)
         {
-            // Retrieve compile-time definitions of all Catalog entities:
+            // Auxiliary CSharp file (perfectly needless when everything goes right
+            // but useful in case of compilation errors):
+            string? outputCSharpPath = (outputAssemblyPath is null) ? null : PathChangeExtension(outputAssemblyPath, "cs");
+
+            // Remove the CSharp file that was generated on previous run:
+            if (outputCSharpPath is not null)
+                FileDelete(outputCSharpPath);   // ignore I/O errors
+
+            // Retrieve compile-time definitions from the Catalog:
             m_definitions.Decompile();
 
             int unitCount = m_definitions.Units.Count;   // start index for (possible) new units
             int scaleCount = m_definitions.Scales.Count; // start index for (possible) new scales
 
-            // Parse (append) new definitions (if any) to the decompiler lists:
+            // Parse (append) new definitions (if any) to the definition lists:
             if (m_parser.Parse(definitionPath, definitionStream) &&
                ((m_definitions.Units.Count > unitCount) ||
                 (m_definitions.Scales.Count > scaleCount)))
@@ -139,22 +147,17 @@ namespace Demo.UnitsOfMeasurement
                 string? generatedSource = m_generator.Transform(unitCount, scaleCount);
                 if (generatedSource is not null)
                 {
-                    if (outputAssemblyPath is not null)
-                    {
-                        // Try to save the generated source code to file (ignore I/O exceptions):
-                        string? outputCSharpPath = PathChangeExtension(outputAssemblyPath, "cs");
-                        if (outputCSharpPath is not null)
-                        {
-                            FileSaveText(outputCSharpPath, generatedSource);
-                        }
-                    }
+                    // Save the generated source code to file:
+                    if (outputCSharpPath is not null)
+                        FileSaveText(outputCSharpPath, generatedSource);    // ignore I/O errors
+
                     // References to assemblies containing units & scales that might be referenced from the source.
                     // NOTE: references to units/scales appended previously from a string (thus not saved to a DLL) are not available!!!
                     IEnumerable<Assembly>? catalogAssemblies = Catalog.All
                             .Select(m => m.Type.Assembly).Distinct()
                             .Where(asm => !string.IsNullOrWhiteSpace(asm.Location));
 
-                    // Compile the generated source code:
+                    // Compile the generated source code (to the indicated output assembly file):
                     return m_compiler.CompileFromSource(generatedSource, catalogAssemblies, outputAssemblyPath);
                 }
             }

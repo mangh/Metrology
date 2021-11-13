@@ -164,7 +164,35 @@ namespace Demo.UnitsOfMeasurement
             string FormatErrorMessage(string message) =>
                 $"{nameof(RuntimeLoader)}.{nameof(FileSaveText)}(\"{filePath}\", ...): {message}.";
         }
-        #endregion
 
+        private bool FileDelete(string filePath)
+        {
+            try
+            {
+                File.Delete(filePath);
+                return true;
+            }
+            catch (ArgumentException ex)
+            {
+                ReportError(FormatErrorMessage(ex.Message));
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                ReportError(FormatErrorMessage(ex.Message));
+            }
+            catch (NotSupportedException ex)
+            {
+                ReportError(FormatErrorMessage(ex.Message));
+            }
+            catch (IOException ex)
+            {
+                ReportError(FormatErrorMessage(ex.Message));
+            }
+            return false;
+
+            string FormatErrorMessage(string message) =>
+                $"{nameof(RuntimeLoader)}.{nameof(FileDelete)}(\"{filePath}\", ...): {message}.";
+        }
+        #endregion
    }
 }

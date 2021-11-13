@@ -61,7 +61,7 @@ namespace Demo.UnitsOfMeasurement
                         {
                             int familyStartId = m_definitions.MaxFamilyFound + 1;    // start id for new families
 
-                            StringBuilder csb = new(16 * 1024);
+                            StringBuilder csb = new(32 * 1024);
 
                             // units
                             foreach ((_, string contents) in utor.Translate(unitTemplate, m_definitions.Units, initialFamily: familyStartId, startIndex: unitStartIndex))

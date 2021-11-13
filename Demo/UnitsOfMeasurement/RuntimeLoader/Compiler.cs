@@ -90,18 +90,15 @@ namespace Demo.UnitsOfMeasurement
             private IEnumerable<PortableExecutableReference>? GetPortableExecutableReferences(IEnumerable<Assembly> assemblies)
             {
                 // Required assemblies (with several excess items):
-                IEnumerable<Assembly>? compilationAssemblies = assemblies.Concat(System.Runtime.Loader.AssemblyLoadContext.Default.Assemblies);
+                IEnumerable<Assembly>? compilationAssemblies = 
+                    assemblies
+                    .Concat(System.Runtime.Loader.AssemblyLoadContext.Default.Assemblies)
+                    .Where(asm => !asm.IsDynamic);
 
                 try
                 {
-                    //IEnumerable<PortableExecutableReference>? references = compilationAssemblies
-                    //    .Where(asm => !asm.IsDynamic)
-                    //    .Select(asm => MetadataReference.CreateFromFile(asm.Location));
-
-                    return compilationAssemblies
-                        .Where(asm => !asm.IsDynamic)
-                        .Select(asm => AssemblyMetadata.CreateFromFile(asm.Location).GetReference());
-
+                    //return compilationAssemblies.Select(asm => MetadataReference.CreateFromFile(asm.Location));
+                    return compilationAssemblies.Select(asm => AssemblyMetadata.CreateFromFile(asm.Location).GetReference());
                 }
                 catch (ArgumentException ex)
                 {
