@@ -165,7 +165,7 @@ namespace Mangh.Metrology
             }
             else
             {
-                Notify("missing semicolon \";\" closing the \"{1}\" definition.", entityName);
+                Notify("missing semicolon \";\" closing the \"{0}\" definition.", entityName);
             }
             return false;
         }
