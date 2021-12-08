@@ -1,0 +1,12 @@
+﻿<Project>
+  
+  <ItemGroup>
+    <SourceAliases Include="Templates\Aliases.inc"/>
+    <TargetAliases Include="..\Application\Aliases.cs"/>
+  </ItemGroup>
+
+  <Target Name="CopyAliasesToDependentProjects" AfterTargets="AfterBuild" Inputs="@(SourceAliases)" Outputs="@(TargetAliases)">
+    <Copy SourceFiles="@(SourceAliases)" DestinationFiles="@(TargetAliases)" SkipUnchangedFiles="true" />
+  </Target>
+  
+</Project>
