@@ -72,7 +72,10 @@ namespace <xsl:value-of select="@ns"/>
 
         #region Constructor(s)
         public <xsl:value-of select="@name"/>(<xsl:value-of select="@unit"/> level) =&gt; m_level = level;
+        public static explicit operator <xsl:value-of select="@name"/>(<xsl:value-of select="@unit"/> q) =&gt; new(q);
+        
         public <xsl:value-of select="@name"/>(<xsl:value-of select="valuetype/name"/> level) : this(new <xsl:value-of select="@unit"/>(level)) { }
+        public static explicit operator <xsl:value-of select="@name"/>(<xsl:value-of select="valuetype/name"/> q) =&gt; new(q);
         #endregion
 
         #region Conversions
@@ -80,10 +83,11 @@ namespace <xsl:value-of select="@ns"/>
         <xsl:for-each select="family/relative">public static <xsl:value-of select="../../valuetype/name"/> From<xsl:value-of select="."/>(<xsl:value-of select="../../valuetype/name"/> q) =&gt; <xsl:value-of select="../../@unit"/>.From<xsl:value-of select="@unit"/>(q - <xsl:value-of select="."/>.OFFSET) + OFFSET;
         </xsl:for-each>
         // dimensional:
-        public static explicit operator <xsl:value-of select="@name"/>(<xsl:value-of select="valuetype/name"/> q) =&gt; new(q);
-        public static explicit operator <xsl:value-of select="@name"/>(<xsl:value-of select="@unit"/> q) =&gt; new(q);
-
-        <xsl:for-each select="family/relative">public static explicit operator <xsl:value-of select="../../@name"/>(<xsl:value-of select="."/> q) =&gt; new(From<xsl:value-of select="."/>(q.<xsl:value-of select="$LEVEL"/>.<xsl:value-of select="$VALUE"/>));
+        <!-- Conversion via cast expression is risky: may be misinterpreted as a constructor expression and will not be made!!!
+        <xsl:for-each select="family/relative">// public static explicit operator <xsl:value-of select="../../@name"/>(<xsl:value-of select="."/> q) =&gt; new(From<xsl:value-of select="."/>(q.<xsl:value-of select="$LEVEL"/>.<xsl:value-of select="$VALUE"/>));
+        </xsl:for-each>
+        -->
+        <xsl:for-each select="family/relative">public static <xsl:value-of select="../../@name"/> From(<xsl:value-of select="."/> q) =&gt; new(From<xsl:value-of select="."/>(q.<xsl:value-of select="$LEVEL"/>.<xsl:value-of select="$VALUE"/>));
         </xsl:for-each>
         public static <xsl:value-of select="@name"/> From(ILevel&lt;<xsl:value-of select="valuetype/name"/>&gt; q)
         {
