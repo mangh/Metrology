@@ -12,17 +12,15 @@
         </xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
-    #if DIMENSIONAL_ANALYSIS
+#if DIMENSIONAL_ANALYSIS
     <xsl:value-of select="$GLOBAL"/> using <xsl:value-of select="@ns"/>;
     <xsl:value-of select="$GLOBAL"/> using static <xsl:value-of select="@ns"/>.Math;
-    #else
-    <xsl:for-each select="unit">
-      <xsl:value-of select="$GLOBAL"/> using <xsl:value-of select="@name"/> = <xsl:value-of select="@alias"/>;
+#else
+    <xsl:for-each select="unit"><xsl:value-of select="$GLOBAL"/> using <xsl:value-of select="@name"/> = <xsl:value-of select="@alias"/>;
     </xsl:for-each>
-    <xsl:for-each select="scale">
-      <xsl:value-of select="$GLOBAL"/> using <xsl:value-of select="@name"/> = <xsl:value-of select="@alias"/>;
+    <xsl:for-each select="scale"><xsl:value-of select="$GLOBAL"/> using <xsl:value-of select="@name"/> = <xsl:value-of select="@alias"/>;
     </xsl:for-each>
     <xsl:value-of select="$GLOBAL"/> using static System.Math;
-    #endif
+#endif
   </xsl:template>
 </xsl:stylesheet>

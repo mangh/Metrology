@@ -58,6 +58,10 @@ namespace <xsl:value-of select="@ns"/>
         <xsl:for-each select="family/relative">public static <xsl:value-of select="../../valuetype/name"/> From<xsl:value-of select="."/>(<xsl:value-of select="../../valuetype/name"/> q) =&gt; (Factor / <xsl:value-of select="."/>.Factor) * q;
         </xsl:for-each>
         // dimensional:
+        <!-- Conversion via cast expression is risky: may be misinterpreted as a constructor expression and will not be made!!!
+        <xsl:for-each select="family/relative">// public static explicit operator <xsl:value-of select="../../@name"/>(<xsl:value-of select="."/> q) =&gt; new(From<xsl:value-of select="."/>(q.<xsl:value-of select="$VALUE"/>));
+        </xsl:for-each>
+        -->
         <xsl:for-each select="family/relative">public static <xsl:value-of select="../../@name"/> From(<xsl:value-of select="."/> q) =&gt; new(From<xsl:value-of select="."/>(q.<xsl:value-of select="$VALUE"/>));
         </xsl:for-each>
         public static <xsl:value-of select="@name"/> From(IQuantity&lt;<xsl:value-of select="valuetype/name"/>&gt; q)
