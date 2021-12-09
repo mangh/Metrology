@@ -1,0 +1,69 @@
+<catalog ns="Demo.Metro" uct="63" ufct="1" sct="4" sfct="0">
+    <unit name="Meter"><![CDATA[                   // [L] Meter::Meter {"m"} : 1]]></unit>
+    <unit name="Centimeter"><![CDATA[              // [L] Meter::Centimeter {"cm"} : 100]]></unit>
+    <unit name="Millimeter"><![CDATA[              // [L] Meter::Millimeter {"mm"} : 1000]]></unit>
+    <unit name="Kilometer"><![CDATA[               // [L] Meter::Kilometer {"km"} : 0.001]]></unit>
+    <unit name="Inch"><![CDATA[                    // [L] Meter::Inch {"in"} : 39.37007874015748]]></unit>
+    <unit name="Foot"><![CDATA[                    // [L] Meter::Foot {"ft"} : 3.2808398950131235]]></unit>
+    <unit name="Yard"><![CDATA[                    // [L] Meter::Yard {"yd"} : 1.0936132983377078]]></unit>
+    <unit name="Mile"><![CDATA[                    // [L] Meter::Mile {"mil"} : 0.000621371192237334]]></unit>
+    <unit name="Second"><![CDATA[                  // [T] Second::Second {"s"} : 1]]></unit>
+    <unit name="Minute"><![CDATA[                  // [T] Second::Minute {"min"} : 0.016666666666666666]]></unit>
+    <unit name="Hour"><![CDATA[                    // [T] Second::Hour {"h"} : 0.0002777777777777778]]></unit>
+    <unit name="Kilogram"><![CDATA[                // [M] Kilogram::Kilogram {"kg"} : 1]]></unit>
+    <unit name="Gram"><![CDATA[                    // [M] Kilogram::Gram {"g"} : 1000]]></unit>
+    <unit name="Tonne"><![CDATA[                   // [M] Kilogram::Tonne {"t"} : 0.001]]></unit>
+    <unit name="Pound"><![CDATA[                   // [M] Kilogram::Pound {"lb"} : 2.2046226218487757]]></unit>
+    <unit name="Ounce"><![CDATA[                   // [M] Kilogram::Ounce {"ou"} : 35.27396194958041]]></unit>
+    <unit name="DegKelvin"><![CDATA[               // [ϴ] DegKelvin::DegKelvin {"K", "deg.K"} : 1]]></unit>
+    <unit name="DegCelsius"><![CDATA[              // [ϴ] DegKelvin::DegCelsius {"\u00B0C", "deg.C"} : 1]]></unit>
+    <unit name="DegRankine"><![CDATA[              // [ϴ] DegKelvin::DegRankine {"\u00B0R", "deg.R"} : 1.8]]></unit>
+    <unit name="DegFahrenheit"><![CDATA[           // [ϴ] DegKelvin::DegFahrenheit {"\u00B0F", "deg.F"} : 1.8]]></unit>
+    <unit name="Ampere"><![CDATA[                  // [I] Ampere::Ampere {"A"} : 1]]></unit>
+    <unit name="Mole"><![CDATA[                    // [N] Mole::Mole {"mol"} : 1]]></unit>
+    <unit name="Candela"><![CDATA[                 // [J] Candela::Candela {"cd"} : 1]]></unit>
+    <unit name="EUR"><![CDATA[                     // [¤] EUR::EUR {"EUR"} : 1]]></unit>
+    <unit name="USD"><![CDATA[                     // [¤] EUR::USD {"USD"} : 1.3433]]></unit>
+    <unit name="GBP"><![CDATA[                     // [¤] EUR::GBP {"GBP"} : 0.79055]]></unit>
+    <unit name="PLN"><![CDATA[                     // [¤] EUR::PLN {"PLN"} : 4.1437]]></unit>
+    <unit name="Radian"><![CDATA[                  // [1] Radian::Radian {"rad"} : 1]]></unit>
+    <unit name="Degree"><![CDATA[                  // [1] Radian::Degree {"\u00B0", "deg"} : (180d / System.Math.PI) * Radian.Factor]]></unit>
+    <unit name="Grad"><![CDATA[                    // [1] Radian::Grad {"grad"} : (200d / System.Math.PI) * Radian.Factor]]></unit>
+    <unit name="Cycles"><![CDATA[                  // [1] Radian::Cycles {"c"} : Radian.Factor / (2d * System.Math.PI)]]></unit>
+    <unit name="Steradian"><![CDATA[               // [1] Steradian::Steradian {"sr"} : 1]]></unit>
+    <unit name="Hertz"><![CDATA[                   // [T-1] Hertz::Hertz {"Hz"} : Cycles.Factor / Second.Factor]]></unit>
+    <unit name="Radian_Sec"><![CDATA[              // [T-1] Hertz::Radian_Sec {"rad/s"} : 1]]></unit>
+    <unit name="RPM"><![CDATA[                     // [T-1] Hertz::RPM {"rpm"} : Cycles.Factor / Minute.Factor]]></unit>
+    <unit name="SquareMeter"><![CDATA[             // [L2] SquareMeter::SquareMeter {"m\u00B2", "m2"} : 1]]></unit>
+    <unit name="SquareFoot"><![CDATA[              // [L2] SquareMeter::SquareFoot {"ft\u00B2", "sq ft"} : 10.763910416709724]]></unit>
+    <unit name="CubicMeter"><![CDATA[              // [L3] CubicMeter::CubicMeter {"m\u00B3", "m3"} : 1]]></unit>
+    <unit name="Meter_Sec"><![CDATA[               // [LT-1] Meter_Sec::Meter_Sec {"m/s"} : 1]]></unit>
+    <unit name="Kilometer_Hour"><![CDATA[          // [LT-1] Meter_Sec::Kilometer_Hour {"km/h"} : 3.6]]></unit>
+    <unit name="MPH"><![CDATA[                     // [LT-1] Meter_Sec::MPH {"mph", "mi/h"} : 2.2369362920544025]]></unit>
+    <unit name="Meter_Sec2"><![CDATA[              // [LT-2] Meter_Sec2::Meter_Sec2 {"m/s2"} : 1]]></unit>
+    <unit name="Newton"><![CDATA[                  // [LT-2M] Newton::Newton {"N"} : 1]]></unit>
+    <unit name="PoundForce"><![CDATA[              // [LT-2M] Newton::PoundForce {"lbf"} : 0.2248089430997105]]></unit>
+    <unit name="Poundal"><![CDATA[                 // [LT-2M] Newton::Poundal {"pdl"} : 7.233013851209894]]></unit>
+    <unit name="Dyne"><![CDATA[                    // [LT-2M] Newton::Dyne {"dyn"} : 100000]]></unit>
+    <unit name="Joule"><![CDATA[                   // [L2T-2M] Joule::Joule {"J"} : 1]]></unit>
+    <unit name="Watt"><![CDATA[                    // [L2T-3M] Watt::Watt {"W"} : 1]]></unit>
+    <unit name="NewtonMeter"><![CDATA[             // [L2T-2M] NewtonMeter::NewtonMeter {"N\u00B7m", "N*m"} : 1]]></unit>
+    <unit name="Joule_Kelvin"><![CDATA[            // [L2T-2Mϴ-1] Joule_Kelvin::Joule_Kelvin {"J/K"} : 1]]></unit>
+    <unit name="Joule_Kelvin_Kilogram"><![CDATA[   // [L2T-2ϴ-1] Joule_Kelvin_Kilogram::Joule_Kelvin_Kilogram {"J/kg/K"} : 1]]></unit>
+    <unit name="Pascal"><![CDATA[                  // [L-1T-2M] Pascal::Pascal {"Pa"} : 1]]></unit>
+    <unit name="Bar"><![CDATA[                     // [L-1T-2M] Pascal::Bar {"bar"} : 1E-05]]></unit>
+    <unit name="AtmTechnical"><![CDATA[            // [L-1T-2M] Pascal::AtmTechnical {"at"} : 1.0197162129779282E-05]]></unit>
+    <unit name="AtmStandard"><![CDATA[             // [L-1T-2M] Pascal::AtmStandard {"atm"} : 9.869232667160129E-06]]></unit>
+    <unit name="MillimeterHg"><![CDATA[            // [L-1T-2M] Pascal::MillimeterHg {"mmHg"} : 133.322387415]]></unit>
+    <unit name="Coulomb"><![CDATA[                 // [TI] Coulomb::Coulomb {"C"} : 1]]></unit>
+    <unit name="Volt"><![CDATA[                    // [L2T-3MI-1] Volt::Volt {"V"} : 1]]></unit>
+    <unit name="Ohm"><![CDATA[                     // [L2T-3MI-2] Ohm::Ohm {"\u03A9", "ohm"} : 1]]></unit>
+    <unit name="Siemens"><![CDATA[                 // [L-2T3M-1I2] Siemens::Siemens {"S"} : 1]]></unit>
+    <unit name="Farad"><![CDATA[                   // [L-2T4M-1I2] Farad::Farad {"F"} : 1]]></unit>
+    <unit name="Weber"><![CDATA[                   // [L2T-2MI-1] Weber::Weber {"Wb"} : 1]]></unit>
+    <unit name="Meter2_Sec2"><![CDATA[             // [L2T-2] Meter2_Sec2::Meter2_Sec2 {"m2/s2"} : 1]]></unit>
+    <scale name="Kelvin"><![CDATA[                  // [ϴ] Kelvin::Kelvin : AbsoluteZero = DegKelvin 0]]></scale>
+    <scale name="Celsius"><![CDATA[                 // [ϴ] Kelvin::Celsius : AbsoluteZero = DegCelsius -273.15]]></scale>
+    <scale name="Rankine"><![CDATA[                 // [ϴ] Kelvin::Rankine : AbsoluteZero = DegRankine 0]]></scale>
+    <scale name="Fahrenheit"><![CDATA[              // [ϴ] Kelvin::Fahrenheit : AbsoluteZero = DegFahrenheit -459.66999999999996]]></scale>
+</catalog>

@@ -1,0 +1,17 @@
+<scale name="Celsius" ns="Demo.Metro" unit="DegCelsius" late="no">
+    <valuetype>
+        <name>double</name>
+        <alias>System.Double</alias>
+        <one>1d</one>
+        <zero>0d</zero>
+    </valuetype>
+    <level>m_level</level>
+    <offset>-273.15d</offset>
+    <format>{0} {1}</format>
+    <refpoint normalized="AbsoluteZero">AbsoluteZero</refpoint>
+    <family id="Kelvin.Family">
+        <relative unit="DegKelvin">Kelvin</relative>
+        <relative unit="DegFahrenheit">Fahrenheit</relative>
+        <relative unit="DegRankine">Rankine</relative>
+    </family>
+</scale>
