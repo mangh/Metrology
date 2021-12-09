@@ -36,10 +36,9 @@ namespace CALINE3.Metrology
         /// <param name="y">exponent (dimensionless)</param>
         /// <returns>the power of the specified length as a dimensionless number (i.e. w/o any unit).</returns>
         /// <remarks>
-        /// NOTE: the method is dimensionally safe on the argument side but
-        /// questionable on the result side: the result has no relationship
-        /// with the input <see cref="Meter"/> unit. Therefore there is a
-        /// risk of using it in a wrong context.
+        /// NOTE: the method is dimensionally safe on the input but questionable
+        /// on the output: the result has no (dimensional) relationship with the
+        /// input unit <see cref="Meter"/>; there is a risk of using it in a wrong context.
         /// </remarks>
         public static double Pow(Meter length, double y) => System.Math.Pow(length.Value, y);
         #endregion
