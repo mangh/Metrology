@@ -225,11 +225,10 @@ namespace CALINE3
             if ((TYP != "AG") && (TYP != "BR"))
             {
                 Meter D1 = W2 + 2.0 * Abs(HL);
-                Meter D2 = W2;
                 if (Abs(D) < D1)
                 {
                     // 2:1 SLOPE ASSUMED
-                    Z -= (Abs(D) <= D2) ? HL : HL * (1.0 - (Abs(D) - W2) / (2.0 * Abs(HL)));
+                    Z -= (Abs(D) <= W2) ? HL : HL * (1.0 - (Abs(D) - W2) / (2.0 * Abs(HL)));
                 }
             }
 
