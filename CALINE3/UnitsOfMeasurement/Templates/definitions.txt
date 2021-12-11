@@ -155,12 +155,11 @@ unit Degree "\u00B0" "deg" : "{0}{1}" = (180 / "System.Math.PI") * Radian;
 //unit Steradian "sr" = <>;
 //unit SquareDegree "deg\u00B2" "deg2" = ((180 / "System.Math.PI") * (180 / "System.Math.PI")) * Steradian;
 
-
 ////////////////////////////////////////////////////////////////////////////////
 //
 //      Frequency
 //
-unit Hertz "Hz" /* "evts/s" */ = 1 / Second;
+unit Hertz "Hz" = 1 / Second;
 // unit KiloHertz "kHz" = Hertz / 1000;
 // unit MegaHertz "MHz" = KiloHertz / 1000;
 // unit GigaHertz "GHz" = MegaHertz / 1000;
@@ -174,10 +173,10 @@ unit Event_Hour "evt/h" = 1 / Hour | 3600 * Hertz;
 //      Angular Frequency (aka. Rotational Velocity)
 //
 //      NOTE: due to the use of literal ("System.Math.PI") in Degree_Sec
-//      definition below, parser cannot check whether the specified
+//      definition below, parser will not check whether the specified
 //      formulas are consistent i.e. whether the formulas:
 //
-//              Degree_Sec / Second
+//              Degree / Second
 //      and
 //              (180 / "System.Math.PI") * Radian_Sec
 //
@@ -188,7 +187,6 @@ unit Event_Hour "evt/h" = 1 / Hour | 3600 * Hertz;
 //unit Radian_Sec "rad/s" = Radian / Second;
 //unit Degree_Sec "\u00B0/s" "degree/s" = Degree / Second | (180 / "System.Math.PI") * Radian_Sec;
 //unit RPM "rpm" = Turn / Minute | (30 / "System.Math.PI") * Radian_Sec;
-
 
 ////////////////////////////////////////////////////////////////////////////////
 //
@@ -233,8 +231,8 @@ unit Meter2 "m\u00B2" "m2" = Meter * Meter;
 //      Volume
 //
 unit Meter3 "m\u00B3" "m3" = Meter2 * Meter;
+//unit Liter "L" = Meter3 * 1000;
 //unit Centimeter3 "cm\u00B3" "cm3" = Centimeter2 * Centimeter | Meter3 * 1.0e6;
-//unit Liter "L" = Meter3 / 1000;
 
 //unit Inch3 "in\u00B3" "cu in" = Inch2 * Inch | Meter3 * (100/2.54) * (100/2.54) * (100/2.54);
 //unit Foot3 "ft\u00B3" "cu ft" = Foot2 * Foot | Meter3 * ((100/2.54)/12) * ((100/2.54)/12) * ((100/2.54)/12);
@@ -254,6 +252,44 @@ unit Centimeter_Sec "cm/s" = Centimeter / Second | 100 * Meter_Sec;
 //      Acceleration
 //
 unit Meter_Sec2 "m/s2" = Meter_Sec / Second;
+
+////////////////////////////////////////////////////////////////////////////////
+//
+//      Kinematic viscosity (aka. 
+//          thermal diffusivity, 
+//          momentum diffusivity,
+//          specific angular momentum)
+//
+unit Meter2_Sec "m\u00B2/s" "m2/s" = Meter2 / Second | Meter_Sec * Meter;
+
+////////////////////////////////////////////////////////////////////////////////
+//
+//      Linear mass density
+//
+unit Gram_Meter "g/m" = Gram / Meter;
+//unit Gram_Kilometer "g/km" = Gram / Kilometer | Gram_Meter / 1000;
+unit Gram_Mile "g/mi" = Gram / Mile | Gram_Meter / (1000/(25.4*12*3*1760));
+unit Microgram_Meter "\u03BCg/m" "mcg/m" = Microgram / Meter | 1000000 * Gram_Meter;
+
+////////////////////////////////////////////////////////////////////////////////
+//
+//      Volumetric mass density (aka. specific mass, mass concentration)
+//
+unit Gram_Meter3 "g/m\u00B3" "g/m3" = Gram / Meter3;
+unit Microgram_Meter3 "\u03BCg/m\u00B3" "mcg/m3" = Microgram / Meter3 | 1.0e6 * Gram_Meter3;
+
+////////////////////////////////////////////////////////////////////////////////
+//
+//      Molar Volume
+//
+unit Meter3_Mole "m\u00B3/mol" "m3/mol" = Meter3 / Mole;
+
+////////////////////////////////////////////////////////////////////////////////
+//
+//      Molar mass
+//
+unit Gram_Mole "g/mol" = Gram / Mole | Gram_Meter3 * Meter3_Mole;
+unit Microgram_Mole "\u03BCg/mol" "mcg/mol" = Microgram / Mole | Microgram_Meter3 * Meter3_Mole | 1.0e6 * Gram_Mole;
 
 ////////////////////////////////////////////////////////////////////////////////
 //
@@ -289,11 +325,11 @@ unit Meter_Sec2 "m/s2" = Meter_Sec / Second;
 //
 //      NOTE: We can't specify:
 //
-//          NewtonMeter "N*m" = Newton * Meter
+//          NewtonMeter ... = Newton * Meter
 //
 //      as we have already specified
 //
-//          Joule "J" = Newton * Meter
+//          Joule ... = Newton * Meter
 //
 //      and that (as a product of 2 units), would generate operators of the same
 //      arguments but different return values:
@@ -432,45 +468,10 @@ unit Meter_Sec2 "m/s2" = Meter_Sec / Second;
 
 ////////////////////////////////////////////////////////////////////////////////
 //
-//      Flux (CALINE3)
-//
-unit Meter2_Sec "m\u00B2/s" "m2/s" = Meter2 / Second | Meter_Sec * Meter;
-
-////////////////////////////////////////////////////////////////////////////////
-//
-//      Vehicle Emission (CALINE3)
-//
-unit Gram_Meter "g/m" = Gram / Meter;
-//unit Gram_Kilometer "g/km" = Gram / Kilometer | 1000 * Gram_Meter;
-unit Gram_Mile "g/mi" = Gram / Mile | Gram_Meter / (1000/(25.4*12*3*1760));
-unit Microgram_Meter "\u03BCg/m" "mcg/m" = Microgram / Meter | 1000000 * Gram_Meter;
-
-////////////////////////////////////////////////////////////////////////////////
-//
 //      Vehicle Emission Strength (CALINE3)
 //
-unit Microgram_MeterSec "\u03BCg/(m*s)" "mcg/(m*s)" = Microgram_Meter / Second | Microgram_Meter * Hertz;
-unit Gram_Mile_Hour "g/mi/h" = Gram_Mile * Event_Hour;
-
-////////////////////////////////////////////////////////////////////////////////
-//
-//      Molar mass (CALINE3)
-//
-unit Gram_Mole "g/mol" = Gram / Mole;
-unit Microgram_Mole "\u03BCg/mol" "mcg/mol" = Microgram / Mole | 1.0e6 * Gram_Mole;
-
-////////////////////////////////////////////////////////////////////////////////
-//
-//      Molar Volume (CALINE3)
-//
-unit Meter3_Mole "m\u00B3/mol" "m3/mol" = Meter3 / Mole;
-
-////////////////////////////////////////////////////////////////////////////////
-//
-//      Mass Concentration (CALINE3)
-//
-unit Gram_Meter3 "g/m\u00B3" "g/m3" = Gram / Meter3 | Gram_Mole / Meter3_Mole;
-unit Microgram_Meter3 "\u03BCg/m\u00B3" "mcg/m3" = Microgram / Meter3 | Microgram_MeterSec / Meter2_Sec | Microgram_Mole / Meter3_Mole| 1.0e6 * Gram_Meter3;
+unit Microgram_MeterSec "\u03BCg/(m*s)" "mcg/(m*s)" = Microgram_Meter / Second | Microgram_Meter * Hertz | Microgram_Meter3 * Meter2_Sec;
+unit Gram_MileHour "g/(mi*h)" = Gram_Mile * Event_Hour;
 
 ////////////////////////////////////////////////////////////////////////////////
 //
