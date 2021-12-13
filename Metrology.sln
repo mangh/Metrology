@@ -42,6 +42,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bullet", "Demo\Bullet\Bulle
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Benchmark2", "Demo\Benchmark2\Benchmark2.csproj", "{3F8CC14B-1864-4FAB-95B9-450FCF3FA390}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Currencies", "Demo\Currencies\Currencies.csproj", "{34B097B2-079C-4D8F-803B-23398A6F6915}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -96,6 +98,10 @@ Global
 		{3F8CC14B-1864-4FAB-95B9-450FCF3FA390}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3F8CC14B-1864-4FAB-95B9-450FCF3FA390}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3F8CC14B-1864-4FAB-95B9-450FCF3FA390}.Release|Any CPU.Build.0 = Release|Any CPU
+		{34B097B2-079C-4D8F-803B-23398A6F6915}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{34B097B2-079C-4D8F-803B-23398A6F6915}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{34B097B2-079C-4D8F-803B-23398A6F6915}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{34B097B2-079C-4D8F-803B-23398A6F6915}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -114,6 +120,7 @@ Global
 		{2AFD5961-6410-4E39-8247-A3B7A2571AFF} = {0C3A78A2-33D6-42BE-A00E-375D67325EBC}
 		{38FC2687-BCA0-40FE-B60E-CA7DDFDA4556} = {0C3A78A2-33D6-42BE-A00E-375D67325EBC}
 		{3F8CC14B-1864-4FAB-95B9-450FCF3FA390} = {0C3A78A2-33D6-42BE-A00E-375D67325EBC}
+		{34B097B2-079C-4D8F-803B-23398A6F6915} = {0C3A78A2-33D6-42BE-A00E-375D67325EBC}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {54F7E0AD-7097-4699-AE43-65D796031F54}
