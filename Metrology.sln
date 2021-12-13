@@ -38,7 +38,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Benchmark", "CALINE3\Benchm
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitsOfMeasurementTest", "Demo\UnitsOfMeasurementTest\UnitsOfMeasurementTest.csproj", "{2AFD5961-6410-4E39-8247-A3B7A2571AFF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bullet", "Demo\Bullet\Bullet.csproj", "{38FC2687-BCA0-40FE-B60E-CA7DDFDA4556}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bullet", "Demo\Bullet\Bullet.csproj", "{38FC2687-BCA0-40FE-B60E-CA7DDFDA4556}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Benchmark2", "Demo\Benchmark2\Benchmark2.csproj", "{3F8CC14B-1864-4FAB-95B9-450FCF3FA390}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -90,6 +92,10 @@ Global
 		{38FC2687-BCA0-40FE-B60E-CA7DDFDA4556}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{38FC2687-BCA0-40FE-B60E-CA7DDFDA4556}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{38FC2687-BCA0-40FE-B60E-CA7DDFDA4556}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3F8CC14B-1864-4FAB-95B9-450FCF3FA390}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F8CC14B-1864-4FAB-95B9-450FCF3FA390}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F8CC14B-1864-4FAB-95B9-450FCF3FA390}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F8CC14B-1864-4FAB-95B9-450FCF3FA390}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -107,6 +113,7 @@ Global
 		{CAE8D0AD-CEF7-46E0-A476-DB8A6B7DE68F} = {C2553BDF-FA34-4532-B24E-5886A554E34E}
 		{2AFD5961-6410-4E39-8247-A3B7A2571AFF} = {0C3A78A2-33D6-42BE-A00E-375D67325EBC}
 		{38FC2687-BCA0-40FE-B60E-CA7DDFDA4556} = {0C3A78A2-33D6-42BE-A00E-375D67325EBC}
+		{3F8CC14B-1864-4FAB-95B9-450FCF3FA390} = {0C3A78A2-33D6-42BE-A00E-375D67325EBC}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {54F7E0AD-7097-4699-AE43-65D796031F54}
