@@ -127,8 +127,8 @@ namespace <xsl:value-of select="@ns"/>
         public static <xsl:value-of select="@name"/> operator -(<xsl:value-of select="@name"/> lhs, <xsl:value-of select="@unit"/> rhs) =&gt; new(lhs.<xsl:value-of select="$LEVEL"/> - rhs);
         public static <xsl:value-of select="@unit"/> operator -(<xsl:value-of select="@name"/> lhs, <xsl:value-of select="@name"/> rhs) =&gt; lhs.<xsl:value-of select="$LEVEL"/> - rhs.<xsl:value-of select="$LEVEL"/>;
         public static <xsl:value-of select="@name"/> operator -(<xsl:value-of select="@name"/> q) =&gt; new(-q.<xsl:value-of select="$LEVEL"/>);
-        public static <xsl:value-of select="@name"/> operator ++(<xsl:value-of select="@name"/> q) =&gt; q + <xsl:value-of select="@unit"/>.One;
-        public static <xsl:value-of select="@name"/> operator --(<xsl:value-of select="@name"/> q) =&gt; q - <xsl:value-of select="@unit"/>.One;
+        public static <xsl:value-of select="@name"/> operator ++(<xsl:value-of select="@name"/> q) =&gt; q + (<xsl:value-of select="@unit"/>)<xsl:value-of select="valuetype/one"/>;
+        public static <xsl:value-of select="@name"/> operator --(<xsl:value-of select="@name"/> q) =&gt; q - (<xsl:value-of select="@unit"/>)<xsl:value-of select="valuetype/one"/>;
         #endregion
 
         #region Formatting
@@ -147,10 +147,11 @@ namespace <xsl:value-of select="@ns"/>
         public static readonly <xsl:value-of select="@unit"/> Offset = new(OFFSET);
         public static readonly Scale&lt;<xsl:value-of select="valuetype/name"/>&gt; Proxy = new <xsl:value-of select="@name"/>_Proxy();
         #endregion
-
+        <!--
         #region Predefined levels
-        public static readonly <xsl:value-of select="@name"/> Zero = new(0d);
+        public static readonly <xsl:value-of select="@name"/> Zero = new(<xsl:value-of select="valuetype/zero"/>);
         #endregion
+        -->
     }
 
     public partial class <xsl:value-of select="@name"/>_Proxy : Scale&lt;<xsl:value-of select="valuetype/name"/>&gt;

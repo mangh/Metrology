@@ -128,11 +128,12 @@ namespace <xsl:value-of select="@ns"/>
         </xsl:choose>
         public static string Format { get; set; } = "<xsl:value-of select="format"/>";
         #endregion
-
+        <!--
         #region Predefined quantities
         public static readonly <xsl:value-of select="@name"/> One = new(<xsl:value-of select="valuetype/one"/>);
         public static readonly <xsl:value-of select="@name"/> Zero = new(<xsl:value-of select="valuetype/zero"/>);
         #endregion
+        -->
     }
 
     public partial class <xsl:value-of select="@name"/>_Proxy : Unit&lt;<xsl:value-of select="valuetype/name"/>&gt;
