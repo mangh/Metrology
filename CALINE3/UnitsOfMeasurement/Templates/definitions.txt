@@ -267,7 +267,7 @@ unit Meter2_Sec "m\u00B2/s" "m2/s" = Meter2 / Second | Meter_Sec * Meter;
 //      Linear mass density
 //
 unit Gram_Meter "g/m" = Gram / Meter;
-//unit Gram_Kilometer "g/km" = Gram / Kilometer | Gram_Meter / 1000;
+//unit Gram_Kilometer "g/km" = Gram / Kilometer | Gram_Meter * 1000;
 unit Gram_Mile "g/mi" = Gram / Mile | Gram_Meter / (1000/(25.4*12*3*1760));
 unit Microgram_Meter "\u03BCg/m" "mcg/m" = Microgram / Meter | 1000000 * Gram_Meter;
 
