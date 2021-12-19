@@ -42,7 +42,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bullet", "Demo\Bullet\Bulle
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Benchmark2", "Demo\Benchmark2\Benchmark2.csproj", "{3F8CC14B-1864-4FAB-95B9-450FCF3FA390}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Currencies", "Demo\Currencies\Currencies.csproj", "{34B097B2-079C-4D8F-803B-23398A6F6915}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Currencies", "Demo\Currencies\Currencies.csproj", "{34B097B2-079C-4D8F-803B-23398A6F6915}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectTemplate", "ProjectTemplate\ProjectTemplate.csproj", "{60B6E70A-C5C8-434C-9559-3422698A6105}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -102,6 +104,10 @@ Global
 		{34B097B2-079C-4D8F-803B-23398A6F6915}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{34B097B2-079C-4D8F-803B-23398A6F6915}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{34B097B2-079C-4D8F-803B-23398A6F6915}.Release|Any CPU.Build.0 = Release|Any CPU
+		{60B6E70A-C5C8-434C-9559-3422698A6105}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{60B6E70A-C5C8-434C-9559-3422698A6105}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{60B6E70A-C5C8-434C-9559-3422698A6105}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{60B6E70A-C5C8-434C-9559-3422698A6105}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

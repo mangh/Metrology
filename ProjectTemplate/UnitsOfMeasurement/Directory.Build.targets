@@ -1,0 +1,28 @@
+﻿<Project>
+  
+<!--
+  * Uncomment the following "ItemGroup" and "Target" if you want to make use
+    of "Aliases.inc" (that is updated when the Units of Measurement library compiles).
+
+  * Be sure to to replace <PATH TO THE DEPENDENT PROJECT FOLDER> (in the
+    TargetAliases@Include attribute) with the actual path.
+
+  * You may extend this file to support more (than one) dependent projects.
+    You can do this by - for example - adding a new target item (e.g. TargetAliases2)
+    and a corresponding "Copy" task.
+
+  NOTE: the names "SourceAliases" and "TargetAliases" don't have any particular
+        meaning - you can use any other names instead.
+
+  <ItemGroup>
+    <SourceAliases Include="Templates\Aliases.inc"/>
+    <TargetAliases Include="<PATH TO THE DEPENDENT PROJECT FOLDER>\Aliases.cs"/>
+  </ItemGroup>
+
+  <Target Name="CopyAliasesToDependentProjects" AfterTargets="AfterBuild" Inputs="@(SourceAliases)" Outputs="@(TargetAliases)">
+    <Copy SourceFiles="@(SourceAliases)" DestinationFiles="@(TargetAliases)" SkipUnchangedFiles="true" />
+  </Target>
+
+-->
+
+</Project>
