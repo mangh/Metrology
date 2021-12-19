@@ -16,7 +16,7 @@
 
 </xsl:text>
 <xsl:for-each select="family/relative">
-  <xsl:text>    </xsl:text><xsl:value-of select="../../@name"/><xsl:text> &lt;- </xsl:text><xsl:value-of select="."/><xsl:text>
+  <xsl:text>    </xsl:text><xsl:value-of select="../../@name"/><xsl:text>.From(</xsl:text><xsl:value-of select="."/><xsl:text>)
 </xsl:text>
 </xsl:for-each>
 <xsl:for-each select="outer/operation">
@@ -38,7 +38,7 @@
 
 </xsl:text>
 <xsl:for-each select="family/relative">
-  <xsl:text>    </xsl:text><xsl:value-of select="../../@name"/><xsl:text> &lt;- </xsl:text><xsl:value-of select="."/><xsl:text>
+  <xsl:text>    </xsl:text><xsl:value-of select="../../@name"/><xsl:text>.From(</xsl:text><xsl:value-of select="."/><xsl:text>)
 </xsl:text>
 </xsl:for-each>
 </xsl:for-each>
