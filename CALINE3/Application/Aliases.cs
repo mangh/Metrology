@@ -26,6 +26,7 @@
     global using Meter_Sec = System.Double;
     global using Centimeter_Sec = System.Double;
     global using Meter_Sec2 = System.Double;
+    global using Meter2_Sec2 = System.Double;
     global using Meter2_Sec = System.Double;
     global using Gram_Meter = System.Double;
     global using Gram_Mile = System.Double;

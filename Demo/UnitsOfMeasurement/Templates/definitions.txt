@@ -251,7 +251,13 @@ unit MPH "mph" "mi/h" = Mile / Hour | Meter_Sec * ((((100/2.54)/12)/3)/1760) / (
 //
 //      Acceleration
 //
-unit Meter_Sec2 "m/s2" = Meter_Sec / Second;
+unit Meter_Sec2 "m/s\u00B2" "m/s2" = Meter_Sec / Second;
+
+////////////////////////////////////////////////////////////////////////////////
+//
+//      Velocity squared (kinetic and potential energy subexpressions)
+//
+unit Meter2_Sec2 "m\u00B2/s\u00B2" "m2/s2" = Meter_Sec * Meter_Sec | Meter_Sec2 * Meter;
 
 ////////////////////////////////////////////////////////////////////////////////
 //
@@ -260,7 +266,7 @@ unit Meter_Sec2 "m/s2" = Meter_Sec / Second;
 //          momentum diffusivity,
 //          specific angular momentum)
 //
-//unit Meter2_Sec "m\u00B2/s" "m2/s" = Meter2 / Second | Meter_Sec * Meter;
+//unit Meter2_Sec "m\u00B2/s" "m2/s" = Meter2 / Second | Meter_Sec * Meter | Meter2_Sec2 * Second;
 
 ////////////////////////////////////////////////////////////////////////////////
 //
@@ -305,7 +311,7 @@ unit Dyne "dyn" = 1.0e5 * Newton;
 //
 //      Energy
 //
-unit Joule "J" = Newton * Meter;
+unit Joule "J" = Newton * Meter | Kilogram * Meter2_Sec2;
 //unit /* international */ Calorie "cal" = Joule / 4.1868;
 //unit /* international */ BTU "btu" = Joule / 1055.05585262;
 //unit KiloWattHour "kWh" = Joule / 3.6e6;
@@ -465,9 +471,3 @@ unit Farad "F" = Coulomb / Volt | Second / Ohm;
 //
 unit Weber "Wb" = Joule / Ampere | Volt * Second;
 //unit Maxwell "Mx" = 1.0e8 * Weber;
-
-////////////////////////////////////////////////////////////////////////////////
-//
-//      Auxiliary units (used in Bullet application only)
-//
-unit Meter2_Sec2 "m2/s2" = Meter_Sec * Meter_Sec | Meter_Sec2 * Meter;

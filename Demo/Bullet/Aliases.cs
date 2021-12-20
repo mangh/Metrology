@@ -46,6 +46,7 @@
     global using Kilometer_Hour = System.Double;
     global using MPH = System.Double;
     global using Meter_Sec2 = System.Double;
+    global using Meter2_Sec2 = System.Double;
     global using Newton = System.Double;
     global using PoundForce = System.Double;
     global using Poundal = System.Double;
@@ -66,7 +67,6 @@
     global using Siemens = System.Double;
     global using Farad = System.Double;
     global using Weber = System.Double;
-    global using Meter2_Sec2 = System.Double;
     global using Kelvin = System.Double;
     global using Celsius = System.Double;
     global using Rankine = System.Double;

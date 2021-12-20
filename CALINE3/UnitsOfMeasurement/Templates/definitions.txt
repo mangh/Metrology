@@ -251,7 +251,13 @@ unit Centimeter_Sec "cm/s" = Centimeter / Second | 100 * Meter_Sec;
 //
 //      Acceleration
 //
-unit Meter_Sec2 "m/s2" = Meter_Sec / Second;
+unit Meter_Sec2 "m/s\u00B2" "m/s2" = Meter_Sec / Second;
+
+////////////////////////////////////////////////////////////////////////////////
+//
+//      Velocity squared (kinetic and potential energy subexpressions)
+//
+unit Meter2_Sec2 "m\u00B2/s\u00B2" "m2/s2" = Meter_Sec * Meter_Sec | Meter_Sec2 * Meter;
 
 ////////////////////////////////////////////////////////////////////////////////
 //
@@ -260,7 +266,7 @@ unit Meter_Sec2 "m/s2" = Meter_Sec / Second;
 //          momentum diffusivity,
 //          specific angular momentum)
 //
-unit Meter2_Sec "m\u00B2/s" "m2/s" = Meter2 / Second | Meter_Sec * Meter;
+unit Meter2_Sec "m\u00B2/s" "m2/s" = Meter2 / Second | Meter_Sec * Meter | Meter2_Sec2 * Second;
 
 ////////////////////////////////////////////////////////////////////////////////
 //
@@ -305,7 +311,7 @@ unit Microgram_Mole "\u03BCg/mol" "mcg/mol" = Microgram / Mole | Microgram_Meter
 //
 //      Energy
 //
-//unit Joule "J" = Newton * Meter;
+//unit Joule "J" = Newton * Meter | Kilogram * Meter2_Sec2;
 //unit /* international */ Calorie "cal" = Joule / 4.1868;
 //unit /* international */ BTU "btu" = Joule / 1055.05585262;
 //unit KiloWattHour "kWh" = Joule / 3.6e6;

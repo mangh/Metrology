@@ -18,16 +18,16 @@
 //      Length
 //
 unit Meter "m" = <Length>;
-unit Centimeter "cm" = 100 * Meter;
-unit Millimeter "mm" = 1000 * Meter;
+//unit Centimeter "cm" = 100 * Meter;
+//unit Millimeter "mm" = 1000 * Meter;
 //unit Micron "\u00B5m" "micrometer" = 1.0e6 * Meter;
 //unit Angstrom "\u00C5" "angstrom" = 1.0e10 * Meter;
-unit Kilometer "km" = Meter / 1000;
+//unit Kilometer "km" = Meter / 1000;
 
-unit Inch "in" = Millimeter / 25.4;
-unit /* international */ Foot "ft" = Inch / 12;
-unit /* international */ Yard "yd" = Foot / 3;
-unit /* international */ Mile "mil" = Yard / 1760;
+//unit Inch "in" = Millimeter / 25.4;
+//unit /* international */ Foot "ft" = Inch / 12;
+//unit /* international */ Yard "yd" = Foot / 3;
+//unit /* international */ Mile "mil" = Yard / 1760;
 
 //unit /* PostScript */ Point "pt" = 72 * Inch;
 //unit Pica "pc" = Point / 12;
@@ -37,8 +37,8 @@ unit /* international */ Mile "mil" = Yard / 1760;
 //      Time
 //
 unit Second "s" = <Time>;
-unit Minute "min" = Second / 60;
-unit Hour "h" = Minute / 60;
+//unit Minute "min" = Second / 60;
+//unit Hour "h" = Minute / 60;
 //unit Day "d" = Hour / 24;
 //unit Week "wk" = Day / 7;
 //unit /* full */ Month "mo" = Day / 30;
@@ -49,12 +49,12 @@ unit Hour "h" = Minute / 60;
 //      Mass
 //
 unit Kilogram "kg" = <Mass>;
-unit Gram "g" = 1000 * Kilogram;
+//unit Gram "g" = 1000 * Kilogram;
 //unit Microgram "\u03BCg" "mcg" = 1.0e6 * Gram;
-unit Tonne "t" = Kilogram / 1000;
+//unit Tonne "t" = Kilogram / 1000;
 
-unit /* avoirdupois */ Pound "lb" = Kilogram / 0.45359237;
-unit /* avoirdupois */ Ounce "ou" = Pound * 16;
+//unit /* avoirdupois */ Pound "lb" = Kilogram / 0.45359237;
+//unit /* avoirdupois */ Ounce "ou" = Pound * 16;
 
 ////////////////////////////////////////////////////////////////////////////////
 //
@@ -62,31 +62,31 @@ unit /* avoirdupois */ Ounce "ou" = Pound * 16;
 //
 unit DegKelvin "K" "deg.K" = <Temperature>;
 unit DegCelsius "\u00B0C" "deg.C" = DegKelvin;
-unit DegRankine "\u00B0R" "deg.R" = (9 / 5) * DegKelvin;
+//unit DegRankine "\u00B0R" "deg.R" = (9 / 5) * DegKelvin;
 unit DegFahrenheit "\u00B0F" "deg.F" = (9 / 5) * DegKelvin;
 
 scale Kelvin AbsoluteZero = DegKelvin 0.0;
 scale Celsius AbsoluteZero = DegCelsius -273.15;
-scale Rankine AbsoluteZero = DegRankine 0.0;
+// scale Rankine AbsoluteZero = DegRankine 0.0;
 scale Fahrenheit AbsoluteZero = DegFahrenheit -273.15 * (9 / 5) + 32;
 
 ////////////////////////////////////////////////////////////////////////////////
 //
 //      Electric Current
 //
-unit Ampere "A" = <ElectricCurrent>;
+//unit Ampere "A" = <ElectricCurrent>;
 
 ////////////////////////////////////////////////////////////////////////////////
 //
 //      Amount of Substance
 //
-unit Mole "mol" = <AmountOfSubstance>;
+//unit Mole "mol" = <AmountOfSubstance>;
 
 ////////////////////////////////////////////////////////////////////////////////
 //
 //      Luminous Intensity
 //
-unit Candela "cd" = <LuminousIntensity>;
+//unit Candela "cd" = <LuminousIntensity>;
 
 ////////////////////////////////////////////////////////////////////////////////
 //
@@ -96,12 +96,12 @@ unit Candela "cd" = <LuminousIntensity>;
 //      are to be updated on application startup.
 //
 unit<decimal> EUR "EUR" = <Money>;  // Euro
-unit<decimal> USD "USD" = 1.3433 * EUR; // US Dollar
+//unit<decimal> USD "USD" = 1.3433 * EUR; // US Dollar
 //unit<decimal> JPY "JPY" = 136.74 * EUR;  // Japanese Yen
 //unit<decimal> BGN "BGN" = 1.9558 * EUR;  // BulgarianLev
 //unit<decimal> CZK "CZK" = 27.481 * EUR;  // Czech Koruna
 //unit<decimal> DKK "DKK" = 7.4565 * EUR;  // DanishKrone
-unit<decimal> GBP "GBP" = 0.79055 * EUR;    // British Pound
+//unit<decimal> GBP "GBP" = 0.79055 * EUR;    // British Pound
 //unit<decimal> HUF "HUF" = 308.20 * EUR;  // Hungarian Forint
 //unit<decimal> LTL "LTL" = 3.4528 * EUR;  // Lithuanian Litas
 unit<decimal> PLN "PLN" = 4.1437 * EUR; // Polish Zloty
@@ -144,9 +144,9 @@ unit Radian "rad" = <>;
 unit Degree "\u00B0" "deg" : "{0}{1}" = (180 / "System.Math.PI") * Radian;
 //unit ArcMinute "'" : "{0}{1}" = 60 * Degree;
 //unit ArcSecond "\"" : "{0}{1}" = 60 * ArcMinute;
-unit Grad "grad" = (200 / "System.Math.PI") * Radian;
+//unit Grad "grad" = (200 / "System.Math.PI") * Radian;
 
-unit Turn /* aka. cycle, revolution, rotation */ "tr" = Radian / (2 * "System.Math.PI");
+//unit Turn /* aka. cycle, revolution, rotation */ "tr" = Radian / (2 * "System.Math.PI");
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -159,14 +159,14 @@ unit Turn /* aka. cycle, revolution, rotation */ "tr" = Radian / (2 * "System.Ma
 //
 //      Frequency
 //
-unit Hertz "Hz" = 1 / Second;
-// unit KiloHertz "kHz" = Hertz / 1000;
-// unit MegaHertz "MHz" = KiloHertz / 1000;
-// unit GigaHertz "GHz" = MegaHertz / 1000;
+//unit Hertz "Hz" = 1 / Second;
+//unit KiloHertz "kHz" = Hertz / 1000;
+//unit MegaHertz "MHz" = KiloHertz / 1000;
+//unit GigaHertz "GHz" = MegaHertz / 1000;
 
 //unit Event_Sec "evt/s" = Hertz;
 //unit Event_Min "evt/m" = 1 / Minute | 60 * Hertz;
-unit Event_Hour "evt/h" = 1 / Hour | 3600 * Hertz;
+//unit Event_Hour "evt/h" = 1 / Hour | 3600 * Hertz;
 
 ////////////////////////////////////////////////////////////////////////////////
 //
@@ -184,9 +184,9 @@ unit Event_Hour "evt/h" = 1 / Hour | 3600 * Hertz;
 //      any other multi-formula definitions with literals (Degree_Sec, RPM etc).
 //      Therefore it's up to you to take care of their consistency.
 //
-unit Radian_Sec "rad/s" = Radian / Second;
-unit Degree_Sec "\u00B0/s" "degree/s" = Degree / Second | (180 / "System.Math.PI") * Radian_Sec;
-unit RPM "rpm" = Turn / Minute | (30 / "System.Math.PI") * Radian_Sec;
+//unit Radian_Sec "rad/s" = Radian / Second | (2 * "System.Math.PI") * Hertz;
+//unit Degree_Sec "\u00B0/s" "degree/s" = Degree / Second | (180 / "System.Math.PI") * Radian_Sec;
+//unit RPM "rpm" = Turn / Minute | (30 / "System.Math.PI") * Radian_Sec;
 
 ////////////////////////////////////////////////////////////////////////////////
 //
@@ -215,7 +215,7 @@ unit RPM "rpm" = Turn / Minute | (30 / "System.Math.PI") * Radian_Sec;
 //      In such cases the parser is right - the factors are not consistent - 
 //      but it cannot display them correctly.
 //
-unit Meter2 "m\u00B2" "m2" = Meter * Meter;
+//unit Meter2 "m\u00B2" "m2" = Meter * Meter;
 //unit Centimeter2 "cm\u00B2" "cm2" = Centimeter * Centimeter | Meter2 * 1.0e4;
 //unit Kilometer2 "km\u00B2" "km2" = Kilometer * Kilometer | Meter2 / 1.0e6;
 
@@ -230,7 +230,7 @@ unit Meter2 "m\u00B2" "m2" = Meter * Meter;
 //
 //      Volume
 //
-unit Meter3 "m\u00B3" "m3" = Meter2 * Meter;
+//unit Meter3 "m\u00B3" "m3" = Meter2 * Meter;
 //unit Liter "L" = Meter3 * 1000;
 //unit Centimeter3 "cm\u00B3" "cm3" = Centimeter2 * Centimeter | Meter3 * 1.0e6;
 
@@ -243,15 +243,21 @@ unit Meter3 "m\u00B3" "m3" = Meter2 * Meter;
 //      Velocity
 //
 unit Meter_Sec "m/s" = Meter / Second;
-unit Centimeter_Sec "cm/s" = Centimeter / Second | 100 * Meter_Sec;
-unit Kilometer_Hour "km/h" = Kilometer / Hour | Meter_Sec * (1/1000) / ((1/60)/60);
-unit MPH "mph" "mi/h" = Mile / Hour | Meter_Sec * ((((100/2.54)/12)/3)/1760) / ((1/60)/60);
+//unit Centimeter_Sec "cm/s" = Centimeter / Second | 100 * Meter_Sec;
+//unit Kilometer_Hour "km/h" = Kilometer / Hour | Meter_Sec * (1/1000) / ((1/60)/60);
+//unit MPH "mph" "mi/h" = Mile / Hour | Meter_Sec * ((((100/2.54)/12)/3)/1760) / ((1/60)/60);
 
 ////////////////////////////////////////////////////////////////////////////////
 //
 //      Acceleration
 //
-unit Meter_Sec2 "m/s2" = Meter_Sec / Second;
+unit Meter_Sec2 "m/s\u00B2" "m/s2" = Meter_Sec / Second;
+
+////////////////////////////////////////////////////////////////////////////////
+//
+//      Velocity squared (kinetic and potential energy subexpressions)
+//
+//unit Meter2_Sec2 "m\u00B2/s\u00B2" "m2/s2" = Meter_Sec * Meter_Sec | Meter_Sec2 * Meter;
 
 ////////////////////////////////////////////////////////////////////////////////
 //
@@ -260,7 +266,7 @@ unit Meter_Sec2 "m/s2" = Meter_Sec / Second;
 //          momentum diffusivity,
 //          specific angular momentum)
 //
-//unit Meter2_Sec "m\u00B2/s" "m2/s" = Meter2 / Second | Meter_Sec * Meter;
+//unit Meter2_Sec "m\u00B2/s" "m2/s" = Meter2 / Second | Meter_Sec * Meter | Meter2_Sec2 * Second;
 
 ////////////////////////////////////////////////////////////////////////////////
 //
@@ -297,15 +303,15 @@ unit Meter_Sec2 "m/s2" = Meter_Sec / Second;
 //
 unit Newton "N" = Kilogram * Meter_Sec2;
 //unit KilogramForce "kgf" = Newton / 9.80665;
-unit PoundForce "lbf" = Newton / 4.4482216152605;
-unit Poundal "pdl" = Newton / 0.138254954376;
-unit Dyne "dyn" = 1.0e5 * Newton;
+//unit PoundForce "lbf" = Newton / 4.4482216152605;
+//unit Poundal "pdl" = Newton / 0.138254954376;
+//unit Dyne "dyn" = 1.0e5 * Newton;
 
 ////////////////////////////////////////////////////////////////////////////////
 //
 //      Energy
 //
-unit Joule "J" = Newton * Meter;
+unit Joule "J" = Newton * Meter /* | Kilogram * Meter2_Sec2 */;
 //unit /* international */ Calorie "cal" = Joule / 4.1868;
 //unit /* international */ BTU "btu" = Joule / 1055.05585262;
 //unit KiloWattHour "kWh" = Joule / 3.6e6;
@@ -315,7 +321,7 @@ unit Joule "J" = Newton * Meter;
 //
 //      Power
 //
-unit Watt "W" = Joule / Second;
+//unit Watt "W" = Joule / Second;
 //unit KiloWatt "kW" = Watt / 1000 | KiloWattHour / Hour;
 //unit /* international */ BTU_Hour "btu/h" = BTU / Hour | Watt * (1/1055.05585262) / (1/3600);
 
@@ -359,7 +365,7 @@ unit NewtonMeter "N\u00B7m" "N*m" = Newton ^ Meter;
 //
 //      Heat capacity
 //
-unit Joule_Kelvin "J/K" = Joule / DegKelvin;
+//unit Joule_Kelvin "J/K" = Joule / DegKelvin;
 //unit Calorie_Kelvin "cal/K" = Calorie / DegKelvin | Joule_Kelvin / 4.1868;
 //unit BTU_Fahrenheit "BTU/\u00B0F" "BTU/deg.F" = BTU / DegFahrenheit | Joule_Kelvin * (1 / 1055.05585262) / (9 / 5);
 
@@ -367,7 +373,7 @@ unit Joule_Kelvin "J/K" = Joule / DegKelvin;
 //
 //      Specific heat capacity
 //
-unit Joule_Kelvin_Kilogram "J/kg/K" = Joule_Kelvin / Kilogram;
+//unit Joule_Kelvin_Kilogram "J/kg/K" = Joule_Kelvin / Kilogram;
 //unit Calorie_Kelvin_Gram "cal/g/K" = Calorie_Kelvin / Gram | Joule_Kelvin_Kilogram * (1 / 4.1868) / (1000);
 //unit BTU_Fahrenheit_Pound "BTU/lb/\u00B0F" "BTU/lb/deg.F" = BTU_Fahrenheit / Pound | Joule_Kelvin_Kilogram * (1/1055.05585262)/(9/5) * 0.45359237;
 
@@ -378,30 +384,30 @@ unit Joule_Kelvin_Kilogram "J/kg/K" = Joule_Kelvin / Kilogram;
 //
 //      Pressure
 //
-unit Pascal "Pa" = Newton / Meter2;
-unit Bar "bar" = Pascal / 1.0e5;
-unit AtmTechnical "at" = Pascal / 9.80665e4;
-unit AtmStandard "atm" = Pascal / 1.01325e5;
-unit MillimeterHg "mmHg" = Pascal * (13.5951 * 9.80665);
+//unit Pascal "Pa" = Newton / Meter2;
+//unit Bar "bar" = Pascal / 1.0e5;
+//unit AtmTechnical "at" = Pascal / 9.80665e4;
+//unit AtmStandard "atm" = Pascal / 1.01325e5;
+//unit MillimeterHg "mmHg" = Pascal * (13.5951 * 9.80665);
 
 ////////////////////////////////////////////////////////////////////////////////
 //
 //      Electric charge
 //
-unit Coulomb "C" = Ampere * Second;
+//unit Coulomb "C" = Ampere * Second;
 //unit AmpereHour "A\u00B7h" "Ah" = Ampere * Hour | Coulomb / 3600;
 
 ////////////////////////////////////////////////////////////////////////////////
 //
 //       Electric potential (voltage) 
 //
-unit Volt "V" = Joule / Coulomb | Watt / Ampere;
+//unit Volt "V" = Joule / Coulomb | Watt / Ampere;
 
 ////////////////////////////////////////////////////////////////////////////////
 //
 //       Electric resistance
 //
-unit Ohm "\u03A9" "ohm" = Volt / Ampere;
+//unit Ohm "\u03A9" "ohm" = Volt / Ampere;
 //
 //      NOTE: There are many other formulas for Ohm e.g.:
 //
@@ -430,7 +436,7 @@ unit Ohm "\u03A9" "ohm" = Volt / Ampere;
 //
 //       Electric conductance
 //
-unit Siemens "S" = Ampere / Volt;
+//unit Siemens "S" = Ampere / Volt;
 //
 //       NOTE: should the above definition specify also the formula: 1 / Ohm,
 //       then the following operators would be also generated (in Siemens.cs file):
@@ -453,7 +459,7 @@ unit Siemens "S" = Ampere / Volt;
 //
 //       Electric capacitance
 //
-unit Farad "F" = Coulomb / Volt | Second / Ohm;
+//unit Farad "F" = Coulomb / Volt | Second / Ohm;
 //unit MilliFarad "mF" = 1.0e3 * Farad;
 //unit MicroFarad "\u00B5F" "microF" = 1.0e6 * Farad;
 //unit NanoFarad "nF" = 1.0e9 * Farad;
@@ -463,11 +469,5 @@ unit Farad "F" = Coulomb / Volt | Second / Ohm;
 //
 //       Magnetic flux
 //
-unit Weber "Wb" = Joule / Ampere | Volt * Second;
+//unit Weber "Wb" = Joule / Ampere | Volt * Second;
 //unit Maxwell "Mx" = 1.0e8 * Weber;
-
-////////////////////////////////////////////////////////////////////////////////
-//
-//      Auxiliary units (used in Bullet application only)
-//
-unit Meter2_Sec2 "m2/s2" = Meter_Sec * Meter_Sec | Meter_Sec2 * Meter;
