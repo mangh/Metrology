@@ -10,7 +10,6 @@
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 
     <PackageType>Template</PackageType>
-    <PackageVersion>1.0</PackageVersion>
     <PackageId>Mangh.Metrology.UnitsOfMeasurement</PackageId>
     <Title>Units of Measurement Project Template for .NET Core / Standard</Title>
     <Authors>MAN</Authors>
@@ -26,6 +25,8 @@
     <PackageTags>unit;scale;measure;metrology</PackageTags>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <Version>1.0.1</Version>
+    <PackageReleaseNotes>Updated README, unit definitions reduced, scale.xslt template modified. </PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
