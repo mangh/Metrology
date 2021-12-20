@@ -127,8 +127,8 @@ namespace <xsl:value-of select="@ns"/>
         public static <xsl:value-of select="@name"/> operator -(<xsl:value-of select="@name"/> lhs, <xsl:value-of select="@unit"/> rhs) =&gt; new(lhs.<xsl:value-of select="$LEVEL"/> - rhs);
         public static <xsl:value-of select="@unit"/> operator -(<xsl:value-of select="@name"/> lhs, <xsl:value-of select="@name"/> rhs) =&gt; lhs.<xsl:value-of select="$LEVEL"/> - rhs.<xsl:value-of select="$LEVEL"/>;
         public static <xsl:value-of select="@name"/> operator -(<xsl:value-of select="@name"/> q) =&gt; new(-q.<xsl:value-of select="$LEVEL"/>);
-        public static <xsl:value-of select="@name"/> operator ++(<xsl:value-of select="@name"/> q) =&gt; q + (<xsl:value-of select="@unit"/>)<xsl:value-of select="valuetype/one"/>;
-        public static <xsl:value-of select="@name"/> operator --(<xsl:value-of select="@name"/> q) =&gt; q - (<xsl:value-of select="@unit"/>)<xsl:value-of select="valuetype/one"/>;
+        public static <xsl:value-of select="@name"/> operator ++(<xsl:value-of select="@name"/> q) =&gt; new(q.<xsl:value-of select="$LEVEL"/>.<xsl:value-of select="$VALUE"/> + <xsl:value-of select="valuetype/one"/>);
+        public static <xsl:value-of select="@name"/> operator --(<xsl:value-of select="@name"/> q) =&gt; new(q.<xsl:value-of select="$LEVEL"/>.<xsl:value-of select="$VALUE"/> - <xsl:value-of select="valuetype/one"/>);
         #endregion
 
         #region Formatting
