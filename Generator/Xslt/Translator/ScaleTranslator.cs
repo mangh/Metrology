@@ -66,6 +66,8 @@ namespace Mangh.Metrology
             StringBuilder xsb = new(2 * 1024);
             StringBuilder csb = new(8 * 1024);
 
+            string timestamp = DateTime.Now.ToString();
+
             for (int i = startIndex; i < scales.Count; i++)
             {
                 using (XmlReader reader = XmlReader.Create(new StringReader(XmlScale(scales[i]))))
@@ -85,7 +87,8 @@ namespace Mangh.Metrology
                     .Append(" name=\"").Append(s.Typename).Append('"')
                     .Append(" ns=\"").Append(TargetNamespace).Append('"')
                     .Append(" unit=\"").Append(s.Unit.Typename).Append('"')
-                    .Append(" late=\"").Append(Late ? "yes" : "no").Append("\">");
+                    .Append(" late=\"").Append(Late ? "yes" : "no").Append('"')
+                    .Append(" tm=\"").Append(timestamp).Append("\">");
                 {
                     xsb.Append("<valuetype>");
                     {

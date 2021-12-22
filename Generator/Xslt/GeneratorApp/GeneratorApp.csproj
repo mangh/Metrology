@@ -15,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Mangh.Metrology.UnitTranslatorXslt" Version="1.0.0-final" />
+    <PackageReference Include="Mangh.Metrology.UnitTranslatorXslt" Version="1.0.3" />
   </ItemGroup>
 
 </Project>

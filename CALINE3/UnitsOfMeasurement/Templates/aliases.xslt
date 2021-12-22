@@ -11,8 +11,8 @@
           <xsl:text>/*global*/</xsl:text>
         </xsl:otherwise>
       </xsl:choose>
-    </xsl:variable>
-#if DIMENSIONAL_ANALYSIS
+    </xsl:variable><!--// <xsl:value-of select="@tm"/>
+-->#if DIMENSIONAL_ANALYSIS
     <xsl:value-of select="$GLOBAL"/> using <xsl:value-of select="@ns"/>;
     <xsl:value-of select="$GLOBAL"/> using static <xsl:value-of select="@ns"/>.Math;
 #else

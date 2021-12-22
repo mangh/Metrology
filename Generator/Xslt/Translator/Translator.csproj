@@ -11,15 +11,15 @@
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <SignAssembly>True</SignAssembly>
     <AssemblyOriginatorKeyFile>C:\Users\Marek\source\repos\Metrology\metrology.snk</AssemblyOriginatorKeyFile>
-    <AssemblyVersion>1.0.0.2</AssemblyVersion>
-    <FileVersion>1.0.0.2</FileVersion>
+    <AssemblyVersion>1.0.3.0</AssemblyVersion>
+    <FileVersion>1.0.3.0</FileVersion>
     <DebugType>embedded</DebugType>
   </PropertyGroup>
 
   <!-- NuGet properties -->
   <PropertyGroup>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <Version>1.0.2</Version>
+    <Version>1.0.3</Version>
     <Authors>MAN</Authors>
     <Company>MAN</Company>
     <Description>Metrology Xslt-based Unit Translator</Description>
@@ -31,7 +31,7 @@
     <PackageTags>unit;scale;measure;metrology</PackageTags>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
-    <PackageReleaseNotes>Mangh.Metrology.DefinitionParser dependency updated to version 1.0.2.</PackageReleaseNotes>
+    <PackageReleaseNotes>Parser updated to version 1.0.3; XML timestamped.</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
@@ -43,14 +43,11 @@
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>
+    <PackageReference Include="Mangh.Metrology.DefinitionParser" Version="1.0.3" />
     <None Update="README.md">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Mangh.Metrology.DefinitionParser" Version="1.0.2" />
   </ItemGroup>
 
 </Project>

@@ -9,6 +9,7 @@
 
 
 ********************************************************************************/
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -65,6 +66,8 @@ namespace Mangh.Metrology
             StringBuilder csb = new(8 * 1024);
             StringBuilder xsb = new(2 * 1024);
 
+            string timestamp = DateTime.Now.ToString();
+
             for (int i = startIndex; i < units.Count; i++)
             {
                 using (XmlReader reader = XmlReader.Create(new StringReader(XmlUnit(units[i]))))
@@ -83,7 +86,8 @@ namespace Mangh.Metrology
                     .Append(" name=\"").Append(u.Typename).Append('"')
                     .Append(" ns=\"").Append(TargetNamespace).Append('"')
                     .Append(" late=\"").Append(Late ? "yes" : "no").Append('"')
-                    .Append((u.Sense.Value[Magnitude.Money] == 0) ? ">" : " monetary=\"yes\">");
+                    .Append(" monetary=\"").Append((u.Sense.Value[Magnitude.Money] == 0) ? "yes" : "no").Append('"')
+                    .Append(" tm=\"").Append(timestamp).Append("\">");
                 {
                     xsb.Append("<valuetype>");
                     {

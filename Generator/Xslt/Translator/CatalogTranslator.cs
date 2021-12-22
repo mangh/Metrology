@@ -65,7 +65,8 @@ namespace Mangh.Metrology
                     .Append(" uct=\"").Append(units.Count).Append('"')
                     .Append(" ufct=\"").Append(unitFamilyCount).Append('"')
                     .Append(" sct=\"").Append(scales.Count).Append('"')
-                    .Append(" sfct=\"").Append(scaleFamilyCount).Append("\">");
+                    .Append(" sfct=\"").Append(scaleFamilyCount).Append('"')
+                    .Append(" tm=\"").Append(DateTime.Now).Append("\">");
 
                 foreach (UnitType u in units)
                 {

@@ -2,7 +2,7 @@
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 <xsl:output method="text" version="1.0" encoding="UTF-8" indent="no"/>
 
-<xsl:template match="report"><!-- Created on <xsl:value-of select="@tm"/>
+<xsl:template match="report"><!--<xsl:value-of select="@tm"/>
 -->////////////////////////////////////////////////////////////////////////////////
 //
 //  U N I T S :: <xsl:value-of select="@ns"/> :: <xsl:value-of select="@uct"/> unit(s) :: <xsl:value-of select="@ufct"/> family(ies)

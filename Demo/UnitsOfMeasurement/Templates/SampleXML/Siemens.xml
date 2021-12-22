@@ -1,4 +1,4 @@
-<unit name="Siemens" ns="Demo.Metro" late="no">
+<unit name="Siemens" ns="Demo.Metro" late="no" monetary="no" tm="06.09.2021 12:08:38">
     <valuetype>
         <name>double</name>
         <alias>System.Double</alias>

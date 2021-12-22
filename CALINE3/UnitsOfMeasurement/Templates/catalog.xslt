@@ -12,7 +12,7 @@
     This program is provided to you under the terms of the license
     as published at https://github.com/mangh/metrology
 
-
+<!--<xsl:value-of select="@tm"/>-->
 ********************************************************************************/
 using Mangh.Metrology;
 using System;

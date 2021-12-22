@@ -9,6 +9,7 @@
 
 
 ********************************************************************************/
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
@@ -64,7 +65,8 @@ namespace Mangh.Metrology
 
                 xsb.Append("<aliases")
                     .Append(" ns=\"").Append(TargetNamespace).Append('"')
-                    .Append(global ? " global=\"yes\">" : ">");
+                    .Append(" global=\"").Append(global ? "yes" : "no").Append('"')
+                    .Append(" tm=\"").Append(DateTime.Now).Append("\">");
 
                 foreach (UnitType u in units)
                 {
