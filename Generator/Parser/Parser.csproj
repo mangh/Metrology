@@ -11,15 +11,15 @@
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <SignAssembly>True</SignAssembly>
     <AssemblyOriginatorKeyFile>C:\Users\Marek\source\repos\Metrology\metrology.snk</AssemblyOriginatorKeyFile>
-    <AssemblyVersion>1.0.0.2</AssemblyVersion>
-    <FileVersion>1.0.0.2</FileVersion>
+    <AssemblyVersion>1.0.3.0</AssemblyVersion>
+    <FileVersion>1.0.3.0</FileVersion>
     <DebugType>embedded</DebugType>
   </PropertyGroup>
 
   <!-- NuGet properties -->
   <PropertyGroup>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <Version>1.0.2</Version>
+    <Version>1.0.3</Version>
     <Authors>MAN</Authors>
     <Company>MAN</Company>
     <Description>Metrology Unit Definition Parser</Description>
@@ -32,7 +32,7 @@
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
     <ApplicationIcon>Icon.ico</ApplicationIcon>
-    <PackageReleaseNotes>Parser.Notify() formatting bug removed</PackageReleaseNotes>
+    <PackageReleaseNotes>Some literal values (e.g. PI, E) available for validating expressions.</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>

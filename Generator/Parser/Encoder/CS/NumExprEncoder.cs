@@ -67,7 +67,7 @@ namespace Mangh.Metrology.CS
         }
 
         public void Encode(ASTNumber node) => _stack.Push(new(true, node.Number, Stringify(node.Number)));
-        public void Encode(ASTLiteral node) => _stack.Push(new(false, _one.Value/* fake value (one) of the literal */, node.Literal));
+        public void Encode(ASTLiteral node) => _stack.Push(new(node.Value is not null, node.Value ?? _one.Value, node.Literal));
         public void Encode(ASTMagnitude node) => _stack.Push(new(true, _one.Value, _one.Code));
         public void Encode(ASTUnit node)
         {

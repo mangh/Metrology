@@ -288,7 +288,7 @@ namespace Mangh.Metrology
             // <String Literal> e.g. "System.Math.PI"?
             else if (_token.Symbol == Lexer.Symbol.StringLiteral)
             {
-                ASTNode factor = new ASTLiteral(_token.Body);
+                ASTNode factor = new ASTLiteral(_token.Body, _eval!(_token.Body));
                 GetNextToken();
                 return factor;
             }

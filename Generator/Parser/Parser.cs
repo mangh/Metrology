@@ -36,6 +36,7 @@ namespace Mangh.Metrology
         private readonly IDimExprEncoder _dimExprEncoder;
         private INumExprEncoder? _numExprEncoder;
         private Func<string, Numeral?>? _tryParse;
+        private Func<string, Numeral?>? _eval;
         #endregion
 
         #region Properties
@@ -62,6 +63,7 @@ namespace Mangh.Metrology
             // Encoder and numeric type being set for each unit/scale value type (not known yet):
             _numTypeKeyword = null;
             _tryParse = null;
+            _eval = null;
             _numExprEncoder = null;
             _dimExprEncoder = new CS.DimExprEncoder();
 
@@ -198,18 +200,21 @@ namespace Mangh.Metrology
 
             if (numTypeKeyword == NumeralDouble.Keyword)
             {
+                _eval = CS.Eval.Double;
                 _tryParse = NumeralDouble.TryParse;
                 _numExprEncoder = CS.NumExprEncoder.Double;
                 return true;
             }
             else if (numTypeKeyword == NumeralDecimal.Keyword)
             {
+                _eval = CS.Eval.Decimal;
                 _tryParse = NumeralDecimal.TryParse;
                 _numExprEncoder = CS.NumExprEncoder.Decimal;
                 return true;
             }
             else if (numTypeKeyword == NumeralFloat.Keyword)
             {
+                _eval = CS.Eval.Float;
                 _tryParse = NumeralFloat.TryParse;
                 _numExprEncoder = CS.NumExprEncoder.Float;
                 return true;

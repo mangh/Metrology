@@ -238,7 +238,7 @@ namespace Mangh.Metrology
             {
                 string literal = _token.Body;
                 GetNextToken();
-                return new ASTLiteral(literal);
+                return new ASTLiteral(literal, _eval!(literal));
             }
             else
             {

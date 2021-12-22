@@ -110,10 +110,16 @@ namespace Mangh.Metrology
     {
         public string Literal { get; private set; }
 
+        public Numeral? Value { get; private set; }
+
         public override bool IsNumeric => true;
 
-        public ASTLiteral(string literal) :
-            base() => Literal = literal;
+        public ASTLiteral(string literal, Numeral? value = null) :
+            base()
+        {
+            Literal = literal;
+            Value = value;
+        }
 
         public override void Accept(IASTEncoder encoder) => encoder.Encode(this);
 
