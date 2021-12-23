@@ -137,8 +137,12 @@ unit Mole "mol" = <AmountOfSubstance>;
 //      to remove space separating {value} and {symbol}
 //
 //      NOTE: arithmetic expressions can use string literals e.g. "System.Math.PI".
-//      Parser blindly accepts the literals as numerical (unknown) values
+//      In general parser blindly accepts string literals as numbers of unknown value
 //      leaving their evaluation and syntax check to C# compiler.
+//
+//      NOTE: "System.Math.PI" and "System.Math.E" (if written exactly like this)
+//      are the exception to the above rule: their numeric value is recognized
+//      and used to validate "unit[<double>]" and "scale[<double>]" definitions.
 //
 unit Radian "rad" = <>;
 unit Degree "\u00B0" "deg" : "{0}{1}" = (180 / "System.Math.PI") * Radian;
@@ -160,9 +164,9 @@ unit Degree "\u00B0" "deg" : "{0}{1}" = (180 / "System.Math.PI") * Radian;
 //      Frequency
 //
 unit Hertz "Hz" = 1 / Second;
-// unit KiloHertz "kHz" = Hertz / 1000;
-// unit MegaHertz "MHz" = KiloHertz / 1000;
-// unit GigaHertz "GHz" = MegaHertz / 1000;
+//unit KiloHertz "kHz" = Hertz / 1000;
+//unit MegaHertz "MHz" = KiloHertz / 1000;
+//unit GigaHertz "GHz" = MegaHertz / 1000;
 
 //unit Event_Sec "evt/s" = Hertz;
 //unit Event_Min "evt/m" = 1 / Minute | 60 * Hertz;
@@ -172,19 +176,29 @@ unit Event_Hour "evt/h" = 1 / Hour | 3600 * Hertz;
 //
 //      Angular Frequency (aka. Rotational Velocity)
 //
-//      NOTE: due to the use of literal ("System.Math.PI") in Degree_Sec
-//      definition below, parser will not check whether the specified
-//      formulas are consistent i.e. whether the formulas:
+//      NOTE: parser tries to verify whether alternative formulas e.g.:
 //
-//              Degree / Second
+//              Radian / Second
 //      and
-//              (180 / "System.Math.PI") * Radian_Sec
+//              (2 * "System.Math.PI") * Hertz
 //
-//      produce the same conversion factor and dimension. The same concerns
-//      any other multi-formula definitions with literals (Degree_Sec, RPM etc).
-//      Therefore it's up to you to take care of their consistency.
+//      in Radian_Sec definition below are consistent i.e. whether they
+//      produce the same conversion factor and dimension.
 //
-//unit Radian_Sec "rad/s" = Radian / Second;
+//      NOTE: as a general rule, string literals in formulas are taken
+//      as numbers of unknown value and this prevents parser to verify
+//      whether the alternative formulas produce the same factor.
+//
+//      NOTE: "System.Math.PI" and "System.Math.E" literals are exceptions
+//      to this rule if used in "unit[<double>]" and "scale[<double>]"
+//      definitions: parser recognizes them (in these definitions only)
+//      and uses their value for validation.
+//
+//      NOTE: other literals or any literal in non-<double> definitions
+//      prevents the factor check: you have to take care of the consistency
+//      by other means (e.g. unit tests).
+//
+//unit Radian_Sec "rad/s" = Radian / Second | (2 * "System.Math.PI") * Hertz;
 //unit Degree_Sec "\u00B0/s" "degree/s" = Degree / Second | (180 / "System.Math.PI") * Radian_Sec;
 //unit RPM "rpm" = Turn / Minute | (30 / "System.Math.PI") * Radian_Sec;
 
