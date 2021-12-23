@@ -13,6 +13,7 @@
 using Microsoft.CodeAnalysis.Text;
 using System;
 using System.IO;
+using System.Threading;
 
 namespace Metrological.Namespace
 {
@@ -44,7 +45,7 @@ namespace Metrological.Namespace
                 {
                     Mangh.Metrology.Lexer lexer = new(input);
                     Mangh.Metrology.Parser parser = new(lexer, ReportParseError, m_definitions.Units, m_definitions.Scales);
-                    parser.Parse();
+                    parser.Parse(CancellationToken.None);
                     return !errorsFound;
                 }
                 catch (IOException ex)

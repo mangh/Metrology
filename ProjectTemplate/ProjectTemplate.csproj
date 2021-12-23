@@ -14,7 +14,7 @@
     <Title>Units of Measurement Project Template for .NET Core / Standard</Title>
     <Authors>MAN</Authors>
     <Company>MAN</Company>
-    <Description>Project template for creating Units of Measurement C# class library for .NET Core / Standard</Description>
+    <Description>Project template for creating Units of Measurement C# class library for .NET Core / Standard.</Description>
     <Copyright>Copyright © MAN</Copyright>
     <PackageProjectUrl>https://github.com/mangh/Metrology</PackageProjectUrl>
 
@@ -25,8 +25,8 @@
     <PackageTags>unit;scale;measure;metrology</PackageTags>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <Version>1.0.1</Version>
-    <PackageReleaseNotes>Updated README, unit definitions reduced, scale.xslt template modified. </PackageReleaseNotes>
+    <Version>1.0.3</Version>
+    <PackageReleaseNotes>SourceGenerator updated to version 1.0.3. XML timestamped. CancellationToken polled for cancellation requests.</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>

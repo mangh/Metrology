@@ -13,6 +13,7 @@ using Mangh.Metrology;
 using System;
 using System.IO;
 using System.Text;
+using System.Threading;
 using System.Xml;
 using System.Xml.Xsl;
 
@@ -62,14 +63,15 @@ namespace Metrological.Namespace
                             int familyStartId = m_definitions.MaxFamilyFound + 1;    // start id for new families
 
                             StringBuilder csb = new(32 * 1024);
+                            CancellationToken noCancellation = CancellationToken.None;
 
                             // units
-                            foreach ((_, string contents) in utor.Translate(unitTemplate, m_definitions.Units, initialFamily: familyStartId, startIndex: unitStartIndex))
+                            foreach ((_, string contents) in utor.Translate(noCancellation, unitTemplate, m_definitions.Units, initialFamily: familyStartId, startIndex: unitStartIndex))
                             {
                                 csb.Append(contents);
                             }
                             // scales
-                            foreach ((_, string contents) in stor.Translate(scaleTemplate, m_definitions.Scales, initialFamily: utor.Family, scaleStartIndex))
+                            foreach ((_, string contents) in stor.Translate(noCancellation, scaleTemplate, m_definitions.Scales, initialFamily: utor.Family, scaleStartIndex))
                             {
                                 csb.Append(contents);
                             }
