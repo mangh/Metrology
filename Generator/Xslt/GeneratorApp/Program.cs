@@ -27,16 +27,18 @@ namespace Man.Metrology.XsltGeneratorApp
             Console.WriteLine($"Unit and Scale Generator, Version: {typeof(Program).Assembly.GetName().Version}");
             Console.WriteLine();
 
+            CancellationToken ct = CancellationToken.None;
+
             if (CheckArguments(args))
             {
                 Generator gtor = new(targetNamespace!, templateFolder!, targetFolder!);
 
-                if (gtor.LoadDefinitions("definitions.txt") &&
-                    gtor.MakeUnits("unit.xslt") &&
-                    gtor.MakeScales("scale.xslt") &&
-                    gtor.MakeCatalog("catalog.xslt") &&
-                    gtor.MakeAliases("aliases.xslt", global: true) &&
-                    gtor.MakeReport("report.xslt"))
+                if (gtor.LoadDefinitions("definitions.txt", ct) &&
+                    gtor.MakeUnits("unit.xslt", ct) &&
+                    gtor.MakeScales("scale.xslt", ct) &&
+                    gtor.MakeCatalog("catalog.xslt", ct) &&
+                    gtor.MakeAliases("aliases.xslt", ct, global: true) &&
+                    gtor.MakeReport("report.xslt", ct))
                 {
                     Console.WriteLine("Succeeded:");
                     Console.WriteLine($"  {gtor.Units.Count} unit(s), {gtor.UnitFamilyCount} family(ies),");

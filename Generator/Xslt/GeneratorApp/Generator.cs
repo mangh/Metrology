@@ -49,7 +49,7 @@ namespace Man.Metrology.XsltGeneratorApp
         #endregion
 
         #region Methods
-        public bool LoadDefinitions(string definitionsFilename)
+        public bool LoadDefinitions(string definitionsFilename, CancellationToken ct)
         {
             int errorCount = 0;
 
@@ -62,7 +62,7 @@ namespace Man.Metrology.XsltGeneratorApp
                     {
                         Lexer lexer = new(reader);
                         Parser parser = new(lexer, ReportParseError, Units, Scales);
-                        parser.Parse();
+                        parser.Parse(ct);
                         return errorCount == 0;
                     }
                     catch (IOException ex)
@@ -91,14 +91,14 @@ namespace Man.Metrology.XsltGeneratorApp
             }
         }
 
-        public bool MakeUnits(string templateFilename)
+        public bool MakeUnits(string templateFilename, CancellationToken ct)
         {
             XslCompiledTransform? template = CompileTemplate(templateFilename);
             if (template is null)
                 return false;
 
             UnitTranslator translator = new(TargetNamespace, late: false);
-            foreach ((string name, string contents) in translator.Translate(template, Units, initialFamily: 0, startIndex: 0))
+            foreach ((string name, string contents) in translator.Translate(ct, template, Units, initialFamily: 0, startIndex: 0))
             {
                 if (!SaveToFile(name + ".cs", contents)) return false;
             }
@@ -106,14 +106,14 @@ namespace Man.Metrology.XsltGeneratorApp
             return true;
         }
 
-        public bool MakeScales(string templateFilename)
+        public bool MakeScales(string templateFilename, CancellationToken ct)
         {
             XslCompiledTransform? template = CompileTemplate(templateFilename);
             if (template is null)
                 return false;
 
             ScaleTranslator translator = new(TargetNamespace, late: false);
-            foreach ((string name, string contents) in translator.Translate(template, Scales, initialFamily: UnitFamilyCount, startIndex: 0))
+            foreach ((string name, string contents) in translator.Translate(ct, template, Scales, initialFamily: UnitFamilyCount, startIndex: 0))
             {
                 if (!SaveToFile(name + ".cs", contents)) return false;
             }
@@ -121,35 +121,35 @@ namespace Man.Metrology.XsltGeneratorApp
             return true;
         }
 
-        public bool MakeCatalog(string templateFilename)
+        public bool MakeCatalog(string templateFilename, CancellationToken ct)
         {
             XslCompiledTransform? template = CompileTemplate(templateFilename);
             if (template is null)
                 return false;
 
             CatalogTranslator translator = new(TargetNamespace);
-            (string name, string contents) = translator.Translate(template, UnitFamilyCount, Units, ScaleFamilyCount, Scales);
+            (string name, string contents) = translator.Translate(ct, template, UnitFamilyCount, Units, ScaleFamilyCount, Scales);
             return SaveToFile(name + ".cs", contents);
         }
 
-        public bool MakeAliases(string templateFilename, bool global = true)
+        public bool MakeAliases(string templateFilename, CancellationToken ct, bool global = true)
         {
             XslCompiledTransform? template = CompileTemplate(templateFilename);
             if (template is null)
                 return false;
 
             AliasTranslator translator = new(TargetNamespace);
-            return SaveToFile(translator.Translate(template, Units, Scales, global));
+            return SaveToFile(translator.Translate(ct, template, Units, Scales, global));
         }
 
-        public bool MakeReport(string templateFilename)
+        public bool MakeReport(string templateFilename, CancellationToken ct)
         {
             XslCompiledTransform? template = CompileTemplate(templateFilename);
             if (template is null)
                 return false;
 
             ReportTranslator translator = new(TargetNamespace);
-            return SaveToFile(translator.Translate(template, UnitFamilyCount, Units, ScaleFamilyCount, Scales));
+            return SaveToFile(translator.Translate(ct, template, UnitFamilyCount, Units, ScaleFamilyCount, Scales));
         }
 
         private string? MakePath(string? folder, string? filename, bool requisite = true)
