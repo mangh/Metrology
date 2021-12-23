@@ -14,6 +14,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Xml;
 using System.Xml.Xsl;
 
@@ -49,6 +50,7 @@ namespace Mangh.Metrology
         /// <summary>
         /// Translates <paramref name="scales"/> into target language structs/classes, according to an XSLT scale <paramref name="template"/>.
         /// </summary>
+        /// <param name="ct">propagates notification that operation should be canceled.</param>
         /// <param name="template">XSLT template for a scale</param>
         /// <param name="scales">collection of scales to be translatmed</param>
         /// <param name="initialFamily">family initial id</param>
@@ -56,7 +58,8 @@ namespace Mangh.Metrology
         /// (or the number of items to be skipped at the beginning of the list e.g. all compile time items)
         /// </param>
         /// <returns>Collection of string pairs (class name, class code); one pair for each scale.</returns>
-        public IEnumerable<(string, string)> Translate(XslCompiledTransform template,
+        public IEnumerable<(string, string)> Translate(CancellationToken ct,
+                                                       XslCompiledTransform template,
                                                        List<ScaleType> scales,
                                                        int initialFamily,
                                                        int startIndex = 0)
@@ -70,6 +73,8 @@ namespace Mangh.Metrology
 
             for (int i = startIndex; i < scales.Count; i++)
             {
+                if (ct.IsCancellationRequested) break;
+
                 using (XmlReader reader = XmlReader.Create(new StringReader(XmlScale(scales[i]))))
                 {
                     csb.Clear();

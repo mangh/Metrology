@@ -13,6 +13,7 @@ using Microsoft.CodeAnalysis.Text;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading;
 
 namespace Mangh.Metrology
 {
@@ -102,14 +103,15 @@ namespace Mangh.Metrology
         /// <summary>
         /// Parse unit/scale definitions fed in by the lexer.
         /// </summary>
+        /// <param name="ct">propagates notification that parsing should be canceled.</param>
         /// <exception cref="InvalidOperationException">on an (unrecoverable) fatal error.</exception>
         /// <exception cref="IOException">on <see cref="GetNextToken"/> I/O error.</exception>
         /// <exception cref="ObjectDisposedException">on <see cref="GetNextToken()"/> performed on a disposed reader.</exception>
-        public void Parse()
+        public void Parse(CancellationToken ct)
         {
             string badTokenMessageFormat = "found \"{0}\" while expected \"unit\" or \"scale\" keyword.";
 
-            while (_token.Symbol != Lexer.Symbol.EOF)
+            while (!ct.IsCancellationRequested && (_token.Symbol != Lexer.Symbol.EOF))
             {
                 if (_token.Symbol == Lexer.Symbol.Error)
                 {

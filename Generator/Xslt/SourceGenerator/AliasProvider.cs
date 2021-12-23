@@ -25,7 +25,8 @@ namespace Mangh.Metrology
                 XslCompiledTransform? template = LoadXsltTemplate(context);
                 if (template is not null)
                 {
-                    (string file, string contents) = Master.Translate(template, units, scales, global: true);
+                    (string file, string contents) =
+                        Master.Translate(context.CancellationToken, template, units, scales, global: true);
 
                     // Save aliases to the template folder
                     string? path = MakePath(context, Template.Path, file);

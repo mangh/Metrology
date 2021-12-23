@@ -13,6 +13,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Threading;
 using System.Xml;
 using System.Xml.Xsl;
 
@@ -37,6 +38,7 @@ namespace Mangh.Metrology
         /// <summary>
         /// Transforms <paramref name="units"/> and <paramref name="scales"/> into "aliasing" statements (structured according to an XSLT <paramref name="template"/>).
         /// </summary>
+        /// <param name="ct">propagates notification that operation should be canceled.</param>
         /// <param name="template">XSLT template for the Aliases.</param>
         /// <param name="units">list of transformed units.</param>
         /// <param name="scales">list of transformed scales.</param>
@@ -47,7 +49,8 @@ namespace Mangh.Metrology
         /// </list>
         /// </param>
         /// <returns>Pair of strings (name, contents) for the <see cref="TargetFileName"/> file.</returns>
-        public (string, string) Translate(XslCompiledTransform template,
+        public (string, string) Translate(CancellationToken ct,
+                                          XslCompiledTransform template,
                                           List<UnitType> units,
                                           List<ScaleType> scales,
                                           bool global = true)
@@ -70,6 +73,8 @@ namespace Mangh.Metrology
 
                 foreach (UnitType u in units)
                 {
+                    if (ct.IsCancellationRequested) break;
+
                     xsb.Append("<unit ")
                         .Append(" name=\"").Append(u.Typename).Append('"')
                         .Append(" alias=\"").Append(u.Factor.Value.PredefinedTypename).Append('"')
@@ -78,6 +83,8 @@ namespace Mangh.Metrology
 
                 foreach (ScaleType s in scales)
                 {
+                    if (ct.IsCancellationRequested) break;
+
                     xsb.Append("<scale ")
                         .Append(" name=\"").Append(s.Typename).Append('"')
                         .Append(" alias=\"").Append(s.Unit.Factor.Value.PredefinedTypename).Append('"')

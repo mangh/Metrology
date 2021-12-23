@@ -23,7 +23,8 @@ namespace Mangh.Metrology
                 XslCompiledTransform? template = LoadXsltTemplate(context);
                 if (template is not null)
                 {
-                    foreach ((string file, string contents) in Master.Translate(template, scales, initialFamily, startIndex: 0))
+                    foreach ((string file, string contents) in
+                        Master.Translate(context.CancellationToken, template, scales, initialFamily, startIndex: 0))
                     {
                         context.AddSource(file, contents);
                     }

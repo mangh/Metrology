@@ -17,7 +17,7 @@ namespace Mangh.Metrology
         /// <summary>
         /// An identifier for a Metrology diagnostic.
         /// </summary>
-        public const string DiagnosticId = "METROLOGY";
+        public const string DiagnosticId = "UoM";
         #endregion
 
         #region Properties
@@ -89,6 +89,9 @@ namespace Mangh.Metrology
         {
             foreach (AdditionalText template in context.AdditionalFiles)
             {
+                if (context.CancellationToken.IsCancellationRequested)
+                    break;
+
                 if (template.Path.EndsWith("definitions.txt", StringComparison.OrdinalIgnoreCase))
                 {
                     definitions = new(template);

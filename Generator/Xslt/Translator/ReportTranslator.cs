@@ -13,6 +13,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Threading;
 using System.Xml;
 using System.Xml.Xsl;
 
@@ -37,13 +38,15 @@ namespace Mangh.Metrology
         /// <summary>
         /// Builds a Report (structured according to an XSLT <paramref name="template"/>) of <paramref name="units"/> and <paramref name="scales"/> generated.
         /// </summary>
+        /// <param name="ct">propagates notification that operation should be canceled.</param>
         /// <param name="template">XSLT template for the Report.</param>
         /// <param name="unitFamilyCount">number of unit families found.</param>
         /// <param name="units">list of generated units</param>
         /// <param name="scaleFamilyCount">number of scale families found.</param>
         /// <param name="scales">list of generated scales</param>
         /// <returns>Pair of strings (name, contents) for the Report file.</returns>
-        public (string, string) Translate(XslCompiledTransform template,
+        public (string, string) Translate(CancellationToken ct,
+                                          XslCompiledTransform template,
                                           int unitFamilyCount,
                                           List<UnitType> units,
                                           int scaleFamilyCount,
@@ -70,6 +73,8 @@ namespace Mangh.Metrology
 
                 foreach (UnitType m in units)
                 {
+                    if (ct.IsCancellationRequested) break;
+
                     xsb.Append("<unit name=\"").Append(m.Typename).Append("\">");
                     {
                         xsb.Append("<synopsis>").Append("<![CDATA[").Append(m.ToString()).Append("]]></synopsis>");
@@ -100,6 +105,8 @@ namespace Mangh.Metrology
 
                 foreach (ScaleType m in scales)
                 {
+                    if (ct.IsCancellationRequested) break;
+
                     xsb.Append("<scale name=\"").Append(m.Typename).Append("\">");
                     {
                         xsb.Append("<synopsis>").Append("<![CDATA[").Append(m.ToString()).Append("]]></synopsis>");

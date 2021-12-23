@@ -50,7 +50,7 @@ namespace Mangh.Metrology
                         {
                             Lexer lexer = new(reader);
                             Parser parser = new(lexer, ReportParseError, Units, Scales);
-                            parser.Parse();
+                            parser.Parse(context.CancellationToken);
                             return errorCount == 0;
                         }
                         catch (IOException ex)

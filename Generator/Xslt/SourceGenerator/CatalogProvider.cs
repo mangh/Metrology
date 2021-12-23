@@ -30,7 +30,9 @@ namespace Mangh.Metrology
                 XslCompiledTransform? template = LoadXsltTemplate(context);
                 if (template is not null)
                 {
-                    (string file, string contents) = Master.Translate(template, unitFamilyCount, units, scaleFamilyCount, scales);
+                    (string file, string contents) =
+                        Master.Translate(context.CancellationToken, template, unitFamilyCount, units, scaleFamilyCount, scales);
+
                     context.AddSource(file, contents);
                 }
             }

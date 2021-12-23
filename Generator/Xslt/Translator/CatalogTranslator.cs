@@ -13,6 +13,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Threading;
 using System.Xml;
 using System.Xml.Xsl;
 
@@ -37,13 +38,15 @@ namespace Mangh.Metrology
         /// <summary>
         /// Builds a Catalog class (structured according to an XSLT <paramref name="template"/>) populated with <paramref name="units"/> and <paramref name="scales"/> generated.
         /// </summary>
+        /// <param name="ct">propagates notification that operation should be canceled.</param>
         /// <param name="template">XSLT template for the Catalog</param>
         /// <param name="unitFamilyCount">number of unit families</param>
         /// <param name="units">list of transformed units</param>
         /// <param name="scaleFamilyCount">number of scale families</param>
         /// <param name="scales">list of transformed scales</param>
         /// <returns>Pair of strings (name, code) for the Catalog class.</returns>
-        public (string, string) Translate(XslCompiledTransform template,
+        public (string, string) Translate(CancellationToken ct,
+                                          XslCompiledTransform template,
                                           int unitFamilyCount,
                                           List<UnitType> units,
                                           int scaleFamilyCount,
@@ -70,6 +73,8 @@ namespace Mangh.Metrology
 
                 foreach (UnitType u in units)
                 {
+                    if (ct.IsCancellationRequested) break;
+
                     xsb.Append("<unit name=\"").Append(u.Typename).Append("\">")
                         .Append("<![CDATA[").Append(GetComment(u)).Append("]]>")
                         .Append("</unit>");
@@ -77,6 +82,8 @@ namespace Mangh.Metrology
 
                 foreach (ScaleType s in scales)
                 {
+                    if (ct.IsCancellationRequested) break;
+
                     xsb.Append("<scale name=\"").Append(s.Typename).Append("\">")
                         .Append("<![CDATA[").Append(GetComment(s)).Append("]]>")
                         .Append("</scale>");
