@@ -18,69 +18,67 @@ namespace Bullet
 {
     class Program
     {
-#if DIMENSIONAL_ANALYSIS
-        static readonly string dimensional_analysis_status = "dimensional analysis: ON";
-#else
-        static readonly string dimensional_analysis_status = "dimensional analysis: OFF";
-#endif
         // Bullet slope: range and step values
-        static readonly double min = 0.0;
-        static readonly double max = 90.0;
-        static readonly double step = 0.1;
+        const double MIN = 0.0;
+        const double MAX = 90.0;
+        const double STEP = 0.1;
+
+        // Output formats
+        const string FMT_ANGLE = "{0,5:F2}{1}";     // quantity value {0}, width 5, format "F2" followed by unit symbol {1} (no blank between value and symbol)
+        const string FMT_TIME  = "{0,3:F0} {1}";    // quantity value {0}, width 3, format "F0" followed by blank and unit symbol {1}
+        const string FMT_COORD = "{0,5:F0} {1}";    // quantity value {0}, width 5, format "F0" followed by blank and unit symbol {1}
+
+#if DIMENSIONAL_ANALYSIS
+        const string DIMENSIONAL_ANALYSIS_STATUS = "dimensional analysis: ON";
+#else
+        const string DIMENSIONAL_ANALYSIS_STATUS = "dimensional analysis: OFF";
+#endif
 
         static void Main(/*string[] args*/)
         {
             Console.WriteLine(
                 "Units of Measurement for C# applications. Copyright (©) Marek Anioła.\n" +
                 "This program is provided to you under the terms of the license\n" +
-                "as published at https://github.com/mangh/unitsofmeasurement."
+                "as published at https://github.com/mangh/metrology."
             );
 
             Console.WriteLine("\nRange of a bullet (demo)");
 
-            // Customize unit formats
-            CustomizeFormats();
-
             // Plain and measured (with units) bullet samplers
             var plain = new Plain.Sampler(height: 0.0, velocity: 715.0);
-            var fancy = new Measured.Sampler(height: (Meter)0.0, velocity: (Meter_Sec)715.0);
+            var measured = new Measured.Sampler(height: (Meter)0.0, velocity: (Meter_Sec)715.0);
 
-            // Fancy/plain performance ratio
+            // Measured/plain performance ratio
             var ratio = new Benchmark();
 
-            // Process and thread properties set as described in CodeProject article by Thomas Maierhofer
-            // "Performance Tests: Precise Run Time Measurements with System.Diagnostics.Stopwatch"
-            // http://www.codeproject.com/Articles/61964/Performance-Tests-Precise-Run-Time-Measurements-wi
-            Process currentProcess = Process.GetCurrentProcess();
-            currentProcess.ProcessorAffinity = new IntPtr(2);   // Use only the 2nd core
-            currentProcess.PriorityClass = ProcessPriorityClass.RealTime;
-            Thread.CurrentThread.Priority = ThreadPriority.Highest;
-
             // A warmup of 1000 - 1500 mS. Stabilizes the CPU cache and pipeline
-            WarmUp(plain, fancy);
+            WarmUp(plain, measured);
 
             do
             {
                 // calculate bullet ranges while measure the time spent for the calculations
-                List<(double, double, double, double)> p = plain.Sample(min, max, step);
-                List<(Degree, Second, Meter, Meter)> f = fancy.Sample((Degree)min, (Degree)max, (Degree)step);
+                List<(double, double, double, double)> p = plain.Sample(MIN, MAX, STEP);
+                List<(Degree, Second, Meter, Meter)> m = measured.Sample((Degree)MIN, (Degree)MAX, (Degree)STEP);
 
                 // update performance ratio
-                ratio.Add(fancy.timer.elapsed / plain.timer.elapsed);
+                ratio.Add(measured.timer.elapsed / plain.timer.elapsed);
 
-                PrintResults(f, p);
+                PrintResults(m, p);
 
-                Console.WriteLine();
-                Console.WriteLine(
-$"{fancy.benchmark.Count}. quantity/plain performance ratio: {fancy.timer.elapsed:F0} / {plain.timer.elapsed:F0} = {fancy.timer.elapsed / plain.timer.elapsed:F2} ({dimensional_analysis_status})");
+                Console.WriteLine("\n{0}. quantity/plain performance ratio: {1:F0} / {2:F0} = {3:F2} ({4})",
+                    measured.benchmark.Count, 
+                    measured.timer.elapsed, 
+                    plain.timer.elapsed, 
+                    measured.timer.elapsed / plain.timer.elapsed, 
+                    DIMENSIONAL_ANALYSIS_STATUS
+                );
                 Console.WriteLine("Press Esc to conclude, any other key to retry...");
             }
             while (Console.ReadKey(true).Key != ConsoleKey.Escape);
 
-            Console.WriteLine();
-            Console.WriteLine("Average performance ratio for {0} run(s): {1:F0}±{2:F0}({3:F0}%) / {4:F0}±{5:F0}({6:F0}%) = {7:F2}±{8:F2}({9:F0}%).",
-                fancy.benchmark.Count,
-                fancy.benchmark.Average, fancy.benchmark.StdDev, fancy.benchmark.StdDevPercentage,
+            Console.WriteLine("\nAverage performance ratio for {0} run(s): {1:F0}±{2:F0}({3:F0}%) / {4:F0}±{5:F0}({6:F0}%) = {7:F2}±{8:F2}({9:F0}%).",
+                measured.benchmark.Count,
+                measured.benchmark.Average, measured.benchmark.StdDev, measured.benchmark.StdDevPercentage,
                 plain.benchmark.Average, plain.benchmark.StdDev, plain.benchmark.StdDevPercentage,
                 ratio.Average, ratio.StdDev, ratio.StdDevPercentage
             );
@@ -88,13 +86,23 @@ $"{fancy.benchmark.Count}. quantity/plain performance ratio: {fancy.timer.elapse
 
         static void WarmUp(Plain.Sampler plain, Measured.Sampler measured)
         {
+            // Process and thread properties set as described in CodeProject article by Thomas Maierhofer
+            // "Performance Tests: Precise Run Time Measurements with System.Diagnostics.Stopwatch"
+            // http://www.codeproject.com/Articles/61964/Performance-Tests-Precise-Run-Time-Measurements-wi
+            Process currentProcess = Process.GetCurrentProcess();
+#if (Windows || Linux)
+            currentProcess.ProcessorAffinity = new IntPtr(2);   // Use only the 2nd core
+#endif
+            currentProcess.PriorityClass = ProcessPriorityClass.RealTime;
+            Thread.CurrentThread.Priority = ThreadPriority.Highest;
+
             // Warmp up
             Stopwatch sw = new();
             sw.Restart();
             while (sw.ElapsedMilliseconds < 1000)
             {
-                plain.Sample(min, max, step);
-                measured.Sample((Degree)min, (Degree)max, (Degree)step);
+                plain.Sample(MIN, MAX, STEP);
+                measured.Sample((Degree)MIN, (Degree)MAX, (Degree)STEP);
             }
             sw.Stop();
 
@@ -103,43 +111,55 @@ $"{fancy.benchmark.Count}. quantity/plain performance ratio: {fancy.timer.elapse
             measured.benchmark.Reset();
         }
 
-        static void CustomizeFormats()
-        {
-            Demo.UnitsOfMeasurement.Meter.Format = "{0,5:F0} {1}";      // quantity value {0}, width 5, format "F0" followed by blank and unit symbol {1}
-            Demo.UnitsOfMeasurement.Second.Format = "{0,3:F0} {1}";     // quantity value {0}, width 3, format "F0" followed by blank and unit symbol {1}
-            Demo.UnitsOfMeasurement.Degree.Format = "{0,5:F2}{1}";      // quantity value {0}, width 5, format "F2" followed by unit symbol {1} (no blank between value and symbol)
-        }
-
-        static void PrintResults(List<(Degree, Second, Meter, Meter)> f, List<(double, double, double, double)> p)
+        static void PrintResults(List<(Degree, Second, Meter, Meter)> m, List<(double, double, double, double)> p)
         {
             Console.WriteLine();
-            Console.WriteLine(" angle |  tmax |  xmax   |  ymax  ");
-            Console.WriteLine($"  ({Demo.UnitsOfMeasurement.Degree.Symbol.Default})  |  ({Demo.UnitsOfMeasurement.Second.Symbol.Default})  |  ({Demo.UnitsOfMeasurement.Meter.Symbol.Default})    |  ({Demo.UnitsOfMeasurement.Meter.Symbol.Default})");
-            Console.WriteLine(" ------+-------+---------+---------");
+            Console.WriteLine(" angle |  tmax |  xmax   |  ymax");
+            Console.WriteLine("-------+-------+---------+--------");
 
-            for (int i = 0; i < f.Count; i++)
+            for (int i = 0; i < m.Count; i++)
             {
-                (Degree slope, Second tmax, Meter xmax, Meter ymax) = f[i];
+                (Degree slope, Second tmax, Meter xmax, Meter ymax) = m[i];
 
-                // Fancy and plain results are to be the same. Is this the case?
 #if DIMENSIONAL_ANALYSIS
-                Console.WriteLine($"{slope} | {tmax} | {xmax} | {ymax}");
+                // Print measured results:
+                Console.WriteLine(
+                    $"{slope.ToString(FMT_ANGLE)} | {tmax.ToString(FMT_TIME)} | {xmax.ToString(FMT_COORD)} | {ymax.ToString(FMT_COORD)}"
+                );
 
-                double slopeErr = slope.Value - p[i].Item1;
-                double tmaxErr = tmax.Value - p[i].Item2;
-                double xmaxErr = xmax.Value - p[i].Item3;
-                double ymaxErr = ymax.Value - p[i].Item4;
+                // Measured and plain results are to be the same. Is this the case?
+                CheckResults(
+                    slope.Value - p[i].Item1, 
+                    tmax.Value - p[i].Item2, 
+                    xmax.Value - p[i].Item3, 
+                    ymax.Value - p[i].Item4
+                );
 #else
-                Console.WriteLine($"{Demo.UnitsOfMeasurement.Degree.String(slope)} | {Demo.UnitsOfMeasurement.Second.String(tmax)} | {Demo.UnitsOfMeasurement.Meter.String(xmax)} | {Demo.UnitsOfMeasurement.Meter.String(ymax)}");
+                Console.WriteLine("{0} | {1} | {2} | {3}", 
+                    Demo.UnitsOfMeasurement.Degree.String(slope, FMT_ANGLE), 
+                    Demo.UnitsOfMeasurement.Second.String(tmax, FMT_TIME), 
+                    Demo.UnitsOfMeasurement.Meter.String(xmax, FMT_COORD),
+                    Demo.UnitsOfMeasurement.Meter.String(ymax, FMT_COORD));
 
-                double slopeErr = slope - p[i].Item1;
-                double tmaxErr = tmax - p[i].Item2;
-                double xmaxErr = xmax - p[i].Item3;
-                double ymaxErr = ymax - p[i].Item4;
+                CheckResults(
+                    slope - p[i].Item1,
+                    tmax - p[i].Item2,
+                    xmax - p[i].Item3,
+                    ymax - p[i].Item4
+                );
 #endif
+            }
+
+            static void CheckResults(double slopeErr, double tmaxErr, double xmaxErr, double ymaxErr)
+            {
                 if ((slopeErr != 0.0) || (tmaxErr != 0.0) || (xmaxErr != 0.0) || (ymaxErr != 0.0))
                 {
-                    Console.WriteLine($"{Demo.UnitsOfMeasurement.Degree.String(slopeErr)} | {Demo.UnitsOfMeasurement.Second.String(tmaxErr)} | {Demo.UnitsOfMeasurement.Meter.String(xmaxErr)} | {Demo.UnitsOfMeasurement.Meter.String(ymaxErr)}");
+                    Console.WriteLine("{0} | {1} | {2} | {3}  *** (m - p) diff ***",
+                        Demo.UnitsOfMeasurement.Degree.String(slopeErr), 
+                        Demo.UnitsOfMeasurement.Second.String(tmaxErr), 
+                        Demo.UnitsOfMeasurement.Meter.String(xmaxErr),
+                        Demo.UnitsOfMeasurement.Meter.String(ymaxErr)
+                    );
                 }
             }
         }

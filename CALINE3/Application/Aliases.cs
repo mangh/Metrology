@@ -1,4 +1,3 @@
-
 #if DIMENSIONAL_ANALYSIS
     global using CALINE3.Metrology;
     global using static CALINE3.Metrology.Math;

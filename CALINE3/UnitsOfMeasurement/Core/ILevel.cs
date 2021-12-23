@@ -5,7 +5,7 @@
     Copyright (C) Marek Aniola
 
     This program is provided to you under the terms of the license
-    as published at https://github.com/mangh/metrology
+    as published at https://github.com/mangh/Metrology
 
 
 ********************************************************************************/

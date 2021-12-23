@@ -1,4 +1,3 @@
-
 #if DIMENSIONAL_ANALYSIS
     global using Demo.UnitsOfMeasurement;
     global using static Demo.UnitsOfMeasurement.Math;

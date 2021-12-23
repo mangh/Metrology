@@ -22,7 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Mangh.Metrology.SourceGeneratorXslt" Version="1.0.2" />
+    <PackageReference Include="Mangh.Metrology.SourceGeneratorXslt" Version="1.0.3" />
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.0.1" />
   </ItemGroup>
 
