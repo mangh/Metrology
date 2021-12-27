@@ -1,3 +1,9 @@
+### Release 1.0.4 (12/27/2021)
+
+###### Translator and Template: unit factor bug fix
+* Unit factor is a get/set PROPERTY for monetary units ONLY,
+  for other units that is a CONST FIELD.
+
 ### Release 1.0.3 (12/22/2021)
 
 ###### Selected string literals are recognized
