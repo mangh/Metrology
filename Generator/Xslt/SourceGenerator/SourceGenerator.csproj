@@ -10,8 +10,8 @@
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <SignAssembly>True</SignAssembly>
     <AssemblyOriginatorKeyFile>C:\Users\Marek\source\repos\Metrology\metrology.snk</AssemblyOriginatorKeyFile>
-    <AssemblyVersion>1.0.3.0</AssemblyVersion>
-    <FileVersion>1.0.3.0</FileVersion>
+    <AssemblyVersion>1.0.4.0</AssemblyVersion>
+    <FileVersion>1.0.4.0</FileVersion>
     <!-- Debug symbols embedded in DLL (portable across platforms) -->
     <DebugType>embedded</DebugType>
   </PropertyGroup>
@@ -34,9 +34,9 @@
     <PackageTags>unit;scale;measure;metrology</PackageTags>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <Version>1.0.3</Version>
+    <Version>1.0.4</Version>
     <ApplicationIcon>Icon.ico</ApplicationIcon>
-    <PackageReleaseNotes>Parser and Translator updated to version 1.0.3. CancellationToken polled for cancellation request.</PackageReleaseNotes>
+    <PackageReleaseNotes>Translator Bug fix: factor is to be a property for monetary units only, for others it is to be a const field.</PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -60,7 +60,7 @@
     <!-- Generator dependencies:
         * PrivateAssets="none": all assets (apart of being consumed by the generator) can flow to the parent project,
         * GeneratePathProperty="true": dependencies can be referenced via the "global-packages" folder (i.e. via Pkg... property) -->
-    <PackageReference Include="Mangh.Metrology.UnitTranslatorXslt" Version="1.0.3" GeneratePathProperty="true" PrivateAssets="none" />
+    <PackageReference Include="Mangh.Metrology.UnitTranslatorXslt" Version="1.0.4" GeneratePathProperty="true" PrivateAssets="none" />
     <PackageReference Include="Mangh.Metrology.DefinitionParser" Version="1.0.3" GeneratePathProperty="true" PrivateAssets="none" />
 
     <!-- The dependencies must be in the same location as the generator i.e. in the "analyzers" folder -->

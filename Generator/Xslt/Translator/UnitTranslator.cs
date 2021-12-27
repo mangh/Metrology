@@ -91,7 +91,7 @@ namespace Mangh.Metrology
                     .Append(" name=\"").Append(u.Typename).Append('"')
                     .Append(" ns=\"").Append(TargetNamespace).Append('"')
                     .Append(" late=\"").Append(Late ? "yes" : "no").Append('"')
-                    .Append(" monetary=\"").Append((u.Sense.Value[Magnitude.Money] == 0) ? "yes" : "no").Append('"')
+                    .Append(" monetary=\"").Append((u.Sense.Value[Magnitude.Money] != 0) ? "yes" : "no").Append('"')
                     .Append(" tm=\"").Append(timestamp).Append("\">");
                 {
                     xsb.Append("<valuetype>");

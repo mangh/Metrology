@@ -11,15 +11,15 @@
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <SignAssembly>True</SignAssembly>
     <AssemblyOriginatorKeyFile>C:\Users\Marek\source\repos\Metrology\metrology.snk</AssemblyOriginatorKeyFile>
-    <AssemblyVersion>1.0.3.0</AssemblyVersion>
-    <FileVersion>1.0.3.0</FileVersion>
+    <AssemblyVersion>1.0.4.0</AssemblyVersion>
+    <FileVersion>1.0.4.0</FileVersion>
     <DebugType>embedded</DebugType>
   </PropertyGroup>
 
   <!-- NuGet properties -->
   <PropertyGroup>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <Version>1.0.3</Version>
+    <Version>1.0.4</Version>
     <Authors>MAN</Authors>
     <Company>MAN</Company>
     <Description>Metrology Xslt-based Unit Translator</Description>
@@ -31,7 +31,7 @@
     <PackageTags>unit;scale;measure;metrology</PackageTags>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
-    <PackageReleaseNotes>Parser updated to version 1.0.3. XML timestamped. CancellationToken used to break operation.</PackageReleaseNotes>
+    <PackageReleaseNotes>Bug fix: factor is a get/set property for monetary units only, for others it is to be a const field.</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>

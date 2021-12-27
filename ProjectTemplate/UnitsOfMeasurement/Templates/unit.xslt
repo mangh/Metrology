@@ -123,7 +123,7 @@ namespace <xsl:value-of select="@ns"/>
         public static readonly SymbolCollection Symbol = new(<xsl:for-each select="tags/tag">&quot;<xsl:value-of select="."/>&quot;<xsl:if test="not(position()=last())"><xsl:text>, </xsl:text></xsl:if></xsl:for-each>);
         public static readonly Unit&lt;<xsl:value-of select="valuetype/name"/>&gt; Proxy = new <xsl:value-of select="@name"/>_Proxy();
         <xsl:choose>
-        <xsl:when test="@monetary">public static <xsl:value-of select="valuetype/name"/> Factor { get; set; } = <xsl:value-of select="factor"/>;</xsl:when>
+        <xsl:when test="@monetary='yes'">public static <xsl:value-of select="valuetype/name"/> Factor { get; set; } = <xsl:value-of select="factor"/>;</xsl:when>
         <xsl:otherwise>public const <xsl:value-of select="valuetype/name"/> Factor = <xsl:value-of select="factor"/>;</xsl:otherwise>
         </xsl:choose>
         public static string Format { get; set; } = "<xsl:value-of select="format"/>";
@@ -142,7 +142,7 @@ namespace <xsl:value-of select="@ns"/>
         public override Dimension Sense =&gt; <xsl:value-of select="@name"/>.Sense;
         public override int Family =&gt; <xsl:value-of select="@name"/>.Family;
         <xsl:choose>
-        <xsl:when test="@monetary">public override <xsl:value-of select="valuetype/name"/> Factor { get { return <xsl:value-of select="@name"/>.Factor; } set { <xsl:value-of select="@name"/>.Factor = value; } }</xsl:when>
+        <xsl:when test="@monetary='yes'">public override <xsl:value-of select="valuetype/name"/> Factor { get { return <xsl:value-of select="@name"/>.Factor; } set { <xsl:value-of select="@name"/>.Factor = value; } }</xsl:when>
         <xsl:otherwise>public override <xsl:value-of select="valuetype/name"/> Factor =&gt; <xsl:value-of select="@name"/>.Factor;</xsl:otherwise>
         </xsl:choose>
         public override SymbolCollection Symbol =&gt; <xsl:value-of select="@name"/>.Symbol;
