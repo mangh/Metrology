@@ -1,4 +1,4 @@
-# Metrology - Units of Measurement for .NET Core / Standard
+# Units of Measurement for .NET Core / Standard
 ## Product description
 
 * _dotnet_ project template for creating Units of Measurement C# class library.

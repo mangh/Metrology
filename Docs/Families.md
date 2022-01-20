@@ -1,5 +1,5 @@
 ## Families
-A _family_ is a subset of units (or a subset of scales) that can be converted to each other. For example, _Meter_ and _Centimeter_ unitsform a family as long as they are combined by a conversion relationship similar to the following:
+A _family_ is a subset of units (or a subset of scales) that can be converted to each other. For example, _Meter_ and _Centimeter_ units form a family as long as they are combined by a conversion relationship similar to the following:
 ```
 unit Centimeter "cm" = 100 * Meter;
 ```

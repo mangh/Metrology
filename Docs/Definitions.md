@@ -141,8 +141,6 @@ unit Second "s" = <Time>;
 ```
 The above definitions specify: _Meter_ as a _length_ unit (of symbol "m") and _Second_ as a _time_ unit (of symbol "s"); each unit of (implicit) conversion factor 1.0. They do not introduce - neither explicitly nor implicitly - any relationship with other units. Units defined this way can be considered as _primary_.
 
-<br/>
-
 ### Conversion relationship
 ```
 unit Centimeter "cm" = 100 * Meter;
@@ -157,8 +155,6 @@ public static Meter From(Centimeter q)    // in Meter.cs
 public static Centimeter From(Meter q)    // in Centimeter.cs
 ```
 
-<br/>
-
 ### Arithmetic (product or quotient) relationship
 ```
 unit Meter_Sec "m/s" = Meter / Second;
@@ -170,8 +166,6 @@ public static Second operator /(Meter lhs, Meter_Sec rhs) // in Meter.cs
 public static Meter operator *(Meter_Sec lhs, Second rhs) // in Meter_Sec.cs
 public static Meter operator *(Second lhs, Meter_Sec rhs) // in Meter_Sec.cs
 ```
-
-<br/>
 
 ### Multiple relationships
 ```
