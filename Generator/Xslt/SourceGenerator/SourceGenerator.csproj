@@ -83,7 +83,7 @@
          for symbols from the "Microsoft.CodeAnalysis.Common" package. The build itself can succeed
          without that reference (explicitly specified) as the package is referenced anyway as a
          dependency of the "Mangh.Metrology.DefinitionParser". -->
-    <PackageReference Include="Microsoft.CodeAnalysis.Common" Version="4.2.0" PrivateAssets="none" />
+    <PackageReference Include="Microsoft.CodeAnalysis.Common" Version="4.3.1" PrivateAssets="none" />
   </ItemGroup>
 
 </Project>
