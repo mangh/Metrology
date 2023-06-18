@@ -159,14 +159,13 @@ namespace Benchmark
 /*
  * Sample results (shortened):
  * 
+ * Summary (.NET 6.0, DIMENSIONAL_ANALYSIS: ON) *******************************************
+ * 
  * BenchmarkDotNet=v0.13.1, OS=Windows 10.0.19043.1348 (21H1/May2021Update)
  * Intel Core i5-3360M CPU 2.80GHz (Ivy Bridge), 1 CPU, 4 logical and 2 physical cores
  * .NET SDK=6.0.100
  *   [Host]     : .NET 6.0.0 (6.0.21.52210), X64 RyuJIT
  *   DefaultJob : .NET 6.0.0 (6.0.21.52210), X64 RyuJIT
- * 
- * 
- * Summary (DIMENSIONAL_ANALYSIS: ON):
  * 
  * |  Method | DimensionalAnalysis |        Mean |    Error |   StdDev | Ratio | RatioSD |
  * |-------- |-------------------- |------------:|---------:|---------:|------:|--------:|
@@ -195,7 +194,13 @@ namespace Benchmark
  * Global total time: 00:04:47 (287.24 sec), executed benchmarks: 14
  * 
  * 
- * Summary (DIMENSIONAL_ANALYSIS: OFF):
+ * Summary (.NET 6.0, DIMENSIONAL_ANALYSIS: OFF) *******************************************
+ * 
+ * BenchmarkDotNet=v0.13.1, OS=Windows 10.0.19043.1348 (21H1/May2021Update)
+ * Intel Core i5-3360M CPU 2.80GHz (Ivy Bridge), 1 CPU, 4 logical and 2 physical cores
+ * .NET SDK=6.0.100
+ *   [Host]     : .NET 6.0.0 (6.0.21.52210), X64 RyuJIT
+ *   DefaultJob : .NET 6.0.0 (6.0.21.52210), X64 RyuJIT
  * 
  * |  Method | DimensionalAnalysis |      Mean |    Error |   StdDev | Ratio |
  * |-------- |-------------------- |----------:|---------:|---------:|------:|
@@ -222,5 +227,41 @@ namespace Benchmark
  * 
  * Run time: 00:05:11 (311.17 sec), executed benchmarks: 14
  * Global total time: 00:05:33 (333.2 sec), executed benchmarks: 14
+ * 
+ * 
+ * Summary (.NET 7.0, DIMENSIONAL_ANALYSIS: ON) *******************************************
+ * 
+ * BenchmarkDotNet=v0.13.2, OS=Windows 11 (10.0.22621.1848)
+ * 11th Gen Intel Core i7-1165G7 2.80GHz, 1 CPU, 8 logical and 4 physical cores
+ * .NET SDK=7.0.304
+ *   [Host]     : .NET 7.0.7 (7.0.723.27404), X64 RyuJIT AVX2
+ *   DefaultJob : .NET 7.0.7 (7.0.723.27404), X64 RyuJIT AVX2
+ * 
+ * |  Method | DimensionalAnalysis |      Mean |    Error |   StdDev | Ratio | RatioSD |
+ * |-------- |-------------------- |----------:|---------:|---------:|------:|--------:|
+ * |     Add |                  On |  14.08 μs | 0.245 μs | 0.217 μs |  1.00 |    0.00 |
+ * |    QAdd |                  On |  44.60 μs | 0.579 μs | 0.542 μs |  3.17 |    0.06 |
+ * |         |                     |           |          |          |       |         |
+ * |  Bullet |                  On | 130.78 μs | 1.279 μs | 1.134 μs |  1.00 |    0.00 |
+ * | QBullet |                  On | 319.15 μs | 4.406 μs | 4.121 μs |  2.44 |    0.05 |
+ * |         |                     |           |          |          |       |         |
+ * |     Cvt |                  On |  14.20 μs | 0.221 μs | 0.196 μs |  1.00 |    0.00 |
+ * |    QCvt |                  On |  38.04 μs | 0.587 μs | 0.549 μs |  2.68 |    0.06 |
+ * |         |                     |           |          |          |       |         |
+ * |     Div |                  On |  14.37 μs | 0.264 μs | 0.247 μs |  1.00 |    0.00 |
+ * |    QDiv |                  On |  43.81 μs | 0.795 μs | 0.744 μs |  3.05 |    0.07 |
+ * |         |                     |           |          |          |       |         |
+ * |     Mix |                  On |  20.96 μs | 0.413 μs | 0.459 μs |  1.00 |    0.00 |
+ * |    QMix |                  On |  48.47 μs | 0.914 μs | 0.978 μs |  2.31 |    0.05 |
+ * |         |                     |           |          |          |       |         |
+ * |     Mul |                  On |  14.39 μs | 0.276 μs | 0.284 μs |  1.00 |    0.00 |
+ * |    QMul |                  On |  45.85 μs | 0.896 μs | 0.920 μs |  3.19 |    0.10 |
+ * |         |                     |           |          |          |       |         |
+ * |     Sub |                  On |  20.76 μs | 0.336 μs | 0.281 μs |  1.00 |    0.00 |
+ * |    QSub |                  On |  44.93 μs | 0.661 μs | 0.812 μs |  2.16 |    0.05 |
+ * 
+ * 
+ * Run time: 00:05:03 (303.04 sec), executed benchmarks: 14
+ * Global total time: 00:05:07 (307.17 sec), executed benchmarks: 14
  * 
  */ 

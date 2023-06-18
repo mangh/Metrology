@@ -165,7 +165,7 @@ namespace Bullet
         }
     }
 }
-/* Sample output (dimensional analysis: OFF):
+/* Sample output (.NET 6.0, dimensional analysis: OFF):
  * 
  * Units of Measurement for C# applications. Copyright (c) Marek Aniola.
  * This program is provided to you under the terms of the license
@@ -208,10 +208,9 @@ namespace Bullet
  * 
  * Average performance ratio for 32 run(s): 2515±236(9%) / 2495±225(9%) = 1,01±0,07(7%).
  * 
- * 
  ********************************************************************************************
  *
- * Sample output (dimensional analysis: ON):
+ * Sample output (.NET 6.0, dimensional analysis: ON):
  * 
  *  angle |  tmax |  xmax   |  ymax
  *   (°)  |  (s)  |  (m)    |  (m)
@@ -247,5 +246,12 @@ namespace Bullet
  * Press Esc to conclude, any other key to retry...
  * 
  * Average performance ratio for 32 run(s): 13282±325(2%) / 2434±80(3%) = 5,46±0,21(4%).
+ *
+ ********************************************************************************************
+ * 
+ * Under .NET 7.0 the results are much better:
+ * 
+ * Average performance ratio for 32 run(s): 4198+905(22%) / 1766+369(21%) = 2,38+0,11(5%).
+ * 
  *
  */

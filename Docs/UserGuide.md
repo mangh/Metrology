@@ -338,15 +338,21 @@ See [Demo Applications](https://github.com/mangh/unitsofmeasurement/tree/master/
 <br/>
 
 ## Dimensional Analysis vs. Performance
-Algorithms formulated in units of measure are slower than their counterparts using "plain" numbers only. The results of the performance tests can be seen in the comments pasted at the end of the source code for sample benchmarks:
+Algorithms formulated in units of measure are slower than their counterparts using "plain" numbers only.
+Performance test results can be seen in the comments pasted at the end of the source code of the sample benchmarks.
+Under .NET 6.0, the results are:
 * [Bullet Application Benchmark](https://github.com/mangh/Metrology/blob/main/Demo/Benchmark2/Program.cs) - approx. 5.45-fold increase in execution time (or 5.45-fold drop in performance),
 * [CALINE3 Application Benchmark](https://github.com/mangh/CALINE3.CS/tree/main/Benchmark) - approx. 1.25-fold increase in execution time (or 1.24-fold drop in performance; 1.24 &#8776; 2.701 ms / 2.177 ms),
 
+and under .NET 7.0:
+* [Bullet Application Benchmark](https://github.com/mangh/Metrology/blob/main/Demo/Benchmark2/Program.cs) - approx. 2,38-fold increase in execution time (or 2,38-fold drop in performance),
+* [CALINE3 Application Benchmark](https://github.com/mangh/CALINE3.CS/tree/main/Benchmark) - approx. 1.12-fold increase in execution time (or 1.12-fold drop in performance; 1.12 &#8776; 1.244 ms / 1.109 ms ms),
+
 These benchmark show how units of measurement can affect performance. 
 
-The first focuses on a single, somewhat artificial method ([Bullet.Measured.Calculator.CalculateRange](https://github.com/mangh/Metrology/blob/main/Demo/Bullet/Bullet.Measured.cs)) that is formulated entirely in units of measurement - there is not a single expression that is free from units. As can be seen, such characteristics translates into a large drop in performance (5.45).
+The first focuses on a single, somewhat artificial method ([Bullet.Measured.Calculator.CalculateRange](https://github.com/mangh/Metrology/blob/main/Demo/Bullet/Bullet.Measured.cs)) that is formulated entirely in units of measurement - there is not a single expression that is free from units. As can be seen, such characteristics translates into a large drop in performance: 5.45 (under .NET 6.0) and 2.38 (under .NET 7.0).
 
-The second ([CALINE3](https://github.com/mangh/CALINE3.CS/tree/main/CALINE3)) is closer to real-world applications but - interestingly - is not as restrained in using units, as a much better result (1.24) would suggest. In this case, the algorithm is spread over several cooperating classes that have to perform a number of standard operations (such as creating objects, handling collections, etc.) being integral to the algorithm and contributing to the overall execution time, regardless of whether the units are used or not. It does not make much sense to consider only the operations referring to units, in isolation from this context. As you can see in the profiler screenshot below, these operations make only a small contribution (cca. 6%) to the overall execution time and this is what accounts for a much better benchmark result, even when they are 5x slower:
+The second ([CALINE3](https://github.com/mangh/CALINE3.CS/tree/main/CALINE3)) is closer to real-world applications but - interestingly - is not as restrained in using units, as a much better result (1.24/1.12) would suggest. In this case, the algorithm is spread over several cooperating classes that have to perform a number of standard operations (such as creating objects, handling collections, etc.) being integral to the algorithm and contributing to the overall execution time, regardless of whether the units are used or not. It does not make much sense to consider only the operations referring to units, in isolation from this context. As you can see in the profiler screenshot below, these operations make only a small contribution (cca. 6%) to the overall execution time and this is what accounts for a much better benchmark result, even when they are 5x slower:
 
 ![profiling](image/Profiling.png)
 
