@@ -21,17 +21,9 @@ namespace Demo.UnitsOfMeasurement
 
     internal static class NumericParser
     {
-        public static NumericParserDelegate<double> TryParseDouble =
-            delegate (string input, NumberStyles style, IFormatProvider fp, out double result)
-            { return double.TryParse(input, style, fp, out result); };
-
-        public static NumericParserDelegate<decimal> TryParseDecimal =
-            delegate (string input, NumberStyles style, IFormatProvider fp, out decimal result)
-            { return decimal.TryParse(input, style, fp, out result); };
-
-        public static NumericParserDelegate<float> TryParseFloat =
-            delegate (string input, NumberStyles style, IFormatProvider fp, out float result)
-            { return float.TryParse(input, style, fp, out result); };
+        public static NumericParserDelegate<double> TryParseDouble = double.TryParse;
+        public static NumericParserDelegate<decimal> TryParseDecimal = decimal.TryParse;
+        public static NumericParserDelegate<float> TryParseFloat = float.TryParse;
 
         public static System.Delegate SelectDelegate(Type type)
         {

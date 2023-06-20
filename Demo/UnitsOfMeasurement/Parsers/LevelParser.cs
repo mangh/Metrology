@@ -78,9 +78,12 @@ namespace Demo.UnitsOfMeasurement
         /// <param name="level">Input level string to be analyzed.</param>
         /// <param name="scales">Scales allowed in the <paramref name="level"/> string (to validate unit symbol).</param>
         /// <param name="matchunitsymbol">Predicate to check whether a unit symbol is present in the <paramref name="level"/> string.</param>
-        /// <param name="number">Number found in the <paramref name="level"/> string, <c>null</c> if it could not be found there.</param>
-        /// <param name="symbol">Unit symbol embedded in the <paramref name="level"/> string; <c>null</c> if it is missing there.</param>
-        /// <returns><c>Scale</c> corresponding to the the unit <paramref name="symbol"/> in the <paramref name="level"/> string; <c>null</c> if no valid unit symbol has been found.</returns>
+        /// <param name="number">Number found in the <paramref name="level"/> string; <see langword="null"/> if it is not found.</param>
+        /// <param name="symbol">Unit symbol found in the <paramref name="level"/> string.</param>
+        /// <returns>
+        /// <see cref="Scale"/> corresponding to the the unit <paramref name="symbol"/> in the <paramref name="level"/> string;
+        /// <see langword="null"/> if none of the allowed scales has been matched.
+        /// </returns>
         public static Scale? Tokenize(string level, IEnumerable<Scale> scales, Predicate<string> matchunitsymbol, out string? number, out string symbol)
         {
             Scale? scale = null;

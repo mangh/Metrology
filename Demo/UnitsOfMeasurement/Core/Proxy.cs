@@ -15,7 +15,7 @@ using System.Reflection;
 namespace Demo.UnitsOfMeasurement
 {
     /// <summary>
-    /// Proxy for either a unit type or a scale type (unit and scale common properties).
+    /// Unit or scale type proxy.
     /// </summary>
     public abstract class Proxy : IEquatable<Proxy>
     {
@@ -25,14 +25,15 @@ namespace Demo.UnitsOfMeasurement
 
         #region Properties
         public RuntimeTypeHandle Handle => m_handle;
-        public Type Type => Type.GetTypeFromHandle(m_handle);
+        public Type Type => Type.GetTypeFromHandle(m_handle)!;
         #endregion
 
         #region Constructor(s)
         /// <summary>
-        /// Proxy constructor.
+        /// <see cref="Proxy"/> constructor.
         /// </summary>
-        /// <param name="t">unit or scale type to be represented by this proxy.</param>
+        /// <param name="t">Unit or scale type to be represented by this proxy.</param>
+        /// <exception cref="NotSupportedException">The .NET Compact Framework does not support <see cref="Type.TypeHandle"/> property.</exception>
         protected Proxy(Type t) => m_handle = t.TypeHandle;
         #endregion
 
@@ -44,18 +45,23 @@ namespace Demo.UnitsOfMeasurement
 
         #region Statics
         /// <summary>
-        /// Retrieves <c>Unit&lt;T&gt;</c> (or <c>Scale&lt;T&gt;</c>) proxy from a type expected to implement interface <c>IQuantity&lt;T&gt;</c> (or <c>ILevel&lt;T&gt;</c> as appropriate).
+        /// Tries to retrieve <see cref="Proxy"/> from a type.
         /// </summary>
         /// <param name="t">Input type to retrieve proxy from.</param>
-        /// <returns><c>Unit&lt;T&gt;</c> (or <c>Scale&lt;T&gt;</c>) proxy for a unit (or a scale) input type; <c>null</c> for any other types.</returns>
+        /// <returns>Proxy for a <see cref="Unit{T}"/> (or <see cref="Scale{T}"/>) input type; <see langword="null"/> for any other types.</returns>
+        /// <exception cref="ArgumentException"></exception>
+        /// <exception cref="FieldAccessException"></exception>
+        /// <exception cref="NotSupportedException"></exception>
+        /// <exception cref="TargetException"></exception>
+        /// <exception cref="TargetInvocationException"></exception>
         public static Proxy? TryRetrieveFrom(Type? t)
         {
-            if ((t is not null) && (t.IsValueType))
+            if ((t is not null) && t.IsValueType)
             {
                 foreach (Type ifc in t.GetInterfaces())
                 {
-                    if ((ifc.FullName is not null) && 
-                        (ifc.FullName.StartsWith(Unit.GenericInterfaceFullName) || 
+                    if ((ifc.FullName is not null) &&
+                        (ifc.FullName.StartsWith(Unit.GenericInterfaceFullName) ||
                         ifc.FullName.StartsWith(Scale.GenericInterfaceFullName)))
                     {
                         FieldInfo? fieldInfo = t.GetField("Proxy", BindingFlags.Static | BindingFlags.Public);

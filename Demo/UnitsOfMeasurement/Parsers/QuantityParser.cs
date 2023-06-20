@@ -78,13 +78,16 @@ namespace Demo.UnitsOfMeasurement
 
     public static class QuantityTokenizer
     {
-        /// <summary>Tokenize quantity string into number and unit symbol substrings.</summary>
-        /// <param name="quantity">Input string to be tokenized.</param>
+        /// <summary>Tokenize a quantity string into a <paramref name="number"/> and a unit <paramref name="symbol"/>.</summary>
+        /// <param name="quantity">Input quantity string to be analyzed.</param>
         /// <param name="units">Units allowed in the input string (providing allowed unit symbols).</param>
         /// <param name="matchunitsymbol">Predicate to check whether given unit symbol is part of the input string.</param>
-        /// <param name="number">Number found in the input string.</param>
+        /// <param name="number">Number found in the input string; <see langword="null"/> if it is not found.</param>
         /// <param name="symbol">Unit symbol found in the input string.</param>
-        /// <returns>Unit representing unit symbol found in the input string --or-- null if no allowed unit has been found.</returns>
+        /// <returns>
+        /// <see cref="Unit"/> corresponding to the the unit <paramref name="symbol"/> in the <paramref name="quantity"/> string;
+        /// <see langword="null"/> if none of the allowed units has been matched.
+        /// </returns>
         public static Unit? Tokenize(string quantity, IEnumerable<Unit> units, Predicate<string> matchunitsymbol, out string? number, out string symbol)
         {
             Unit? unit = null;

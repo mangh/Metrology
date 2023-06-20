@@ -1,5 +1,5 @@
 ﻿<Project>
-  
+
   <ItemGroup>
     <SourceAliases Include="Templates\Aliases.inc"/>
     <TargetAliases Include="..\Bullet\Aliases.cs"/>

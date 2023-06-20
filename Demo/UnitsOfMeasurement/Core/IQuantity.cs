@@ -13,20 +13,21 @@
 namespace Demo.UnitsOfMeasurement
 {
     /// <summary>
-    /// Quantity interface.
+    /// Quantity interface
+    /// (to be implemented by units).
     /// </summary>
     /// <typeparam name="T">
-    /// numeric type underlying the quantity and its unit: <see cref="double"/>, <see cref="float"/> or <see cref="decimal"/>.
+    /// A numeric type for implementing quantity arithmetic: <see cref="double"/>, <see cref="float"/> or <see cref="decimal"/>.
     /// </typeparam>
     public interface IQuantity<T> where T : struct
     {
         /// <summary>
-        /// Quantity value (as a number of <see cref="Unit"/>s).
+        /// The numerical value of the quantity (in units <see cref="Unit"/>).
         /// </summary>
         T Value { get; }
 
         /// <summary>
-        /// The unit used to derive the <see cref="Value"/>.
+        /// The unit of measurement in which <see cref="Value"/> was measured.
         /// </summary>
         Unit<T> Unit { get; }
     }

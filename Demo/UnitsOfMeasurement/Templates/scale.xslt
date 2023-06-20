@@ -12,13 +12,13 @@
     This program is provided to you under the terms of the license
     as published at https://github.com/mangh/metrology
 
-<!--<xsl:value-of select="@tm"/>-->
+
 ********************************************************************************/
-<xsl:variable name="VALUE">
 <!--
-  Compile-time units can access (internally) m_value field of other compile-time units.
-  Late units can access it via Value property only.
+  Compile-time units can access (internally) m_value/m_level field of other compile-time units/scales.
+  Late units/scales can access it via Value/Level property only.
 -->
+<xsl:variable name="VALUE">
   <xsl:choose>
     <xsl:when test="@late='yes'">
       <xsl:text>Value</xsl:text>
@@ -29,10 +29,6 @@
   </xsl:choose>
 </xsl:variable>
 <xsl:variable name="LEVEL">
-<!--
-  Compile-time scales can access (internally) m_level field of other compile-time units.
-  Late units can access it via Level property only.
--->
   <xsl:choose>
     <xsl:when test="@late='yes'">
       <xsl:text>Level</xsl:text>
@@ -42,63 +38,85 @@
     </xsl:otherwise>
   </xsl:choose>
 </xsl:variable>
+<xsl:variable name="VALUE_T">
+  <xsl:value-of select="valuetype/@keywd"/>
+</xsl:variable>
 namespace <xsl:value-of select="@ns"/>
 {
     using System;
 
-    <xsl:if test="string-length(refpoint)>0">[ScaleReferencePoint("<xsl:value-of select="refpoint"/>")]</xsl:if>
+    [ScaleReferencePoint("<xsl:value-of select="refpoint/@normalized"/>")]
     public partial struct <xsl:value-of select="@name"/> :
-        ILevel&lt;<xsl:value-of select="valuetype/name"/>&gt;,
+        ILevel&lt;<xsl:value-of select="$VALUE_T"/>&gt;,
         IEquatable&lt;<xsl:value-of select="@name"/>&gt;,
         IComparable&lt;<xsl:value-of select="@name"/>&gt;,
         IFormattable
     {
         #region Constants
         // offset (dimensionless) to the "<xsl:value-of select="refpoint/@normalized"/>" family common reference point
-        public const <xsl:value-of select="valuetype/name"/> OFFSET = <xsl:value-of select="offset"/>;
+        public const <xsl:value-of select="$VALUE_T"/> OFFSET = <xsl:value-of select="offset"/>;
         #endregion
     
         #region Fields
         internal readonly <xsl:value-of select="@unit"/> m_level;
         #endregion
 
-        #region Properties / ILevel&lt;<xsl:value-of select="valuetype/name"/>&gt;
+        #region Properties / ILevel&lt;<xsl:value-of select="$VALUE_T"/>&gt;
         public <xsl:value-of select="@unit"/> Level =&gt; m_level;
 
-        IQuantity&lt;<xsl:value-of select="valuetype/name"/>&gt; ILevel&lt;<xsl:value-of select="valuetype/name"/>&gt;.Level =&gt; m_level;
-        IQuantity&lt;<xsl:value-of select="valuetype/name"/>&gt; ILevel&lt;<xsl:value-of select="valuetype/name"/>&gt;.ConvertibleLevel =&gt; m_level - Offset;
-        Scale&lt;<xsl:value-of select="valuetype/name"/>&gt; ILevel&lt;<xsl:value-of select="valuetype/name"/>&gt;.Scale =&gt; Proxy;
+        IQuantity&lt;<xsl:value-of select="$VALUE_T"/>&gt; ILevel&lt;<xsl:value-of select="$VALUE_T"/>&gt;.Level =&gt; m_level;
+        IQuantity&lt;<xsl:value-of select="$VALUE_T"/>&gt; ILevel&lt;<xsl:value-of select="$VALUE_T"/>&gt;.ConvertibleLevel =&gt; m_level - Offset;
+        Scale&lt;<xsl:value-of select="$VALUE_T"/>&gt; ILevel&lt;<xsl:value-of select="$VALUE_T"/>&gt;.Scale =&gt; Proxy;
         #endregion
 
         #region Constructor(s)
         public <xsl:value-of select="@name"/>(<xsl:value-of select="@unit"/> level) =&gt; m_level = level;
         public static explicit operator <xsl:value-of select="@name"/>(<xsl:value-of select="@unit"/> q) =&gt; new(q);
         
-        public <xsl:value-of select="@name"/>(<xsl:value-of select="valuetype/name"/> level) : this(new <xsl:value-of select="@unit"/>(level)) { }
-        public static explicit operator <xsl:value-of select="@name"/>(<xsl:value-of select="valuetype/name"/> q) =&gt; new(q);
+        public <xsl:value-of select="@name"/>(<xsl:value-of select="$VALUE_T"/> level) : this(new <xsl:value-of select="@unit"/>(level)) { }
+        public static explicit operator <xsl:value-of select="@name"/>(<xsl:value-of select="$VALUE_T"/> q) =&gt; new(q);
         #endregion
 
         #region Conversions
         // dimensionless:
-        <xsl:for-each select="family/relative">public static <xsl:value-of select="../../valuetype/name"/> From<xsl:value-of select="."/>(<xsl:value-of select="../../valuetype/name"/> q) =&gt; <xsl:value-of select="../../@unit"/>.From<xsl:value-of select="@unit"/>(q - <xsl:value-of select="."/>.OFFSET) + OFFSET;
+        <xsl:for-each select="family/relative">
+          <xsl:text>public static </xsl:text>
+          <xsl:value-of select="$VALUE_T"/>
+          <xsl:text> From</xsl:text><xsl:value-of select="."/>
+          <xsl:text>(</xsl:text>
+          <xsl:value-of select="$VALUE_T"/><xsl:text> q) =&gt; </xsl:text>
+          <xsl:value-of select="../../@unit"/>
+          <xsl:text>.From</xsl:text>
+          <xsl:value-of select="@unit"/>
+          <xsl:text>(q - </xsl:text>
+          <xsl:value-of select="."/><xsl:text>.OFFSET) + OFFSET;
+        </xsl:text>
         </xsl:for-each>
         // dimensional:
-        <!-- Conversion via cast expression is risky: may be misinterpreted as a constructor expression and will not be made!!!
-        <xsl:for-each select="family/relative">// public static explicit operator <xsl:value-of select="../../@name"/>(<xsl:value-of select="."/> q) =&gt; new(From<xsl:value-of select="."/>(q.<xsl:value-of select="$LEVEL"/>.<xsl:value-of select="$VALUE"/>));
+        <xsl:for-each select="family/relative">
+          <xsl:text>public static </xsl:text>
+          <xsl:value-of select="../../@name"/>
+          <xsl:text> From(</xsl:text>
+          <xsl:value-of select="."/>
+          <xsl:text> q) =&gt; new(From</xsl:text>
+          <xsl:value-of select="."/>
+          <xsl:text>(q.</xsl:text>
+          <xsl:value-of select="$LEVEL"/>
+          <xsl:text>.</xsl:text>
+          <xsl:value-of select="$VALUE"/>
+          <xsl:text>));
+        </xsl:text>
         </xsl:for-each>
-        -->
-        <xsl:for-each select="family/relative">public static <xsl:value-of select="../../@name"/> From(<xsl:value-of select="."/> q) =&gt; new(From<xsl:value-of select="."/>(q.<xsl:value-of select="$LEVEL"/>.<xsl:value-of select="$VALUE"/>));
-        </xsl:for-each>
-        public static <xsl:value-of select="@name"/> From(ILevel&lt;<xsl:value-of select="valuetype/name"/>&gt; q)
+        public static <xsl:value-of select="@name"/> From(ILevel&lt;<xsl:value-of select="$VALUE_T"/>&gt; q)
         {
             return q.Scale.Family == Family ?
                 new <xsl:value-of select="@name"/>(<xsl:value-of select="@unit"/>.From(q.ConvertibleLevel) + Offset) :
                 throw new InvalidOperationException($"Cannot convert \"{q.GetType().Name}\" to \"<xsl:value-of select="@name"/>\".");
         }
 
-        public static <xsl:value-of select="@name"/> From(IQuantity&lt;<xsl:value-of select="valuetype/name"/>&gt; q)
+        public static <xsl:value-of select="@name"/> From(IQuantity&lt;<xsl:value-of select="$VALUE_T"/>&gt; q)
         {
-            Scale&lt;<xsl:value-of select="valuetype/name"/>&gt;? scale = Catalog.Scale(Family, q.Unit);
+            Scale&lt;<xsl:value-of select="$VALUE_T"/>&gt;? scale = Catalog.Scale(Family, q.Unit);
             return scale is not null ?
                 From(scale.From(q.Value)) :
                 throw new InvalidOperationException($"Cannot convert \"{q.GetType().Name}\" to \"<xsl:value-of select="@name"/>\".");
@@ -127,12 +145,12 @@ namespace <xsl:value-of select="@ns"/>
         public static <xsl:value-of select="@name"/> operator -(<xsl:value-of select="@name"/> lhs, <xsl:value-of select="@unit"/> rhs) =&gt; new(lhs.<xsl:value-of select="$LEVEL"/> - rhs);
         public static <xsl:value-of select="@unit"/> operator -(<xsl:value-of select="@name"/> lhs, <xsl:value-of select="@name"/> rhs) =&gt; lhs.<xsl:value-of select="$LEVEL"/> - rhs.<xsl:value-of select="$LEVEL"/>;
         public static <xsl:value-of select="@name"/> operator -(<xsl:value-of select="@name"/> q) =&gt; new(-q.<xsl:value-of select="$LEVEL"/>);
-        public static <xsl:value-of select="@name"/> operator ++(<xsl:value-of select="@name"/> q) =&gt; new(q.<xsl:value-of select="$LEVEL"/>.<xsl:value-of select="$VALUE"/> + <xsl:value-of select="valuetype/one"/>);
-        public static <xsl:value-of select="@name"/> operator --(<xsl:value-of select="@name"/> q) =&gt; new(q.<xsl:value-of select="$LEVEL"/>.<xsl:value-of select="$VALUE"/> - <xsl:value-of select="valuetype/one"/>);
+        public static <xsl:value-of select="@name"/> operator ++(<xsl:value-of select="@name"/> q) { <xsl:value-of select="@unit"/> lv = q.<xsl:value-of select="$LEVEL"/>; return new(++lv); }
+        public static <xsl:value-of select="@name"/> operator --(<xsl:value-of select="@name"/> q) { <xsl:value-of select="@unit"/> lv = q.<xsl:value-of select="$LEVEL"/>; return new(--lv); }
         #endregion
 
         #region Formatting
-        public static string String(<xsl:value-of select="valuetype/name"/> level, string? format = null, IFormatProvider? fp = null) =&gt;
+        public static string String(<xsl:value-of select="$VALUE_T"/> level, string? format = null, IFormatProvider? fp = null) =&gt;
             <xsl:value-of select="@unit"/>.String(level, format ?? <xsl:value-of select="@name"/>.Format, fp);
 
         public override string ToString() =&gt; String(m_level.m_value);
@@ -142,24 +160,19 @@ namespace <xsl:value-of select="@ns"/>
         #endregion
 
         #region Static fields and properties (DO NOT CHANGE!)
-        public const int Family = <xsl:value-of select="family/@id"/>;
+        public const int Family = <xsl:value-of select="family/@id"/>;    <xsl:if test="family/@prime"><xsl:text>// </xsl:text><xsl:value-of select="family/@prime"/></xsl:if>
         public static string Format { get; set; } = "<xsl:value-of select="format"/>";
         public static readonly <xsl:value-of select="@unit"/> Offset = new(OFFSET);
-        public static readonly Scale&lt;<xsl:value-of select="valuetype/name"/>&gt; Proxy = new <xsl:value-of select="@name"/>_Proxy();
+        public static readonly Scale&lt;<xsl:value-of select="$VALUE_T"/>&gt; Proxy = new <xsl:value-of select="@name"/>_Proxy();
         #endregion
-        <!--
-        #region Predefined levels
-        public static readonly <xsl:value-of select="@name"/> Zero = new(<xsl:value-of select="valuetype/zero"/>);
-        #endregion
-        -->
     }
 
-    public partial class <xsl:value-of select="@name"/>_Proxy : Scale&lt;<xsl:value-of select="valuetype/name"/>&gt;
+    public partial class <xsl:value-of select="@name"/>_Proxy : Scale&lt;<xsl:value-of select="$VALUE_T"/>&gt;
     {
         #region Properties
         public override int Family =&gt; <xsl:value-of select="@name"/>.Family;
         public override string Format { get =&gt; <xsl:value-of select="@name"/>.Format; set { <xsl:value-of select="@name"/>.Format = value; } }
-        public override IQuantity&lt;<xsl:value-of select="valuetype/name"/>&gt; Offset =&gt; <xsl:value-of select="@name"/>.Offset;
+        public override IQuantity&lt;<xsl:value-of select="$VALUE_T"/>&gt; Offset =&gt; <xsl:value-of select="@name"/>.Offset;
         public override Unit Unit =&gt; <xsl:value-of select="@unit"/>.Proxy;
         #endregion
 
@@ -171,9 +184,9 @@ namespace <xsl:value-of select="@ns"/>
         #endregion
 
         #region Methods
-        public override ILevel&lt;<xsl:value-of select="valuetype/name"/>&gt; From(<xsl:value-of select="valuetype/name"/> value) =&gt; new <xsl:value-of select="@name"/>(value);
-        public override ILevel&lt;<xsl:value-of select="valuetype/name"/>&gt; From(ILevel&lt;<xsl:value-of select="valuetype/name"/>&gt; level) =&gt; <xsl:value-of select="@name"/>.From(level);
-        public override ILevel&lt;<xsl:value-of select="valuetype/name"/>&gt; From(IQuantity&lt;<xsl:value-of select="valuetype/name"/>&gt; quantity) =&gt; <xsl:value-of select="@name"/>.From(quantity);
+        public override ILevel&lt;<xsl:value-of select="$VALUE_T"/>&gt; From(<xsl:value-of select="$VALUE_T"/> value) =&gt; new <xsl:value-of select="@name"/>(value);
+        public override ILevel&lt;<xsl:value-of select="$VALUE_T"/>&gt; From(ILevel&lt;<xsl:value-of select="$VALUE_T"/>&gt; level) =&gt; <xsl:value-of select="@name"/>.From(level);
+        public override ILevel&lt;<xsl:value-of select="$VALUE_T"/>&gt; From(IQuantity&lt;<xsl:value-of select="$VALUE_T"/>&gt; quantity) =&gt; <xsl:value-of select="@name"/>.From(quantity);
         #endregion
     }
 }

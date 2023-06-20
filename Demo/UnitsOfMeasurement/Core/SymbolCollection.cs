@@ -11,14 +11,14 @@
 ********************************************************************************/
 
 using System;
-using System.Collections;   // IEnumerable.GetEnumerator()
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Demo.UnitsOfMeasurement
 {
     /// <summary>
-    /// TODO: Update summary.
+    /// A collection of symbols (tags) of a unit.
     /// </summary>
     public class SymbolCollection : IEnumerable<string>
     {
@@ -27,11 +27,23 @@ namespace Demo.UnitsOfMeasurement
         #endregion
 
         #region Properties
+        /// <summary>
+        /// Number of symbols.
+        /// </summary>
         public int Count => m_collection.Length;
+
+        /// <summary>
+        /// Default symbol.
+        /// </summary>
         public string Default => m_collection[0];
         #endregion
 
         #region Constructor(s)
+        /// <summary>
+        /// <see cref="SymbolCollection"/> constructor.
+        /// </summary>
+        /// <param name="symbols">Symbol array.</param>
+        /// <exception cref="ArgumentException"></exception>
         public SymbolCollection(params string[] symbols)
         {
             if ((symbols is null) || (symbols.Length < 1) || (Array.FindIndex(symbols, s => string.IsNullOrWhiteSpace(s)) >= 0))
@@ -47,12 +59,26 @@ namespace Demo.UnitsOfMeasurement
         #endregion
 
         #region Indexer, Intersection
-        public string this[int index]
-        {
-            get { return m_collection[index]; }
-        }
+        /// <summary>
+        /// Returns symbol of the specified index.
+        /// </summary>
+        /// <param name="index">Symbol index.</param>
+        /// <exception cref="IndexOutOfRangeException"></exception>
+        public string this[int index] => m_collection[index];
+
+        /// <summary>
+        /// Finds the index of the first occurence of a symbol in the unit's symbol list.
+        /// </summary>
+        /// <param name="symbol"></param>
+        /// <returns>Index (zero-based) of the first occurence of the <paramref name="symbol"/>, if found; otherwise -1.</returns>
         public int IndexOf(string symbol) => Array.FindIndex(m_collection, s => string.CompareOrdinal(s, symbol) == 0);
-        public bool Intersects(IEnumerable<string> symbols) => symbols.Any(s => IndexOf(s) >= 0);
+
+        /// <summary>
+        /// Checks whether any of the unit's symbols appear in another symbol collection.
+        /// </summary>
+        /// <param name="another">Another symbol collection.</param>
+        /// <returns><see langword="true"/> when common elements are found, otherwise <see langword="false"/>.</returns>
+        public bool Intersects(IEnumerable<string> another) => another.Any(s => IndexOf(s) >= 0);
         #endregion
 
         #region Formatting

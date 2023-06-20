@@ -1,6 +1,6 @@
 /*******************************************************************************
 
-    Units of Measurement for C# applications
+    Units of Measurement for C# and C++ applications
 
     Copyright (C) Marek Aniola
 
@@ -15,12 +15,26 @@
 
 ////////////////////////////////////////////////////////////////////////////////
 //
-//      Length
+//      Primary Units
 //
 unit Meter "m" = <Length>;
+unit Second "s" = <Time>;
+unit Kilogram "kg" = <Mass>;
+unit DegKelvin "K" "deg.K" = <Temperature>;
+unit Ampere "A" = <ElectricCurrent>;
+unit Mole "mol" = <AmountOfSubstance>;
+unit Candela "cd" = <LuminousIntensity>;
+
+unit<decimal> EUR "EUR" = <Money>;  // Euro
+
+////////////////////////////////////////////////////////////////////////////////
+//
+//      Length
+//
 unit Centimeter "cm" = 100 * Meter;
 unit Millimeter "mm" = 1000 * Meter;
 //unit Micron "\u00B5m" "micrometer" = 1.0e6 * Meter;
+//unit Nanometer "nm" "nanometer" = 1.0e9 * Meter;
 //unit Angstrom "\u00C5" "angstrom" = 1.0e10 * Meter;
 unit Kilometer "km" = Meter / 1000;
 
@@ -36,7 +50,6 @@ unit /* international */ Mile "mil" = Yard / 1760;
 //
 //      Time
 //
-unit Second "s" = <Time>;
 unit Minute "min" = Second / 60;
 unit Hour "h" = Minute / 60;
 //unit Day "d" = Hour / 24;
@@ -48,9 +61,8 @@ unit Hour "h" = Minute / 60;
 //
 //      Mass
 //
-unit Kilogram "kg" = <Mass>;
 unit Gram "g" = 1000 * Kilogram;
-//unit Microgram "\u03BCg" "mcg" = 1.0e6 * Gram;
+//unit Microgram "\u03BCg" "ug" = 1.0e6 * Gram;
 unit Tonne "t" = Kilogram / 1000;
 
 unit /* avoirdupois */ Pound "lb" = Kilogram / 0.45359237;
@@ -60,7 +72,6 @@ unit /* avoirdupois */ Ounce "ou" = Pound * 16;
 //
 //      Temperature
 //
-unit DegKelvin "K" "deg.K" = <Temperature>;
 unit DegCelsius "\u00B0C" "deg.C" = DegKelvin;
 unit DegRankine "\u00B0R" "deg.R" = (9 / 5) * DegKelvin;
 unit DegFahrenheit "\u00B0F" "deg.F" = (9 / 5) * DegKelvin;
@@ -74,19 +85,16 @@ scale Fahrenheit AbsoluteZero = DegFahrenheit -273.15 * (9 / 5) + 32;
 //
 //      Electric Current
 //
-unit Ampere "A" = <ElectricCurrent>;
 
 ////////////////////////////////////////////////////////////////////////////////
 //
 //      Amount of Substance
 //
-unit Mole "mol" = <AmountOfSubstance>;
 
 ////////////////////////////////////////////////////////////////////////////////
 //
 //      Luminous Intensity
 //
-unit Candela "cd" = <LuminousIntensity>;
 
 ////////////////////////////////////////////////////////////////////////////////
 //
@@ -95,7 +103,6 @@ unit Candela "cd" = <LuminousIntensity>;
 //      NOTE: the rates (conversion factors) below
 //      are to be updated on application startup.
 //
-unit<decimal> EUR "EUR" = <Money>;  // Euro
 unit<decimal> USD "USD" = 1.3433 * EUR; // US Dollar
 //unit<decimal> JPY "JPY" = 136.74 * EUR;  // Japanese Yen
 //unit<decimal> BGN "BGN" = 1.9558 * EUR;  // BulgarianLev
@@ -136,28 +143,28 @@ unit<decimal> PLN "PLN" = 4.1437 * EUR; // Polish Zloty
 //      NOTE: explicit format "{0}{1}" used in places
 //      to remove space separating {value} and {symbol}
 //
-//      NOTE: arithmetic expressions can use string literals e.g. "System.Math.PI".
-//      In general parser blindly accepts string literals as numbers of unknown value
-//      leaving their evaluation and syntax check to C# compiler.
+//      NOTE: arithmetic expressions can use string literals e.g. "Math.PI".
+//      In general parser blindly accepts string literals as numbers of unknown
+//      value leaving their evaluation and syntax check to the compiler.
 //
-//      NOTE: "System.Math.PI" and "System.Math.E" (if written exactly like this)
-//      are the exception to the above rule: their numeric value is recognized
-//      and used to validate "unit[<double>]" and "scale[<double>]" definitions.
+//      NOTE: the literals "Math.PI" (or "System.Math.PI") and "Math.E" (or
+//      "System.Math.E") are an exception to the above rule: they are recognized
+//      and their numeric value used to validate definitions of "units" and "scale".
 //
 unit Radian "rad" = <>;
-unit Degree "\u00B0" "deg" : "{0}{1}" = (180 / "System.Math.PI") * Radian;
-//unit ArcMinute "'" : "{0}{1}" = 60 * Degree;
-//unit ArcSecond "\"" : "{0}{1}" = 60 * ArcMinute;
-unit Grad "grad" = (200 / "System.Math.PI") * Radian;
+unit Degree "\u00B0" "deg" : "{0}{1}" = (180 / "Math.PI") * Radian;
+//unit ArcMinute "\u2032" "'" : "{0}{1}" = 60 * Degree;
+//unit ArcSecond "\u2033" "\"" : "{0}{1}" = 60 * ArcMinute;
+unit Grad "grad" = (200 / "Math.PI") * Radian;
 
-unit Turn /* aka. cycle, revolution, rotation */ "tr" = Radian / (2 * "System.Math.PI");
+unit Turn /* aka. cycle, revolution, rotation */ "tr" = Radian / (2 * "Math.PI");
 
 ///////////////////////////////////////////////////////////////////////////////
 //
 //      Solid angle (dimensionless)
 //
 //unit Steradian "sr" = <>;
-//unit SquareDegree "deg\u00B2" "deg2" = ((180 / "System.Math.PI") * (180 / "System.Math.PI")) * Steradian;
+//unit SquareDegree "deg\u00B2" "deg2" = ((180 / "Math.PI") * (180 / "Math.PI")) * Steradian;
 
 ////////////////////////////////////////////////////////////////////////////////
 //
@@ -168,10 +175,6 @@ unit Hertz "Hz" = 1 / Second;
 //unit MegaHertz "MHz" = KiloHertz / 1000;
 //unit GigaHertz "GHz" = MegaHertz / 1000;
 
-//unit Event_Sec "evt/s" = Hertz;
-//unit Event_Min "evt/m" = 1 / Minute | 60 * Hertz;
-unit Event_Hour "evt/h" = 1 / Hour | 3600 * Hertz;
-
 ////////////////////////////////////////////////////////////////////////////////
 //
 //      Angular Frequency (aka. Rotational Velocity)
@@ -180,7 +183,7 @@ unit Event_Hour "evt/h" = 1 / Hour | 3600 * Hertz;
 //
 //              Degree / Second
 //      and
-//              (180 / "System.Math.PI") * Radian_Sec
+//              (180 / "Math.PI") * Radian_Sec
 //
 //      in Degree_Sec definition below are consistent i.e. whether they
 //      produce the same conversion factor and dimension.
@@ -189,18 +192,16 @@ unit Event_Hour "evt/h" = 1 / Hour | 3600 * Hertz;
 //      as numbers of unknown value and this prevents parser to verify
 //      whether the alternative formulas produce the same factor.
 //
-//      NOTE: "System.Math.PI" and "System.Math.E" literals are exceptions
-//      to this rule if used in "unit[<double>]" and "scale[<double>]"
-//      definitions: parser recognizes them (in these definitions only)
-//      and uses their value for validation.
+//      NOTE: the literals "Math.PI" and "Math.E" are exceptions
+//      to this rule: parser recognizes them and uses their value
+//      for validation.
 //
-//      NOTE: other literals or any literal in non-<double> definitions
-//      prevents the factor check: you have to take care of the consistency
-//      by other means (e.g. unit tests).
+//      NOTE: other literals prevents the factor check: you have to
+//      take care of the consistency by other means (e.g. unit tests).
 //
 unit Radian_Sec "rad/s" = Radian / Second | Radian * Hertz;
-unit Degree_Sec "\u00B0/s" "degree/s" = Degree / Second | (180 / "System.Math.PI") * Radian_Sec;
-unit RPM "rpm" = Turn / Minute | (30 / "System.Math.PI") * Radian_Sec;
+unit Degree_Sec "\u00B0/s" "degree/s" = Degree / Second | (180 / "Math.PI") * Radian_Sec;
+unit RPM "rpm" = Turn / Minute | (30 / "Math.PI") * Radian_Sec;
 
 ////////////////////////////////////////////////////////////////////////////////
 //
@@ -289,14 +290,14 @@ unit Meter2_Sec2 "m\u00B2/s\u00B2" "m2/s2" = Meter_Sec * Meter_Sec | Meter_Sec2 
 //unit Gram_Meter "g/m" = Gram / Meter;
 //unit Gram_Kilometer "g/km" = Gram / Kilometer | Gram_Meter * 1000;
 //unit Gram_Mile "g/mi" = Gram / Mile | Gram_Meter / (1000/(25.4*12*3*1760));
-//unit Microgram_Meter "\u03BCg/m" "mcg/m" = Microgram / Meter | 1000000 * Gram_Meter;
+//unit Microgram_Meter "\u03BCg/m" "ug/m" = Microgram / Meter | 1000000 * Gram_Meter;
 
 ////////////////////////////////////////////////////////////////////////////////
 //
 //      Volumetric mass density (aka. specific mass, mass concentration)
 //
 //unit Gram_Meter3 "g/m\u00B3" "g/m3" = Gram / Meter3;
-//unit Microgram_Meter3 "\u03BCg/m\u00B3" "mcg/m3" = Microgram / Meter3 | 1.0e6 * Gram_Meter3;
+//unit Microgram_Meter3 "\u03BCg/m\u00B3" "ug/m3" = Microgram / Meter3 | 1.0e6 * Gram_Meter3;
 
 ////////////////////////////////////////////////////////////////////////////////
 //
@@ -309,7 +310,7 @@ unit Meter2_Sec2 "m\u00B2/s\u00B2" "m2/s2" = Meter_Sec * Meter_Sec | Meter_Sec2 
 //      Molar mass
 //
 //unit Gram_Mole "g/mol" = Gram / Mole | Gram_Meter3 * Meter3_Mole;
-//unit Microgram_Mole "\u03BCg/mol" "mcg/mol" = Microgram / Mole | Microgram_Meter3 * Meter3_Mole | 1.0e6 * Gram_Mole;
+//unit Microgram_Mole "\u03BCg/mol" "ug/mol" = Microgram / Mole | Microgram_Meter3 * Meter3_Mole | 1.0e6 * Gram_Mole;
 
 ////////////////////////////////////////////////////////////////////////////////
 //
@@ -357,7 +358,7 @@ unit Watt "W" = Joule / Second;
 //          Joule operator *(Newton lhs, Meter rhs)
 //          NewtonMeter operator *(Newton lhs, Meter rhs)
 //
-//      and C# wouldn't know which one to apply when it finds Newton * Meter product.
+//      and the compiler wouldn't know which one to apply when it finds such product.
 //
 //      To work around the problem you can make use of wedge product ("^" operator
 //      instead of star "*"):
@@ -455,17 +456,22 @@ unit Siemens "S" = Ampere / Volt;
 //       NOTE: should the above definition specify also the formula: 1 / Ohm,
 //       then the following operators would be also generated (in Siemens.cs file):
 //
-//       public static Ohm operator /(double lhs, Siemens rhs) { return new Ohm(lhs / rhs.Value); }
-//       public static double operator *(Siemens lhs, Ohm rhs) { return lhs.Value * rhs.Value; }
-//       public static double operator *(Ohm lhs, Siemens rhs) { return lhs.Value * rhs.Value; }
+//       public static Ohm operator /(double lhs, Siemens rhs) => new(lhs / rhs.Value);
+//       public static double operator *(Siemens lhs, Ohm rhs) => lhs.Value * rhs.Value;
+//       public static double operator *(Ohm lhs, Siemens rhs) => lhs.Value * rhs.Value;
 //
 //       which is not exactly what the formula means (i.e. the reciprocal of resitance).
-//       It'd be better to implement it as a property in an extension file (OhmEx.cs),
-//       for example:
+//       It'd be better to implement it as a pair of properties in extension files
+//       (e.g.: OhmEx.cs and SiemensEx.cs), for example:
 //
 //       public partial struct Ohm
 //       {
-//           public Siemens Reciprocal { get { return new Siemens(1.0 / Value); } }
+//           public Siemens Conductance => new(1.0 / Value);
+//       }
+//
+//       public partial struct Siemens
+//       {
+//           public Ohm Resistance => new(1.0 / Value);
 //       }
 //
 

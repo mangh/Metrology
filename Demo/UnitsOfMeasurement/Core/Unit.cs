@@ -16,7 +16,8 @@ using System;
 namespace Demo.UnitsOfMeasurement
 {
     /// <summary>
-    /// Unit proxy base (common unit properties independent of value type).
+    /// Unit's base proxy
+    /// (provides properties independent of the underlying numeric type).
     /// </summary>
     public abstract class Unit : Proxy
     {
@@ -27,17 +28,33 @@ namespace Demo.UnitsOfMeasurement
         #endregion
 
         #region Properties
+        /// <summary>
+        /// Unit family id.
+        /// </summary>
         public abstract int Family { get; }
+
+        /// <summary>
+        /// Unit dimension.
+        /// </summary>
         public abstract Dimension Sense { get; }
+
+        /// <summary>
+        /// Unit symbols (tags).
+        /// </summary>
         public abstract SymbolCollection Symbol { get; }
+
+        /// <summary>
+        /// Quantity formatting string.
+        /// </summary>
         public abstract string Format { get; set; }
         #endregion
 
         #region Constructor(s)
         /// <summary>
-        /// Create unit proxy from a <paramref name="unit"/> type.
+        /// <see cref="Unit"/> constructor.
         /// </summary>
-        /// <param name="unit">unit of any value type.</param>
+        /// <param name="unit">The original unit (of any value type) to be represented by this proxy.</param>
+        /// <exception cref="NotSupportedException">Thrown by base class in the .NET Compact Framework environment.</exception>
         protected Unit(Type unit) :
             base(unit)
         {
@@ -50,19 +67,28 @@ namespace Demo.UnitsOfMeasurement
     }
 
     /// <summary>
-    /// Unit proxy (specific for the value type parameter <typeparamref name="T"/>).
+    /// Unit proxy (for the specific value type <typeparamref name="T"/>).
     /// </summary>
-    /// <typeparam name="T">value type underlying the unit (<see cref="double"/>, <see cref="decimal"/>, <see cref="float"/>).</typeparam>
+    /// <typeparam name="T">Value type underlying the unit (<see cref="double"/>, <see cref="decimal"/>, <see cref="float"/>).</typeparam>
     public abstract class Unit<T> : Unit
         where T : struct
     {
         #region Properties
+        /// <summary>
+        /// Unit alias (name) to be used when reporting exceptions.
+        /// </summary>
         public string Alias { get; private set; }
 
-        // Basically, factors for all units - except monetary - are constant. 
-        // Therefore monetary units have to override both getter and setter accessors.
-        // All other, "normal" units have to override the getter only and leave the setter as-is
-        // i.e. raise exception on attempt to change the factor.
+        /// <summary>
+        /// Unit conversion factor.
+        /// </summary>
+        /// <remarks>
+        /// NOTE:<br/>
+        /// As a rule, conversion factors are constant for all units - except monetary.<br/>
+        /// Monetary units have to override both getter and setter below (to allow for a factor change).<br/>
+        /// All other units have to override the getter only and leave the setter as-is i.e. raise exception<br/>
+        /// on an attempt to change the conversion factor.
+        /// </remarks>
         public virtual T Factor
         {
             get { throw new NotImplementedException($"{Alias}.Factor Proxy getter not implemented."); }
@@ -71,10 +97,12 @@ namespace Demo.UnitsOfMeasurement
         #endregion
 
         #region Constructor(s)
-
-        /// <summary>Creates unit proxy from a <paramref name="unit"/> type.</summary>
-        /// <param name="unit">unit type implementing <see cref="IQuantity{T}"/> interface.</param>
-        /// <exception cref="System.ArgumentException">thrown when <paramref name="unit"/> argument is not a value type implementing <see cref="IQuantity{T}"/> interface.</exception>
+        /// <summary>
+        /// <see cref="Unit{T}"/> constructor.
+        /// </summary>
+        /// <param name="unit">The original unit (implementing the <see cref="IQuantity{T}"/> interface) to be represented by this proxy.</param>
+        /// <exception cref="System.ArgumentException"><paramref name="unit"/> argument is not a value type implementing <see cref="IQuantity{T}"/> interface.</exception>
+        /// <exception cref="NotSupportedException">Thrown by base class in the .NET Compact Framework environment.</exception>
         protected Unit(Type unit) :
             base(unit)
         {
@@ -84,21 +112,27 @@ namespace Demo.UnitsOfMeasurement
                 throw new ArgumentException($"\"{Alias}\" is not a unit type implementing {typeof(IQuantity<T>).Name} interface.");
             }
         }
-        /// <summary>Verifies whether the type is a unit type implementing <see cref="IQuantity{T}"/> interface.</summary>
-        /// <param name="t">type to be verified.</param>
-        /// <returns>"true" for a valid unit type, "false" otherwise.</returns>
+        /// <summary>
+        /// Verifies whether the type is a unit i.e. a value type implementing the <see cref="IQuantity{T}"/> interface.
+        /// </summary>
+        /// <param name="t">Type to be verified.</param>
+        /// <returns><see langword="true"/> for a unit type, otherwise <see langword="false"/>.</returns>
         public static bool IsAssignableFrom(Type t) => t.IsValueType && typeof(IQuantity<T>).IsAssignableFrom(t);
         #endregion
 
         #region Methods
-        /// <summary>Creates <see cref="Unit{T}"/> quantity from a plain <paramref name="value"/>.</summary>
-        /// <param name="value">value to be assigned to the quantity.</param>
-        /// <returns><see cref="Unit{T}"/> quantity for the the given <paramref name="value"/>.</returns>
+        /// <summary>
+        /// Creates quantity (in <see cref="Unit{T}"/> units) from a plain numeric (unitless) <paramref name="value"/>.
+        /// </summary>
+        /// <param name="value">Plain numeric value.</param>
+        /// <returns>Quantity (in <see cref="Unit{T}"/> units) for the the given numeric <paramref name="value"/>.</returns>
         public abstract IQuantity<T> From(T value);
 
-        /// <summary>Converts quantity to the unit of measurement represented by this <see cref="Unit{T}"/>.</summary>
-        /// <param name="quantity">Quantity to be converted from.</param>
-        /// <returns>quantity converted to the unit of measurement represented by this <see cref="Unit{T}"/>.</returns>
+        /// <summary>
+        /// Converts <paramref name="quantity"/> from one unit to another.
+        /// </summary>
+        /// <param name="quantity">Input quantity to be converted.</param>
+        /// <returns>Quantity (in <see cref="Unit{T}"/> units) converted from the <paramref name="quantity"/> (in some other units).</returns>
         public abstract IQuantity<T> From(IQuantity<T> quantity);
         #endregion
     }

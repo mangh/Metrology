@@ -13,22 +13,23 @@
 namespace Demo.UnitsOfMeasurement
 {
     /// <summary>
-    /// Scale level interface.
+    /// Level interface
+    /// (to be implemented by scales).
     /// </summary>
     /// <typeparam name="T">
-    /// numeric type underlying the level and its scale: <see cref="double"/>, <see cref="float"/> or <see cref="decimal"/>.
+    /// A numeric type for implementing level arithmetic: <see cref="double"/>, <see cref="float"/> or <see cref="decimal"/>.
     /// </typeparam>
     public interface ILevel<T> where T : struct
     {
         /// <summary>
-        /// Level relative to the <see cref="Scale"/> point zero
-        /// (in <see cref="Scale.Unit"/> units).
+        /// Level relative to (distance from) the zero point of the <see cref="Scale"/>
+        /// (in scale units).
         /// </summary>
         IQuantity<T> Level { get; }
 
         /// <summary>
-        /// Level relative to the <see cref="Scale"/> family common reference point
-        /// (in <see cref="ILevel{t}.Scale.Unit"/> units).
+        /// Level relative to (distance from) the common reference point of the family to which the <see cref="Scale"/> belongs
+        /// (in scale units).
         /// </summary>
         IQuantity<T> ConvertibleLevel { get; }
 

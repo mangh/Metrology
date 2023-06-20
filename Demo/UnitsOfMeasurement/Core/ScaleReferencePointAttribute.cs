@@ -14,6 +14,13 @@ using System;
 
 namespace Demo.UnitsOfMeasurement
 {
+    /// <summary>
+    /// Scale reference point name (to distinguish scales belonging to different families).
+    /// </summary>
+    /// <remarks>
+    /// NOTE:<br/>
+    /// Scales belonging to the same family share the same reference point.
+    /// </remarks>
     [AttributeUsage(AttributeTargets.Struct, Inherited = false, AllowMultiple = false)]
     public class ScaleReferencePointAttribute : Attribute
     {
