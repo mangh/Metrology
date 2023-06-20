@@ -1,4 +1,4 @@
-# Units of Measurement for `dotnet` _(under reconstruction)_
+# Units of Measurement for `dotnet`<br/>_(under reconstruction)_
 ## Product description
 
 * _dotnet_ project template for creating Units of Measurement C# class library.

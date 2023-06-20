@@ -39,19 +39,28 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "image", "image", "{ABB4BD43
 		Docs\image\VSProject.png = Docs\image\VSProject.png
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Definitions", "Generator\Definitions\Definitions.csproj", "{9E2F7F91-0EF8-4E07-B636-1EC922467860}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Definitions", "Generator\Definitions\Definitions.csproj", "{9E2F7F91-0EF8-4E07-B636-1EC922467860}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Model", "Generator\Model\Model.csproj", "{2493D361-1D4C-4E43-AA5D-B03CC2496671}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Model", "Generator\Model\Model.csproj", "{2493D361-1D4C-4E43-AA5D-B03CC2496671}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitGenerator", "Generator\UnitGenerator\UnitGenerator.csproj", "{F1BBC84C-E26B-40FD-A02B-6B44E7B6013C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitGenerator", "Generator\UnitGenerator\UnitGenerator.csproj", "{F1BBC84C-E26B-40FD-A02B-6B44E7B6013C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SourceGenerator", "Generator\SourceGenerator\SourceGenerator.csproj", "{7793F138-9498-4C1C-A2F4-C4CBF6A77B83}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SourceGenerator", "Generator\SourceGenerator\SourceGenerator.csproj", "{7793F138-9498-4C1C-A2F4-C4CBF6A77B83}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ProjectTemplate", "ProjectTemplate", "{88701C30-EA27-4CCC-9EBE-709C841AF94D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSUnits", "ProjectTemplate\CSUnits\CSUnits.csproj", "{9BD55998-E148-4429-8B47-F63668FD64E0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CSUnits", "ProjectTemplate\CSUnits\CSUnits.csproj", "{9BD55998-E148-4429-8B47-F63668FD64E0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CPPUnits", "ProjectTemplate\CPPUnits\CPPUnits.csproj", "{A3213251-843E-4CB3-BCE7-92AF0CB89301}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CPPUnits", "ProjectTemplate\CPPUnits\CPPUnits.csproj", "{A3213251-843E-4CB3-BCE7-92AF0CB89301}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{706AD40B-2D2F-4CC1-97F2-0BEA97412C50}"
+	ProjectSection(SolutionItems) = preProject
+		Icon.ico = Icon.ico
+		Icon.png = Icon.png
+		LICENSE = LICENSE
+		README.md = README.md
+		READMETOO.md = READMETOO.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
