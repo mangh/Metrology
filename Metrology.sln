@@ -54,6 +54,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "image", "image", "{ABB4BD43
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Definitions", "Generator\Definitions\Definitions.csproj", "{9E2F7F91-0EF8-4E07-B636-1EC922467860}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Model", "Generator\Model\Model.csproj", "{2493D361-1D4C-4E43-AA5D-B03CC2496671}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -104,6 +106,10 @@ Global
 		{9E2F7F91-0EF8-4E07-B636-1EC922467860}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9E2F7F91-0EF8-4E07-B636-1EC922467860}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9E2F7F91-0EF8-4E07-B636-1EC922467860}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2493D361-1D4C-4E43-AA5D-B03CC2496671}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2493D361-1D4C-4E43-AA5D-B03CC2496671}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2493D361-1D4C-4E43-AA5D-B03CC2496671}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2493D361-1D4C-4E43-AA5D-B03CC2496671}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -121,6 +127,7 @@ Global
 		{34B097B2-079C-4D8F-803B-23398A6F6915} = {0C3A78A2-33D6-42BE-A00E-375D67325EBC}
 		{ABB4BD43-CF82-4C7D-96F7-09D19ADAA6FC} = {072A2266-1F02-4DE0-BAA9-94CC78B69779}
 		{9E2F7F91-0EF8-4E07-B636-1EC922467860} = {F2AADC68-36F3-4717-90E0-0241E9DE04D9}
+		{2493D361-1D4C-4E43-AA5D-B03CC2496671} = {F2AADC68-36F3-4717-90E0-0241E9DE04D9}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {54F7E0AD-7097-4699-AE43-65D796031F54}
