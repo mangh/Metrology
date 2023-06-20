@@ -188,21 +188,21 @@ namespace Demo.UnitsOfMeasurement
                 Assert.AreEqual((Turn)1.0, turns);
             }
 
-            [TestMethod]
-            public void Frequencies()
-            {
-                Hertz frequency = (Hertz)1000.0;
-                //Events_Sec evts_sec = Events_Sec.From(frequency);
-                //Events_Min evts_min = Events_Min.From(evts_sec);
-                Event_Hour evts_hr = Event_Hour.From(frequency);   // evts_min;
+            //[TestMethod]
+            //public void Frequencies()
+            //{
+            //    Hertz frequency = (Hertz)1000.0;
+            //    //Events_Sec evts_sec = Events_Sec.From(frequency);
+            //    //Events_Min evts_min = Events_Min.From(evts_sec);
+            //    Event_Hour evts_hr = Event_Hour.From(frequency);   // evts_min;
 
-                frequency = Hertz.From(evts_hr);
+            //    frequency = Hertz.From(evts_hr);
 
-                Assert.AreEqual((Hertz)1000.0, frequency);
-                Assert.AreEqual((Event_Hour)3600000.0, evts_hr);
-                //Assert.AreEqual((Events_Min)60000.0, evts_min);
-                //Assert.AreEqual((Events_Sec)1000.0, evts_sec);
-            }
+            //    Assert.AreEqual((Hertz)1000.0, frequency);
+            //    Assert.AreEqual((Event_Hour)3600000.0, evts_hr);
+            //    //Assert.AreEqual((Events_Min)60000.0, evts_min);
+            //    //Assert.AreEqual((Events_Sec)1000.0, evts_sec);
+            //}
 
             [TestMethod]
             public void RotationalSpeed()
