@@ -25,7 +25,7 @@ namespace Bullet
 
         // Output formats
         const string FMT_ANGLE = "{0,5:F2}{1}";     // quantity value {0}, width 5, format "F2" followed by unit symbol {1} (no blank between value and symbol)
-        const string FMT_TIME  = "{0,3:F0} {1}";    // quantity value {0}, width 3, format "F0" followed by blank and unit symbol {1}
+        const string FMT_TIME = "{0,3:F0} {1}";     // quantity value {0}, width 3, format "F0" followed by blank and unit symbol {1}
         const string FMT_COORD = "{0,5:F0} {1}";    // quantity value {0}, width 5, format "F0" followed by blank and unit symbol {1}
 
 #if DIMENSIONAL_ANALYSIS
@@ -66,10 +66,10 @@ namespace Bullet
                 PrintResults(m, p);
 
                 Console.WriteLine("\n{0}. quantity/plain performance ratio: {1:F0} / {2:F0} = {3:F2} ({4})",
-                    measured.benchmark.Count, 
-                    measured.timer.elapsed, 
-                    plain.timer.elapsed, 
-                    measured.timer.elapsed / plain.timer.elapsed, 
+                    measured.benchmark.Count,
+                    measured.timer.elapsed,
+                    plain.timer.elapsed,
+                    measured.timer.elapsed / plain.timer.elapsed,
                     DIMENSIONAL_ANALYSIS_STATUS
                 );
                 Console.WriteLine("Press Esc to conclude, any other key to retry...");
@@ -135,9 +135,9 @@ namespace Bullet
                     ymax.Value - p[i].Item4
                 );
 #else
-                Console.WriteLine("{0} | {1} | {2} | {3}", 
-                    Demo.UnitsOfMeasurement.Degree.String(slope, FMT_ANGLE), 
-                    Demo.UnitsOfMeasurement.Second.String(tmax, FMT_TIME), 
+                Console.WriteLine("{0} | {1} | {2} | {3}",
+                    Demo.UnitsOfMeasurement.Degree.String(slope, FMT_ANGLE),
+                    Demo.UnitsOfMeasurement.Second.String(tmax, FMT_TIME),
                     Demo.UnitsOfMeasurement.Meter.String(xmax, FMT_COORD),
                     Demo.UnitsOfMeasurement.Meter.String(ymax, FMT_COORD));
 
@@ -155,8 +155,8 @@ namespace Bullet
                 if ((slopeErr != 0.0) || (tmaxErr != 0.0) || (xmaxErr != 0.0) || (ymaxErr != 0.0))
                 {
                     Console.WriteLine("{0} | {1} | {2} | {3}  *** (m - p) diff ***",
-                        Demo.UnitsOfMeasurement.Degree.String(slopeErr), 
-                        Demo.UnitsOfMeasurement.Second.String(tmaxErr), 
+                        Demo.UnitsOfMeasurement.Degree.String(slopeErr),
+                        Demo.UnitsOfMeasurement.Second.String(tmaxErr),
                         Demo.UnitsOfMeasurement.Meter.String(xmaxErr),
                         Demo.UnitsOfMeasurement.Meter.String(ymaxErr)
                     );
@@ -165,7 +165,7 @@ namespace Bullet
         }
     }
 }
-/* Sample output (.NET 6.0, dimensional analysis: OFF):
+/* Sample output (.NET 7.0, dimensional analysis: OFF):
  * 
  * Units of Measurement for C# applications. Copyright (c) Marek Aniola.
  * This program is provided to you under the terms of the license
@@ -203,33 +203,25 @@ namespace Bullet
  * 89,90° | 146 s |   182 m |  6515 m
  * 90,00° | 146 s |     0 m |  6515 m
  * 
- * 32. quantity/plain performance ratio: 2427 / 2506 = 0,97 (dimensional analysis: OFF)
+ * 32. quantity/plain performance ratio: 2199 / 2421 = 0,91 (dimensional analysis: OFF)
  * Press Esc to conclude, any other key to retry...
  * 
- * Average performance ratio for 32 run(s): 2515±236(9%) / 2495±225(9%) = 1,01±0,07(7%).
+ * Average performance ratio for 32 run(s): 1863±364(20%) / 1863±387(21%) = 1,01±0,14(14%).
+ * 
  * 
  ********************************************************************************************
  *
- * Sample output (.NET 6.0, dimensional analysis: ON):
+ * Sample output (.NET 7.0, dimensional analysis: ON):
  * 
  *  angle |  tmax |  xmax   |  ymax
- *   (°)  |  (s)  |  (m)    |  (m)
- *  ------+-------+---------+---------
+ * -------+-------+---------+--------
  *  0,00° |   0 s |     0 m |     0 m
  *  0,10° |   0 s |   182 m |     0 m
  *  0,20° |   1 s |   364 m |     0 m
  *  0,30° |   1 s |   546 m |     0 m
- *  0,40° |   1 s |   728 m |     0 m
- *  0,50° |   1 s |   910 m |     0 m
- *  0,60° |   2 s |  1092 m |     0 m
- *  0,70° |   2 s |  1274 m |     0 m
- *  0,80° |   2 s |  1456 m |     0 m
- *  0,90° |   2 s |  1637 m |     1 m
- *  1,00° |   3 s |  1819 m |     1 m
- *  1,10° |   3 s |  2001 m |     2 m
- * ...
- * ...
- * ...
+ * 
+ * 
+ * 88,90° | 146 s |  2001 m |  6513 m
  * 89,00° | 146 s |  1819 m |  6513 m
  * 89,10° | 146 s |  1637 m |  6514 m
  * 89,20° | 146 s |  1456 m |  6514 m
@@ -242,16 +234,9 @@ namespace Bullet
  * 89,90° | 146 s |   182 m |  6515 m
  * 90,00° | 146 s |     0 m |  6515 m
  * 
- * 32. quantity/plain performance ratio: 13157 / 2427 = 5,42 (dimensional analysis: ON)
+ * 32. quantity/plain performance ratio: 5204 / 2241 = 2,32 (dimensional analysis: ON)
  * Press Esc to conclude, any other key to retry...
  * 
- * Average performance ratio for 32 run(s): 13282±325(2%) / 2434±80(3%) = 5,46±0,21(4%).
- *
- ********************************************************************************************
- * 
- * Under .NET 7.0 the results are much better:
- * 
- * Average performance ratio for 32 run(s): 4198+905(22%) / 1766+369(21%) = 2,38+0,11(5%).
- * 
+ * Average performance ratio for 32 run(s): 4730±857(18%) / 1924±348(18%) = 2,48±0,38(15%).
  *
  */

@@ -1,8 +1,15 @@
-#if DIMENSIONAL_ANALYSIS
+﻿#if DIMENSIONAL_ANALYSIS
     global using Demo.UnitsOfMeasurement;
     global using static Demo.UnitsOfMeasurement.Math;
 #else
     global using Meter = System.Double;
+    global using Second = System.Double;
+    global using Kilogram = System.Double;
+    global using DegKelvin = System.Double;
+    global using Ampere = System.Double;
+    global using Mole = System.Double;
+    global using Candela = System.Double;
+    global using EUR = System.Decimal;
     global using Centimeter = System.Double;
     global using Millimeter = System.Double;
     global using Kilometer = System.Double;
@@ -10,22 +17,15 @@
     global using Foot = System.Double;
     global using Yard = System.Double;
     global using Mile = System.Double;
-    global using Second = System.Double;
     global using Minute = System.Double;
     global using Hour = System.Double;
-    global using Kilogram = System.Double;
     global using Gram = System.Double;
     global using Tonne = System.Double;
     global using Pound = System.Double;
     global using Ounce = System.Double;
-    global using DegKelvin = System.Double;
     global using DegCelsius = System.Double;
     global using DegRankine = System.Double;
     global using DegFahrenheit = System.Double;
-    global using Ampere = System.Double;
-    global using Mole = System.Double;
-    global using Candela = System.Double;
-    global using EUR = System.Decimal;
     global using USD = System.Decimal;
     global using GBP = System.Decimal;
     global using PLN = System.Decimal;
@@ -34,7 +34,6 @@
     global using Grad = System.Double;
     global using Turn = System.Double;
     global using Hertz = System.Double;
-    global using Event_Hour = System.Double;
     global using Radian_Sec = System.Double;
     global using Degree_Sec = System.Double;
     global using RPM = System.Double;
@@ -72,4 +71,3 @@
     global using Fahrenheit = System.Double;
     global using static System.Math;
 #endif
-  
