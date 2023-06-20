@@ -49,6 +49,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SourceGenerator", "Generato
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ProjectTemplate", "ProjectTemplate", "{88701C30-EA27-4CCC-9EBE-709C841AF94D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSUnits", "ProjectTemplate\CSUnits\CSUnits.csproj", "{9BD55998-E148-4429-8B47-F63668FD64E0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -95,6 +97,10 @@ Global
 		{7793F138-9498-4C1C-A2F4-C4CBF6A77B83}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7793F138-9498-4C1C-A2F4-C4CBF6A77B83}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7793F138-9498-4C1C-A2F4-C4CBF6A77B83}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9BD55998-E148-4429-8B47-F63668FD64E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9BD55998-E148-4429-8B47-F63668FD64E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9BD55998-E148-4429-8B47-F63668FD64E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9BD55998-E148-4429-8B47-F63668FD64E0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -111,6 +117,7 @@ Global
 		{2493D361-1D4C-4E43-AA5D-B03CC2496671} = {F2AADC68-36F3-4717-90E0-0241E9DE04D9}
 		{F1BBC84C-E26B-40FD-A02B-6B44E7B6013C} = {F2AADC68-36F3-4717-90E0-0241E9DE04D9}
 		{7793F138-9498-4C1C-A2F4-C4CBF6A77B83} = {F2AADC68-36F3-4717-90E0-0241E9DE04D9}
+		{9BD55998-E148-4429-8B47-F63668FD64E0} = {88701C30-EA27-4CCC-9EBE-709C841AF94D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {54F7E0AD-7097-4699-AE43-65D796031F54}

@@ -1,0 +1,56 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+
+    <IncludeContentInPack>true</IncludeContentInPack>
+    <IncludeBuildOutput>false</IncludeBuildOutput>
+    <ContentTargetFolders>content</ContentTargetFolders>
+    <NoWarn>$(NoWarn);NU5128</NoWarn>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+
+    <PackageType>Template</PackageType>
+    <PackageId>Mangh.Metrology.CSUnits</PackageId>
+    <Title>Units of Measurement Project Template for .NET Core / Standard</Title>
+    <Authors>MAN</Authors>
+    <Company>MAN</Company>
+    <Description>Project template for creating Units of Measurement C# class library for .NET Core / Standard.</Description>
+    <Copyright>Copyright © MAN</Copyright>
+    <PackageProjectUrl>https://github.com/mangh/Metrology</PackageProjectUrl>
+
+    <PackageIcon>Icon.png</PackageIcon>
+
+    <RepositoryUrl>https://github.com/mangh/Metrology</RepositoryUrl>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageTags>unit;scale;measure;metrology</PackageTags>
+    <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <Version>2.0.0</Version>
+    <PackageReleaseNotes>
+      Version 2.x
+      * supporting packages restructured,
+      * packages renamed.
+      Version 1.x (named: Mangh.Metrology.UnitsOfMeasurement)
+      * deprecated.
+    </PackageReleaseNotes>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="Metrology\**\*" />
+    <Compile Remove="**\*" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\Icon.png" Pack="True" PackagePath="\" />
+    <None Update="README.md" Pack="True" PackagePath="\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Metrology\.template.config\" />
+    <Folder Include="Metrology\Core\" />
+    <Folder Include="Metrology\Templates\" />
+    <Folder Include="Metrology\RuntimeLoader\" />
+    <Folder Include="Metrology\Parsers\" />
+  </ItemGroup>
+
+</Project>
