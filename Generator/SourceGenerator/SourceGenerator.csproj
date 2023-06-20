@@ -1,0 +1,104 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- Assembly properties -->
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <LangVersion>latestMajor</LangVersion>
+    <Nullable>enable</Nullable>
+    <EnforceExtendedAnalyzerRules>true</EnforceExtendedAnalyzerRules>
+    <AssemblyName>Mangh.Metrology.SourceGenerator</AssemblyName>
+    <RootNamespace>Mangh.Metrology</RootNamespace>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <SignAssembly>True</SignAssembly>
+    <AssemblyOriginatorKeyFile>$(SolutionDir)\metrology.snk</AssemblyOriginatorKeyFile>
+    <AssemblyVersion>2.0.0.0</AssemblyVersion>
+    <FileVersion>2.0.0.0</FileVersion>
+    <!-- Debug symbols embedded in DLL (portable across platforms) -->
+    <DebugType>embedded</DebugType>
+  </PropertyGroup>
+
+  <!-- NuGet properties -->
+  <PropertyGroup>
+    <!-- Generate package at build -->
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <!-- Do not include the generator as a "lib" dependency
+      i.e. do not make it available as a reference for compile as well as runtime. -->
+    <IncludeBuildOutput>false</IncludeBuildOutput>
+    <Authors>MAN</Authors>
+    <Company>MAN</Company>
+    <Description>Units of Measurement Source Generator for C#</Description>
+    <Copyright>Copyright © MAN</Copyright>
+    <PackageProjectUrl>https://github.com/mangh/Metrology</PackageProjectUrl>
+    <PackageIcon>Icon.png</PackageIcon>
+    <RepositoryUrl>https://github.com/mangh/Metrology</RepositoryUrl>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageTags>unit;scale;measure;metrology</PackageTags>
+    <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <Version>2.0.0</Version>
+    <ApplicationIcon>Icon.ico</ApplicationIcon>
+    <PackageReleaseNotes>
+      Version 2.x
+      * source code heavily restructured,
+      * packages renamed.
+      Version 1.x (named: Mangh.Metrology.SourceGeneratorXslt)
+      * deprecated.
+    </PackageReleaseNotes>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DefineConstants>$(DefineConstants)</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DefineConstants>$(DefineConstants)</DefineConstants>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\Icon.png" Pack="true" PackagePath="" />
+    <None Include="README.md" Pack="True" PackagePath="\" />
+  </ItemGroup>
+
+  <!--
+  WATCH OUT FOR THE FOLLOWING <ItemGroup>!
+  VISUAL STUDIO IS VERY FOND OF CHANGING THAT!
+  DON'T ALLOW IT!
+  -->
+  <ItemGroup>
+
+    <!-- Generator goes to the "analyzers" folder (of the nuget package) -->
+    <None Include="$(OutputPath)\$(AssemblyName).dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+
+    <!-- Generator dependencies:
+        * PrivateAssets="none": all assets (apart of being consumed by the generator) can flow to the parent project,
+        * GeneratePathProperty="true": dependencies can be referenced via the "global-packages" folder (i.e. via Pkg... property) -->
+    <PackageReference Include="Mangh.Metrology.Model" Version="2.0.0" GeneratePathProperty="true" PrivateAssets="none" />
+    <PackageReference Include="Mangh.Metrology.Definitions" Version="2.0.0" GeneratePathProperty="true" PrivateAssets="none" />
+
+    <!-- The dependencies must be in the same location as the generator i.e. in the "analyzers" folder -->
+    <None Include="$(PkgMangh_Metrology_Model)\lib\netstandard2.0\*.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+    <None Include="$(PkgMangh_Metrology_Definitions)\lib\netstandard2.0\*.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+
+    <!-- The dependencies goes to the "lib" directory as well, 
+         for other components - independent of the generator - may need them as well (e.g. UnitsOfMeasurement/RuntimeLoader). -->
+    <None Include="$(PkgMangh_Metrology_Model)\lib\netstandard2.0\*.*" Pack="true" PackagePath="lib/netstandard2.0" Visible="false" />
+    <None Include="$(PkgMangh_Metrology_Definitions)\lib\netstandard2.0\*.*" Pack="true" PackagePath="lib/netstandard2.0" Visible="false" />
+
+    <!-- Package the props file -->
+    <None Include="Mangh.Metrology.SourceGenerator.props" Pack="true" PackagePath="build" Visible="false" />
+
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Icon.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- The reference below is only to avoid unresolved-symbol errors (red squiggles) in VS editor
+         for symbols from the "Microsoft.CodeAnalysis.Common" package. The build itself can succeed
+         without that reference (explicitly specified) as the package is referenced anyway as a
+         dependency of the "Mangh.Metrology.Definitions". -->
+    <PackageReference Include="Microsoft.CodeAnalysis.Common" Version="4.6.0" PrivateAssets="none" />
+  </ItemGroup>
+
+</Project>
