@@ -19,8 +19,11 @@ namespace RuntimeUnits
 {
     class Program
     {
-        static void Main(string[] args)
+        static readonly TranslationContext tc = new();
+
+        static int Main()
         {
+            Console.ResetColor();
             Console.WriteLine(
                 "Units of Measurement for C# applications. Copyright (©) Marek Anioła.\n" +
                 "This program is provided to you under the terms of the license\n" +
@@ -36,16 +39,9 @@ namespace RuntimeUnits
             TestSupplementaryUnits("converting \"{0}\" (compile-time unit):", "1 km");
             TestSupplementaryScales("converting \"{0}\" (compile-time scale):", "100 deg.C");
 
-            string templateFolder = Path.GetDirectoryName(typeof(Program).Assembly.Location)!;
-            RuntimeLoader ldr = new();
-            if (!ldr.LoadFromFile(Path.Combine(templateFolder, "LateDefinitions.txt")))
-            {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("\nInvalid definitions:");
-                foreach (var e in ldr.Errors) Console.WriteLine(e);
-                Console.ResetColor();
-                return;
-            }
+            RuntimeLoader ldr = new(tc);
+            if (!ldr.LoadFromFile(Path.Combine(tc.WorkDirectory, "LateDefinitions.txt")))
+                return 1;
 
             Console.WriteLine();
             Console.WriteLine("After loading supplementary units:");
@@ -55,6 +51,8 @@ namespace RuntimeUnits
             TestSupplementaryScales("converting \"{0}\" (runtime scale):", "-80 deg.Re");
             TestSupplementaryUnits("converting \"{0}\" (compile-time unit):", "1 km");
             TestSupplementaryScales("converting \"{0}\" (compile-time scale):", "100 deg.C");
+
+            return 0;
         }
 
         static void TestSupplementaryUnits(string headerformat, string input)
@@ -66,12 +64,12 @@ namespace RuntimeUnits
 
             if (!parser.TryParse(input, out IQuantity<double>? length))
             {
-                Console.ForegroundColor = ConsoleColor.Red;
+                Console.ForegroundColor = tc.ErrorColor;
                 Console.WriteLine("{0}: invalid number or unit other than any the following: \"{1}\".", input, string.Join("\", \"", parser.Units.SelectMany(m => m.Symbol)));
             }
             else
             {
-                Console.ForegroundColor = ConsoleColor.Green;
+                Console.ForegroundColor = tc.ReportColor;
                 int i = 0;
                 foreach (var unit in parser.Units)
                 {
@@ -107,12 +105,12 @@ namespace RuntimeUnits
 
             if (!parser.TryParse(input, out IQuantity<double>? temperature))
             {
-                Console.ForegroundColor = ConsoleColor.Red;
+                Console.ForegroundColor = tc.ErrorColor;
                 Console.WriteLine("{0}: invalid number or unit other than any of the following: {1}.", input, string.Join(", ", parser.Units.Select(u => u.Symbol.ToString())));
             }
             else
             {
-                Console.ForegroundColor = ConsoleColor.Green;
+                Console.ForegroundColor = tc.ReportColor;
                 int i = 0;
                 foreach (Scale<double> scale in allowedScales)
                 {
@@ -146,12 +144,12 @@ namespace RuntimeUnits
 
             if (!parser.TryParse(input, out ILevel<double>? temperature))
             {
-                Console.ForegroundColor = ConsoleColor.Red;
+                Console.ForegroundColor = tc.ErrorColor;
                 Console.WriteLine("{0}: invalid number or unit other than any of the following: {1}.", input, string.Join(", ", parser.Scales.Select(s => s.Unit.Symbol.ToString())));
             }
             else
             {
-                Console.ForegroundColor = ConsoleColor.Green;
+                Console.ForegroundColor = tc.ReportColor;
                 int i = 0;
                 foreach (var scale in parser.Scales)
                 {
