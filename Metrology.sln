@@ -10,8 +10,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Xslt", "Xslt", "{26E539F4-D
 		Generator\Xslt\README.md = Generator\Xslt\README.md
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Translator", "Generator\Xslt\Translator\Translator.csproj", "{7058FFAC-6586-49B4-BFA3-D37CCCF86F67}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SourceGenerator", "Generator\Xslt\SourceGenerator\SourceGenerator.csproj", "{8E008BAF-400C-4E16-9DF5-8ED56BA6A7E0}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GeneratorApp", "Generator\Xslt\GeneratorApp\GeneratorApp.csproj", "{968BC497-266C-41C1-85BA-4F0DA755323C}"
@@ -62,10 +60,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{7058FFAC-6586-49B4-BFA3-D37CCCF86F67}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7058FFAC-6586-49B4-BFA3-D37CCCF86F67}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7058FFAC-6586-49B4-BFA3-D37CCCF86F67}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7058FFAC-6586-49B4-BFA3-D37CCCF86F67}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8E008BAF-400C-4E16-9DF5-8ED56BA6A7E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8E008BAF-400C-4E16-9DF5-8ED56BA6A7E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8E008BAF-400C-4E16-9DF5-8ED56BA6A7E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -116,7 +110,6 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{26E539F4-D78A-4E3A-963B-03311E4EBDF9} = {F2AADC68-36F3-4717-90E0-0241E9DE04D9}
-		{7058FFAC-6586-49B4-BFA3-D37CCCF86F67} = {26E539F4-D78A-4E3A-963B-03311E4EBDF9}
 		{8E008BAF-400C-4E16-9DF5-8ED56BA6A7E0} = {26E539F4-D78A-4E3A-963B-03311E4EBDF9}
 		{968BC497-266C-41C1-85BA-4F0DA755323C} = {26E539F4-D78A-4E3A-963B-03311E4EBDF9}
 		{7CAF42E7-D983-404E-BD98-46E349EDACCB} = {0C3A78A2-33D6-42BE-A00E-375D67325EBC}
