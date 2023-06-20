@@ -15,7 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitsOfMeasurementTest", "D
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bullet", "Demo\Bullet\Bullet.csproj", "{38FC2687-BCA0-40FE-B60E-CA7DDFDA4556}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Benchmark2", "Demo\Benchmark2\Benchmark2.csproj", "{3F8CC14B-1864-4FAB-95B9-450FCF3FA390}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Benchmark", "Demo\Benchmark\Benchmark.csproj", "{3F8CC14B-1864-4FAB-95B9-450FCF3FA390}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Currencies", "Demo\Currencies\Currencies.csproj", "{34B097B2-079C-4D8F-803B-23398A6F6915}"
 EndProject
