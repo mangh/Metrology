@@ -1,0 +1,493 @@
+/*******************************************************************************
+
+    Units of Measurement for C++ applications
+
+    Copyright (C) Marek Aniola
+
+    This program is provided to you under the terms of the license
+    as published at https://github.com/mangh/metrology
+
+    The definitions below (in particular conversion factors) are
+    based on Wikipedia at http://en.wikipedia.org/wiki/Conversion_of_units
+
+
+********************************************************************************/
+
+////////////////////////////////////////////////////////////////////////////////
+//
+//      Primary Units
+//
+unit Meter "m" = <Length>;
+unit Second "s" = <Time>;
+unit Kilogram "kg" = <Mass>;
+unit DegKelvin "K" "deg.K" = <Temperature>;
+//unit Ampere "A" = <ElectricCurrent>;
+//unit Mole "mol" = <AmountOfSubstance>;
+//unit Candela "cd" = <LuminousIntensity>;
+
+unit<double> EUR "EUR" = <Money>;  // Euro
+
+////////////////////////////////////////////////////////////////////////////////
+//
+//      Length
+//
+unit Centimeter "cm" = 100 * Meter;
+unit Millimeter "mm" = 1000 * Meter;
+//unit Micron "um" "micrometer" = 1.0e6 * Meter;
+//unit Nanometer "nm" "nanometer" = 1.0e9 * Meter;
+//unit Angstrom "angstrom" = 1.0e10 * Meter;
+//unit Kilometer "km" = Meter / 1000;
+
+unit Inch "in" = Millimeter / 25.4;
+unit /* international */ Foot "ft" = Inch / 12;
+unit /* international */ Yard "yd" = Foot / 3;
+unit /* international */ Mile "mil" = Yard / 1760;
+
+//unit /* PostScript */ Point "pt" = 72 * Inch;
+//unit Pica "pc" = Point / 12;
+
+////////////////////////////////////////////////////////////////////////////////
+//
+//      Time
+//
+unit Minute "min" = Second / 60;
+unit Hour "h" = Minute / 60;
+//unit Day "d" = Hour / 24;
+//unit Week "wk" = Day / 7;
+//unit /* full */ Month "mo" = Day / 30;
+//unit /* common */ Year "yr" = Day / 365;
+
+////////////////////////////////////////////////////////////////////////////////
+//
+//      Mass
+//
+unit Gram "g" = 1000 * Kilogram;
+//unit Microgram "ug" = 1.0e6 * Gram;
+//unit Tonne "t" = Kilogram / 1000;
+
+//unit /* avoirdupois */ Pound "lb" = Kilogram / 0.45359237;
+//unit /* avoirdupois */ Ounce "ou" = Pound * 16;
+
+////////////////////////////////////////////////////////////////////////////////
+//
+//      Temperature
+//
+unit DegCelsius "deg.C" = DegKelvin;
+//unit DegRankine "deg.R" = (9 / 5) * DegKelvin;
+unit DegFahrenheit "deg.F" = (9 / 5) * DegKelvin;
+
+scale Kelvin AbsoluteZero = DegKelvin 0.0;
+scale Celsius AbsoluteZero = DegCelsius -273.15;
+//scale Rankine AbsoluteZero = DegRankine 0.0;
+scale Fahrenheit AbsoluteZero = DegFahrenheit -273.15 * (9 / 5) + 32;
+
+////////////////////////////////////////////////////////////////////////////////
+//
+//      Electric Current
+//
+
+////////////////////////////////////////////////////////////////////////////////
+//
+//      Amount of Substance
+//
+
+////////////////////////////////////////////////////////////////////////////////
+//
+//      Luminous Intensity
+//
+
+////////////////////////////////////////////////////////////////////////////////
+//
+//      Currencies
+//
+//      NOTE: the rates (conversion factors) below
+//      are to be updated on application startup.
+//
+//unit<double> USD "USD" = 1.3433 * EUR; // US Dollar
+//unit<double> JPY "JPY" = 136.74 * EUR;  // Japanese Yen
+//unit<double> BGN "BGN" = 1.9558 * EUR;  // BulgarianLev
+//unit<double> CZK "CZK" = 27.481 * EUR;  // Czech Koruna
+//unit<double> DKK "DKK" = 7.4565 * EUR;  // DanishKrone
+//unit<double> GBP "GBP" = 0.79055 * EUR;    // British Pound
+//unit<double> HUF "HUF" = 308.20 * EUR;  // Hungarian Forint
+//unit<double> LTL "LTL" = 3.4528 * EUR;  // Lithuanian Litas
+//unit<double> PLN "PLN" = 4.1437 * EUR; // Polish Zloty
+//unit<double> RON "RON" = 4.3888 * EUR;  // Romanian New Lei
+//unit<double> SEK "SEK" = 9.1523 * EUR;  // SwedishKrona
+//unit<double> CHF "CHF" = 1.2150 * EUR;  // SwissFranc
+//unit<double> NOK "NOK" = 8.3365 * EUR;  // NorwegianKroner
+//unit<double> HRK "HRK" = 7.6372 * EUR;  // Croatian Kuna
+//unit<double> RUB "RUB" = 47.5507 * EUR; // Russian Rouble
+//unit<double> TRY "TRY" = 2.8204 * EUR;  // Turkish Lira
+//unit<double> AUD "AUD" = 1.4275 * EUR;  // Australian Dollar
+//unit<double> BRL "BRL" = 2.9952 * EUR;  // Brazilian Real
+//unit<double> CAD "CAD" = 1.4520 * EUR;  // Canadian Dollar
+//unit<double> CNY "CNY" = 8.3110 * EUR;  // Chinese Yuan Renminbi
+//unit<double> HKD "HKD" = 10.4107 * EUR; // Hong Kong Dollar
+//unit<double> IDR "IDR" = 15550.26 * EUR;    // Indonesian Rupiah
+//unit<double> ILS "ILS" = 4.6056 * EUR;  // Israeli New Shekel
+//unit<double> INR "INR" = 80.6813 * EUR; // Indian Rupee
+//unit<double> KRW "KRW" = 1379.01 * EUR; // South-Korean Won
+//unit<double> MXN "MXN" = 17.4092 * EUR; // Mexican Peso
+//unit<double> MYR "MYR" = 4.2679 * EUR;  // Malaysian Ringgit
+//unit<double> NZD "NZD" = 1.5703 * EUR;  // New Zealand Dollar
+//unit<double> PHP "PHP" = 58.246 * EUR;  // Philippine Peso
+//unit<double> SGD "SGD" = 1.6674 * EUR;  // Singapore Dollar
+//unit<double> THB "THB" = 42.720 * EUR;  // Thai Baht
+//unit<double> ZAR "ZAR" = 14.1523 * EUR; // South African Rand
+
+////////////////////////////////////////////////////////////////////////////////
+//
+//      Plane angle (dimensionless)
+//
+//      NOTE: explicit format "%f%s" used in places
+//      to remove space separating {value} and {symbol}
+//
+//      NOTE: arithmetic expressions can use string literals e.g. "Math.PI".
+//      In general parser blindly accepts string literals as numbers of unknown
+//      value leaving their evaluation and syntax check to the compiler.
+//
+//      NOTE: the literals "Math.PI" (or "System.Math.PI") and "Math.E" (or
+//      "System.Math.E") are an exception to the above rule: they are recognized
+//      and their numeric value used to validate definitions of "units" and "scale".
+//
+unit Radian "rad" = <>;
+unit Degree "deg" : "%f%s" = (180 / "Math.PI") * Radian;
+//unit ArcMinute "'" : "%f%s" = 60 * Degree;
+//unit ArcSecond "\"" : "%f%s" = 60 * ArcMinute;
+//unit Grad "grad" = (200 / "Math.PI") * Radian;
+
+//unit Turn /* aka. cycle, revolution, rotation */ "tr" = Radian / (2 * "Math.PI");
+
+///////////////////////////////////////////////////////////////////////////////
+//
+//      Solid angle (dimensionless)
+//
+//unit Steradian "sr" = <>;
+//unit SquareDegree "deg2" = ((180 / "Math.PI") * (180 / "Math.PI")) * Steradian;
+
+////////////////////////////////////////////////////////////////////////////////
+//
+//      Frequency
+//
+//unit Hertz "Hz" = 1 / Second;
+//unit KiloHertz "kHz" = Hertz / 1000;
+//unit MegaHertz "MHz" = KiloHertz / 1000;
+//unit GigaHertz "GHz" = MegaHertz / 1000;
+
+////////////////////////////////////////////////////////////////////////////////
+//
+//      Angular Frequency (aka. Rotational Velocity)
+//
+//      NOTE: parser tries to verify whether alternative formulas e.g.:
+//
+//              Degree / Second
+//      and
+//              (180 / "Math.PI") * Radian_Sec
+//
+//      in Degree_Sec definition below are consistent i.e. whether they
+//      produce the same conversion factor and dimension.
+//
+//      NOTE: as a general rule, string literals in formulas are taken
+//      as numbers of unknown value and this prevents parser to verify
+//      whether the alternative formulas produce the same factor.
+//
+//      NOTE: the literals "Math.PI" and "Math.E" are exceptions
+//      to this rule: parser recognizes them and uses their value
+//      for validation.
+//
+//      NOTE: other literals prevents the factor check: you have to
+//      take care of the consistency by other means (e.g. unit tests).
+//
+//unit Radian_Sec "rad/s" = Radian / Second | Radian * Hertz;
+//unit Degree_Sec "degree/s" = Degree / Second | (180 / "Math.PI") * Radian_Sec;
+//unit RPM "rpm" = Turn / Minute | (30 / "Math.PI") * Radian_Sec;
+
+////////////////////////////////////////////////////////////////////////////////
+//
+//      Area
+//
+//      NOTE: Foot2 (square foot) definition below (as well as many others)
+//      specifies conversion factor as an expression
+//
+//          ((100/2.54)/12) * ((100/2.54)/12)
+//
+//      rather than its approximate equivalent e.g. 10.7639104167097. The
+//      expression uses the same numbers as previously used in Foot definition.
+//      Thus it mimics calculations being made in Foot * Foot associate
+//      formula and ensures that both formulas are consistent. Approximate
+//      equivalents are very likely to produce inconsistencies.
+//
+//      NOTE: conversion factors are consistent if they are equal (==) up to
+//      maximum internal precision built into C# floating-point engine
+//      (17 digits for doubles). No rounding is applied. However, C# displays
+//      up to 15 digits only on output (for doubles). Thus it may happen the
+//      parser will complain about inconsistent factors (unequal in 17 digits)
+//      but display them (using 15 digits) as equal in an error message e.g.:
+//
+//      "Foot.Factor * Foot.Factor" == 10.7639104167097 != 10.7639104167097 == "Meter2.Factor * 10.7639104167097d"
+//
+//      In such cases the parser is right - the factors are not consistent - 
+//      but it cannot display them correctly.
+//
+unit Meter2 "m2" = Meter * Meter;
+//unit Centimeter2 "cm2" = Centimeter * Centimeter | Meter2 * 1.0e4;
+//unit Kilometer2 "km2" = Kilometer * Kilometer | Meter2 / 1.0e6;
+
+//unit Inch2 "sq in" = Inch * Inch | Meter2 * (100/2.54) * (100/2.54); 
+//unit Foot2 "sq ft" = Foot * Foot | Meter2 * ((100/2.54)/12) * ((100/2.54)/12);
+//unit Yard2 "sq yd" = Yard * Yard | Meter2 * (((100/2.54)/12)/3) * (((100/2.54)/12)/3);
+//unit Mile2 "sq mil" = Mile * Mile | Meter2 * ((((100/2.54)/12)/3)/1760) * ((((100/2.54)/12)/3)/1760);
+
+//unit Barn "b" = Meter2 / 1.0e-28;
+
+////////////////////////////////////////////////////////////////////////////////
+//
+//      Volume
+//
+unit Meter3 "m3" = Meter2 * Meter;
+//unit Liter "L" = Meter3 * 1000;
+//unit Centimeter3 "cm3" = Centimeter2 * Centimeter | Meter3 * 1.0e6;
+
+//unit Inch3 "cu in" = Inch2 * Inch | Meter3 * (100/2.54) * (100/2.54) * (100/2.54);
+//unit Foot3 "cu ft" = Foot2 * Foot | Meter3 * ((100/2.54)/12) * ((100/2.54)/12) * ((100/2.54)/12);
+//unit Yard3 "cu yd" = Yard2 * Yard | Meter3 * (((100/2.54)/12)/3) * (((100/2.54)/12)/3) * (((100/2.54)/12)/3);
+
+////////////////////////////////////////////////////////////////////////////////
+//
+//      Velocity
+//
+unit Meter_Sec "m/s" = Meter / Second;
+//unit Centimeter_Sec "cm/s" = Centimeter / Second | 100 * Meter_Sec;
+//unit Kilometer_Hour "km/h" = Kilometer / Hour | Meter_Sec * (1/1000) / ((1/60)/60);
+//unit MPH "mph" "mi/h" = Mile / Hour | Meter_Sec * ((((100/2.54)/12)/3)/1760) / ((1/60)/60);
+
+////////////////////////////////////////////////////////////////////////////////
+//
+//      Acceleration
+//
+unit Meter_Sec2 "m/s2" = Meter_Sec / Second;
+
+////////////////////////////////////////////////////////////////////////////////
+//
+//      Velocity squared (kinetic and potential energy subexpressions)
+//
+//unit Meter2_Sec2 "m2/s2" = Meter_Sec * Meter_Sec | Meter_Sec2 * Meter;
+
+////////////////////////////////////////////////////////////////////////////////
+//
+//      Kinematic viscosity (aka. 
+//          thermal diffusivity, 
+//          momentum diffusivity,
+//          specific angular momentum)
+//
+//unit Meter2_Sec "m2/s" = Meter2 / Second | Meter_Sec * Meter | Meter2_Sec2 * Second;
+
+////////////////////////////////////////////////////////////////////////////////
+//
+//      Linear mass density
+//
+//unit Gram_Meter "g/m" = Gram / Meter;
+//unit Gram_Kilometer "g/km" = Gram / Kilometer | Gram_Meter * 1000;
+//unit Gram_Mile "g/mi" = Gram / Mile | Gram_Meter / (1000/(25.4*12*3*1760));
+//unit Microgram_Meter "ug/m" = Microgram / Meter | 1000000 * Gram_Meter;
+
+////////////////////////////////////////////////////////////////////////////////
+//
+//      Volumetric mass density (aka. specific mass, mass concentration)
+//
+//unit Gram_Meter3 "g/m3" = Gram / Meter3;
+//unit Microgram_Meter3 "ug/m3" = Microgram / Meter3 | 1.0e6 * Gram_Meter3;
+
+////////////////////////////////////////////////////////////////////////////////
+//
+//      Molar Volume
+//
+//unit Meter3_Mole "m3/mol" = Meter3 / Mole;
+
+////////////////////////////////////////////////////////////////////////////////
+//
+//      Molar mass
+//
+//unit Gram_Mole "g/mol" = Gram / Mole | Gram_Meter3 * Meter3_Mole;
+//unit Microgram_Mole "ug/mol" = Microgram / Mole | Microgram_Meter3 * Meter3_Mole | 1.0e6 * Gram_Mole;
+
+////////////////////////////////////////////////////////////////////////////////
+//
+//      Force
+//
+unit Newton "N" = Kilogram * Meter_Sec2;
+//unit KilogramForce "kgf" = Newton / 9.80665;
+//unit PoundForce "lbf" = Newton / 4.4482216152605;
+//unit Poundal "pdl" = Newton / 0.138254954376;
+//unit Dyne "dyn" = 1.0e5 * Newton;
+
+////////////////////////////////////////////////////////////////////////////////
+//
+//      Energy
+//
+unit Joule "J" = Newton * Meter /* | Kilogram * Meter2_Sec2 */;
+//unit /* international */ Calorie "cal" = Joule / 4.1868;
+//unit /* international */ BTU "btu" = Joule / 1055.05585262;
+//unit KiloWattHour "kWh" = Joule / 3.6e6;
+//unit Erg "erg" = 1.0e7 * Joule;
+
+////////////////////////////////////////////////////////////////////////////////
+//
+//      Power
+//
+//unit Watt "W" = Joule / Second;
+//unit KiloWatt "kW" = Watt / 1000 | KiloWattHour / Hour;
+//unit /* international */ BTU_Hour "btu/h" = BTU / Hour | Watt * (1/1055.05585262) / (1/3600);
+
+////////////////////////////////////////////////////////////////////////////////
+//
+//      Torque (moment of force)
+//
+//      NOTE: We can't specify:
+//
+//          NewtonMeter ... = Newton * Meter
+//
+//      as we have already specified
+//
+//          Joule ... = Newton * Meter
+//
+//      and that (as a product of 2 units), would generate operators of the same
+//      arguments but different return values:
+//
+//          Joule operator *(Newton lhs, Meter rhs)
+//          NewtonMeter operator *(Newton lhs, Meter rhs)
+//
+//      and the compiler wouldn't know which one to apply when it finds such product.
+//
+//      To work around the problem you can make use of wedge product ("^" operator
+//      instead of star "*"):
+//
+//          NewtonMeter "N*m" = Newton ^ Meter
+//
+//      The resulting NewtonMeter unit would be of the same dimension as Joule but
+//      of different family:
+//
+//          NewtonMeter.Sense == Joule.Sense
+//          NewtonMeter.Family != Joule.Family
+//
+unit NewtonMeter "N*m" = Newton ^ Meter;
+//unit DyneCentimeter "dyn*cm" = Dyne ^ Centimeter | NewtonMeter * 1.0e7;
+//unit PoundFoot "lbf*ft" = PoundForce ^ Foot | NewtonMeter * (100/2.54/12/4.4482216152605);
+//unit PoundInch "lbf*in" = PoundForce ^ Inch | NewtonMeter * (100/2.54/4.4482216152605);
+
+////////////////////////////////////////////////////////////////////////////////
+//
+//      Heat capacity
+//
+//unit Joule_Kelvin "J/K" = Joule / DegKelvin;
+//unit Calorie_Kelvin "cal/K" = Calorie / DegKelvin | Joule_Kelvin / 4.1868;
+//unit BTU_Fahrenheit "BTU/deg.F" = BTU / DegFahrenheit | Joule_Kelvin * (1 / 1055.05585262) / (9 / 5);
+
+////////////////////////////////////////////////////////////////////////////////
+//
+//      Specific heat capacity
+//
+//unit Joule_Kelvin_Kilogram "J/kg/K" = Joule_Kelvin / Kilogram;
+//unit Calorie_Kelvin_Gram "cal/g/K" = Calorie_Kelvin / Gram | Joule_Kelvin_Kilogram * (1 / 4.1868) / (1000);
+//unit BTU_Fahrenheit_Pound "BTU/lb/deg.F" = BTU_Fahrenheit / Pound | Joule_Kelvin_Kilogram * (1/1055.05585262)/(9/5) * 0.45359237;
+
+//unit Joule_Kelvin_Mole "J/mol/K" = Joule_Kelvin / Mole;
+//unit Joule_Kelvin_Meter3 "J/m3/K" = Joule_Kelvin / Meter3;
+
+////////////////////////////////////////////////////////////////////////////////
+//
+//      Pressure
+//
+//unit Pascal "Pa" = Newton / Meter2;
+//unit Bar "bar" = Pascal / 1.0e5;
+//unit AtmTechnical "at" = Pascal / 9.80665e4;
+//unit AtmStandard "atm" = Pascal / 1.01325e5;
+//unit MillimeterHg "mmHg" = Pascal * (13.5951 * 9.80665);
+
+////////////////////////////////////////////////////////////////////////////////
+//
+//      Electric charge
+//
+//unit Coulomb "C" = Ampere * Second;
+//unit AmpereHour "Ah" = Ampere * Hour | Coulomb / 3600;
+
+////////////////////////////////////////////////////////////////////////////////
+//
+//       Electric potential (voltage) 
+//
+//unit Volt "V" = Joule / Coulomb | Watt / Ampere;
+
+////////////////////////////////////////////////////////////////////////////////
+//
+//       Electric resistance
+//
+//unit Ohm "ohm" = Volt / Ampere;
+//
+//      NOTE: There are many other formulas for Ohm e.g.:
+//
+//      Ohm = Joule * Second / (Coulomb * Coulomb),
+//      Ohm = Watt / (Ampere * Ampere).
+//
+//      Should you need them, then you should define some auxiliary units e.g.:
+//
+//      unit Coulomb2 "C2" = Coulomb * Coulomb;
+//      unit Ampere2 "A2" = Ampere * Ampere;
+//      unit JouleSecond "J*s" = Joule * Second;
+//
+//      and specify Ohm as:
+//
+//      unit Ohm "ohm" = JouleSecond / Coulomb2 | Watt / Ampere2;
+//
+//      (Should you specify:
+//
+//      unit Ohm "ohm" = Joule * Second / (Coulomb * Coulomb) | Watt / (Ampere * Ampere);
+//
+//      then no operators supporting these formulas would be generated but, of course,
+//      you could implement some helper mehods in an extension file).
+//
+
+////////////////////////////////////////////////////////////////////////////////
+//
+//       Electric conductance
+//
+//unit Siemens "S" = Ampere / Volt;
+//
+//       NOTE: should the above definition specify also the formula: 1 / Ohm,
+//       then the following operators would be also generated (in Siemens.cs file):
+//
+//       public static Ohm operator /(double lhs, Siemens rhs) => new(lhs / rhs.Value);
+//       public static double operator *(Siemens lhs, Ohm rhs) => lhs.Value * rhs.Value;
+//       public static double operator *(Ohm lhs, Siemens rhs) => lhs.Value * rhs.Value;
+//
+//       which is not exactly what the formula means (i.e. the reciprocal of resitance).
+//       It'd be better to implement it as a pair of properties in extension files
+//       (e.g.: OhmEx.cs and SiemensEx.cs in C#), for example:
+//
+//       public partial struct Ohm
+//       {
+//           public Siemens Conductance => new(1.0 / Value);
+//       }
+//
+//       public partial struct Siemens
+//       {
+//           public Ohm Resistance => new(1.0 / Value);
+//       }
+//
+
+////////////////////////////////////////////////////////////////////////////////
+//
+//       Electric capacitance
+//
+//unit Farad "F" = Coulomb / Volt | Second / Ohm;
+//unit MilliFarad "mF" = 1.0e3 * Farad;
+//unit MicroFarad "uF" "microF" = 1.0e6 * Farad;
+//unit NanoFarad "nF" = 1.0e9 * Farad;
+//unit PicoFarad "pF" = 1.0e12 * Farad;
+
+////////////////////////////////////////////////////////////////////////////////
+//
+//       Magnetic flux
+//
+//unit Weber "Wb" = Joule / Ampere | Volt * Second;
+//unit Maxwell "Mx" = 1.0e8 * Weber;
