@@ -25,9 +25,12 @@
     <PackageTags>unit;scale;measure;metrology</PackageTags>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <Version>2.0.0</Version>
+    <Version>2.0.1</Version>
     <PackageReleaseNotes>
-      New package (starts with version 2.x; there was no version 1.x).
+      Version 2.0.1
+      * Added missing Metrology/CMakeLists.txt file (shit happens).
+      Version 2.0.0
+      * new package (there was no version 1.x).
     </PackageReleaseNotes>
   </PropertyGroup>
 
