@@ -6,7 +6,8 @@
 <Unit> ::= 'unit'[<ValueType>] unit-name <Tags> [<Format>] '=' <Dim Expr> [ '|' <Dim Expr> ] ';'
 <Scale> ::= 'scale' scale-name [<Format>] [refpoint] '=' unit-name <Num Expr> ';'
     
-<ValueType> ::= '<double>' | '<float>' | '<decimal>'
+<ValueType> ::= '<double>' | '<float>' | '<decimal>' (for C#)
+            ::= '<double>' | '<float>' | '<longdouble>' (for C++)
 
         Numeric type underlying the unit. Optional. The default is '<double>'.
 
@@ -60,25 +61,26 @@ refpoint ::= identifier
 
 * Parser makes no assumptions of any conventions applied in engineering or measurement practice. Therefore you can choose any names, symbols and expressions (relationships) for your units.
 
-* All numbers, regardless of their syntax, are handled as floating-point numbers of the specified `<ValueType>`, with dot "." as a decimal point (invariant culture). For example: `123`, `456.78`, `1.0e-10`.
+* All numbers, regardless of their syntax, are handled as floating-point numbers of the specified `<ValueType>`, with dot `'.'` as a decimal point (invariant culture). For example:
+  *  `123`,
+  *  `456.78`,
+  *  `1.0e-10`.
 
 * Single-line (`//`) and block (`/* */`) comments can be used to clarify (or exclude) sections of definitions.
   
-* String literals (e.g. `"Math.PI"`) in `<Dim Expr>` and `<Num Expr>` expressions are handled - as a general rule - as numbers of unknown value: their evaluation and syntax check is left to the C# compiler. Of course, using a string literal (with an unknown numeric value) in a formula makes it impossible to verify (while parsing) the conversion factor resulting from the formula.
-
-   The exception to this rule are literals: `"System.Math.PI"` and `"System.Math.E"` but only when used in formulas with the underlying `<ValueType> = double`: in such cases numeric substitute of the literal allows for full validation.
+* String literals (e.g. `"Sqrt2"`) in `<Dim Expr>` and `<Num Expr>` expressions are handled - as a general rule - as numbers of unknown value: their evaluation and syntax check is left to the C# compiler. Of course, using a string literal (of an unknown numeric value) in a formula makes it impossible to verify the conversion factor derived from the formula. The literals `"Math.PI"` and `"Math.E"` (if written exactly this way) are the exceptions to this rule: the parser can recognize them and use the appropriate numeric value to perform the validation.
    
    So formulas in the definition:
    ```
-   unit Degree_Sec "degree/s" = Degree / Second | (180 / "System.Math.PI") * Radian_Sec;
+   unit Degree_Sec "degree/s" = Degree / Second | (180 / "Math.PI") * Radian_Sec;
    ```
    can be verified for both consistent dimensions and conversion factors, but in the definition:
    ```
-   unit Degree_Sec "degree/s" = Degree / Second | (180 / "Math.PI") * Radian_Sec;
+   unit Degree_Sec "degree/s" = Degree / Second | (180 / "PI") * Radian_Sec;
    ```
    they can be verified for dimensions only: conversion factors have to be verified by other means (e.g. unit tests).
 
-* Wedge operator "\^" is an alternative operator for multiplying units (and only units) - apart of the standard operator "\*".
+* Wedge operator `'^'` is an alternative operator for multiplying units (and only units) in addition to the standard operator `'*'`.
   It allows to make a distinction between scalar (\*) and vector (^) product that create different units from the same factors.
   For example:
 
