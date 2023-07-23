@@ -21,16 +21,15 @@ NOTE:
 
 `Parsers` and/or `RuntimeLoader` can be safely removed from the project without breaking the remaining functionality.
 
-<br/>
-
 ## [project root folder]
 
-There are two files that have no meaning (do not give anything) if they remain in their initial form:
+Two files to supplement the project:
 
 - `Math.cs`: a source file that can provide mathematical support for units, e.g. functions: `Sin(Radian)`, `Cos(Radian)` etc.,
-- `Directory.Build.targets` : .csproj extension that can be used to export (copy) the generated `Aliases.inc` file to dependent project(s).
+- `Directory.Build.targets` : a .csproj extension that can be used to export (copy) the generated `Aliases.inc` file to dependent project(s).
 
-<br/>
+These files are initially "empty" (their contents are commented out) - they contribute nothing if left unchanged.
+You can safely delete them if you do not intend to use them.
 
 ## Core
 
@@ -46,8 +45,6 @@ Basic logic of measurement units:
 
 where: `T` = `double` | `float` | `decimal`. 
 
-<br/>
-
 ## Templates
 
 Definitions and XSLT templates of units and scales:
@@ -55,20 +52,15 @@ Definitions and XSLT templates of units and scales:
 * `Definitions.txt` : definitions of units & scales,
 * `Unit.xslt` : template for a single unit (_struct_),
 * `Scale.xslt` : template for a single scale (_struct_),
-* `Catalog.xslt` : template for `Catalog` (_class_) i.e. catalog of all units and scales provided at compile-time,
-* `Aliases.xslt` : template for `Aliases.inc` file that may be used to import unit and scale types to dependent projects,
-* `Report.xslt` : template for `generator_report.txt` file (a summary of generated units and scales).
-
-<br/>
-
+* `Catalog.xslt` : template for the `Catalog` (_class_) i.e. catalog of all units and scales (available for use in the application),
+* `Aliases.xslt` : template for the `Aliases.inc` file that can be used in dependent projects to import generated unit & scale types,
+* `Report.xslt` : template for `generator_report.txt` file (a summary of generated units & scales).
 
 ## [Units]
 
 A virtual compiler folder (read-only) for generated units and scales. When working in _Visual Studio_ you can look in there to see the generated classes:
 
 ![pic](./image/VSProjectCSUnits.png)
-
-<br/>
 
 ## Parsers
 
@@ -77,8 +69,6 @@ A virtual compiler folder (read-only) for generated units and scales. When worki
 * `NumericParser`: provides delegates for the `<T>.TryParse` methods (from the standard library) to convert strings into numbers.
 
 See the [User Guide](UserGuide.md) for an example of use.
-
-<br/>
 
 ## RuntimeLoader
 

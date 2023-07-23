@@ -34,13 +34,11 @@ Definitions and XSLT templates of units and scales:
 * `scale.xslt` : template for a single scale (_struct_),
 * `unit.xslt` : template for a single unit (_struct_),
 
-<br/>
-
 ## Units
 
 This is the folder where units and scales are generated as C++ header files (*.h).
 
-⚠️ The `details` subfolder is a permanent part of the project: it contains the finished C++ code, supplementing the code of the generated units/scales. __DON'T DELETE IT!__ ⚠️
+The `details` subfolder is a permanent part of the project: it contains the finished C++ code, supplementing the code of the generated units/scales. ⚠️ __DON'T DELETE IT!__ ⚠️
 
 On the other hand, the generated *.h files can be safely deleted after build - on the next build they will be automatically restored (albeit at the cost of additional time). Either way, they do not need to be stored in the `git` repository.
 

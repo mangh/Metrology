@@ -21,22 +21,25 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Currencies", "Demo\Currenci
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{072A2266-1F02-4DE0-BAA9-94CC78B69779}"
 	ProjectSection(SolutionItems) = preProject
-		Docs\Components.md = Docs\Components.md
 		Docs\Definitions.md = Docs\Definitions.md
 		Docs\DimAnalysisExample.md = Docs\DimAnalysisExample.md
 		Docs\Families.md = Docs\Families.md
+		Docs\ProjectCPP.md = Docs\ProjectCPP.md
+		Docs\ProjectCS.md = Docs\ProjectCS.md
 		Docs\Quantities-vs-Levels.md = Docs\Quantities-vs-Levels.md
 		Docs\UserGuide.md = Docs\UserGuide.md
+		Docs\UsingCPP.md = Docs\UsingCPP.md
+		Docs\UsingCS.md = Docs\UsingCS.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "image", "image", "{ABB4BD43-CF82-4C7D-96F7-09D19ADAA6FC}"
 	ProjectSection(SolutionItems) = preProject
-		Docs\image\Components.png = Docs\image\Components.png
 		Docs\image\DimAnalysisError.png = Docs\image\DimAnalysisError.png
 		Docs\image\Overview.png = Docs\image\Overview.png
 		Docs\image\Profiling.png = Docs\image\Profiling.png
-		Docs\image\VSProject-Units.png = Docs\image\VSProject-Units.png
-		Docs\image\VSProject.png = Docs\image\VSProject.png
+		Docs\image\ProjectCPP.png = Docs\image\ProjectCPP.png
+		Docs\image\ProjectCS.png = Docs\image\ProjectCS.png
+		Docs\image\VSProjectCSUnits.png = Docs\image\VSProjectCSUnits.png
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Definitions", "Generator\Definitions\Definitions.csproj", "{9E2F7F91-0EF8-4E07-B636-1EC922467860}"
@@ -55,11 +58,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CPPUnits", "ProjectTemplate
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{706AD40B-2D2F-4CC1-97F2-0BEA97412C50}"
 	ProjectSection(SolutionItems) = preProject
+		CHANGELOG.md = CHANGELOG.md
 		Icon.ico = Icon.ico
 		Icon.png = Icon.png
 		LICENSE = LICENSE
 		README.md = README.md
-		READMETOO.md = READMETOO.md
 	EndProjectSection
 EndProject
 Global

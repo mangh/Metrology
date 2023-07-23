@@ -8,7 +8,7 @@ The project generated from the [CSUnits](https://www.nuget.org/packages/Mangh.Me
 * finished source code files,
 * build scripts.
 
-For more information on this set, see [C# Project](./ProjectCS.md) (or [C++ Project](./ProjectCPP.md)) page.
+See the [C# Project](./ProjectCS.md) (or [C++ Project](./ProjectCPP.md)) page for more information on this set.
 
 <br/>
 
@@ -19,7 +19,7 @@ This is probably the most time-consuming part of the process, especially if you 
 or if you find that many of the required units are missing from the original `definitions` and you have to define them from scratch.
 However, the effort you put into it pays off: the definitions, once created, can be used without changes in other projects (both C# and C++).
 
-Once the definitions are ready, you can build the project. The build automatically runs a _generator_ that translates the prepared definitions into unit-of-measurement structures, which are then passed to the compiler as additional code that is an integral part of the (same) project.
+Once the definitions are ready, you can build the project. The build automatically runs a _generator_ that translates the definitions into source code of unit-of-measurement structures, which is (then) compiled as an integral part of the (same) project.
 The generator used depends on whether it is a [C# Project](./ProjectCS.md) or [C++ Project](./ProjectCPP.md):
 
 - for C# it is [Mangh.Metrology.SourceGenerator](https://www.nuget.org/packages/Mangh.Metrology.SourceGenerator) (called automatically from the C# compiler),
@@ -33,9 +33,11 @@ The generation process is shown in the following diagram:
 
 ## Sample definitions
 
-Suppose you have prepared the following `definitions.txt` file:
+Suppose you have prepared the following `definitions.txt` file
+(see the ["Definition syntax and semantics"](./Definitions.md) page for detailed instructions on this file):
 
-```JS
+
+```
 ///////////////////////////////////////////////////////
 //
 //  Length
@@ -87,6 +89,8 @@ unit<decimal> USD "USD" = 1.3433 * EUR;     // US Dollar
 unit<decimal> GBP "GBP" = 0.79055 * EUR;    // British Pound 
 unit<decimal> PLN "PLN" = 4.1437 * EUR;     // Polish Zloty 
 ```
+(You can also take a look at a
+[more elaborate definition example](https://github.com/mangh/Metrology/blob/main/Demo/UnitsOfMeasurement/Templates/definitions.txt).)
 
 A _unit definition_, such as the one above for `Kilometer_Hour`, specifies the:
 
@@ -102,8 +106,9 @@ A _scale definition_, such as the one above for `Fahrenheit`, specifies the:
 - scale type name: `Fahrenheit`,
 - underlying unit type: `DegFahrenheit`,
 - family reference level name: `AbsoluteZero`,
-- offset: `-273.15 * (9 / 5) + 32` // position of the `AbsoluteZero` reference level relative to the zero level of the scale.
+- offset: `-273.15 * (9 / 5) + 32` (position of the `AbsoluteZero` reference level relative to the zero level of the scale).
 
+<br/>
 
 The library built from these definitions would provide the following unit and scale structures (types), each asigned to the appropriate [conversion family](./Families.md):
 
@@ -116,14 +121,11 @@ The library built from these definitions would provide the following unit and sc
 | temperature scales | `Kelvin`, `Celsius`, `Fahrenheit`                    | `Kelvin.Family`    |
 | currency units     | `EUR`, `USD`, `GBP`, `PLN`                           | `EUR.Family`       |
 
-For more information, see [Definition syntax and semantics](./Definitions.md).
-You can also take a look at a
-[more elaborate definition example](https://github.com/mangh/Metrology/blob/main/Demo/UnitsOfMeasurement/Templates/definitions.txt).  
 That's it (basically). Now you can build the project and use the generated library in your application(s).
 
 <br/>
 
-## Basic Usage
+## Usage
 
 > NOTE: throughout the documentation, I use the term _"quantity"_ for a variable of a _unit type_ and the term _"level"_ for a variable of a _scale type_. See ["Quantities and Units. Levels and Scales"](./Quantities-vs-Levels.md) to find out more about that distinction.
 
@@ -206,16 +208,16 @@ or C++:
 ```C++
 auto area = X * Y;  // error: invalid operands to binary expression ('Yard' (aka '_Yard<double>') and ard')
 ```
-until the product `X * Y` (multiplying Yards) is defined in the `definitions.txt` file, as below (for example):
+until the product `X * Y` (multiplication of Yards), is defined in the `definitions.txt` file, for example like this:
 
 ```JS
 unit SquareYard "sq yd" = Yard * Yard;
 ```
-Only such a definition makes both the product and its result (in another unit) acceptable in the source code.
+Only such a definition makes both the product and its result (in another unit) acceptable.
 
 ### Expressions with multiple units
 
-👉 The last example reveals a basic rule: expressions with multiple units (or more precisely: expressions that use _quantities in DIFFERENT UNITS_) can be used only if they have been previously defined in the `definitions.txt` file.
+👉 The last example reveals a basic principle: an expression with multiple units (or more precisely: an expressions composed of _quantities in DIFFERENT UNITS_) can be used only if it has been previously defined in the `definitions.txt` file.
 
 The following C# and C++ excerpts compile because `Meter_Sec` has been previously defined as the quotient of `Meter` by `Second`:
 
@@ -248,29 +250,36 @@ Meter_Sec speed = distance / duration;  // 36 m/s
 ```C#
 // C#
 
-// The definitions used allow you to make the following conversions:
+// The definitions used allow the following conversions:
 Kilometer_Hour kmph = Kilometer_Hour.From(speed);
 MPH mph = MPH.From(speed);
 
 WriteLine($"{distance} / {duration} = {speed} ({kmph}; {mph})");
-// 306 m / 8,5 s = 36 m/s (129,6 km/h; 80,52970651395849 mph)
 
-// In C#, each dimensional conversion method
-// has a dimensionless counterpart that can be applied to plain numbers:
+// In C#, each dimensional conversion method has
+// a dimensionless counterpart that can be applied to plain numbers:
 double kmph_ = Kilometer_Hour.FromMeter_Sec(speed.Value);
 double mph_ = MPH.FromMeter_Sec(speed.Value);
 
 WriteLine($"{distance.Value} / {duration.Value} = {speed.Value} ({kmph_}; {mph_})");
+```
+```C#
+// Sample output:
+// 306 m / 8,5 s = 36 m/s (129,6 km/h; 80,52970651395849 mph)
 // 306 / 8,5 = 36 (129,6; 80,52970651395849)
 ```
+
 ```C++
 // C++
 
-// The definitions used allow you to make the following conversions:
+// The definitions used allow the following conversions:
 Kilometer_Hour kmph = Kilometer_Hour(speed);
 MPH mph = MPH(speed);
 
 cout << distance << " / " << duration << " = " << speed << " (" << kmph << "; " << mph << ")" << endl;
+```
+```C++
+// Sample output:
 // 306 m / 8.5 s = 36 m/s (129.6 km/h; 80.5297 mph)
 ```
 
@@ -322,7 +331,7 @@ All of the previous examples refer to quantities in units known at design-time, 
 However, sometimes it is necessary to handle quantities/levels in units that we cannot name explicitly.
 
 For example:
-_handling a "length" in any unit allowed in the application, but the specific unit will be determined only at run time, for example, when the user selects it from the menu of allowed length units_.
+_handling a "length" variable in any unit allowed in the application, but the specific unit will be determined only at run time, for example, when the user selects it from the menu of allowed length units_.
 
 This requires expressions that can represent quantities/levels in an abstract way, regardless of the unit/scale actually used.  
 These are (assuming: `T` = `double` | `float` | `decimal`):
@@ -333,22 +342,22 @@ These are (assuming: `T` = `double` | `float` | `decimal`):
 Using these expressions, it is possible to handle collections of quantities (levels) in a uniform way, even though they are in different units (scales). For example:
 
 ```C#
-IQuantity<double>[] distance =
+IQuantity<double>[] distances =
 {
-    (Meter)1.0,
-    (Yard)1.0,
-    (Inch)10.0
+    (Yard)10.0,
+    (Foot)100.0,
+    (Inch)1000.0
 };
-for (int i=0; i < distance.Length; ++i)
+foreach (var distance in distances)
 {
-    WriteLine($"distance[{i}] = {distance[i]} ({Meter.From(distance[i])})");
+    WriteLine($"{distance} ({Meter.From(distance)})");
 }
 ```
 ```C#
 // Sample output:
-// distance[0] = 1 m (1 m)
-// distance[1] = 1 yd (0,9144 m)
-// distance[2] = 10 in (0,254 m)
+// 10 yd (9,144 m)
+// 100 ft (30,48 m)
+// 1000 in (25,4 m)
 ```
 
 NOTE:
@@ -356,20 +365,20 @@ NOTE:
 * The flexibility offered by `IQuantity<T>` / `ILevel<T>` expressions can be costly.
 Converting a quantity (or level) to/from the appropriate interface, e.g.: 
   ```C#
-  IQuantity<double> implicitSize = (Meter)123.0;    // boxing
-  Meter explicitMeters = (Meter)implicitSize;       // unboxing &
-                                                    // exception if implicitSize was not Meter
+  IQuantity<double> boxedSize = (Meter)123.0; // boxing
+  Meter unboxedSize = (Meter)boxedSize;       // unboxing &
+                                              // exception if boxedSize was not Meter
   ```
   involves the _boxing_/_unboxing_ operation that is costly in terms of performance.
   Therefore, it should be used sparingly: 
   use interfaces in sections that are inherently slow (e.g. data input) and explicit units in sections that need to run efficiently.
 
-* Also pay attention to the exceptions that these conversions can throw. The second assignment (_unboxing_) would throw an `InvalidCastException` exception if performed for `implicitSize`, which is not a Meter. It would be safer to do:
+* Also note the exceptions that can be raised during such conversions. The second assignment (_unboxing_) would throw an `InvalidCastException` when the `boxedSize` was not in the Meter unit. It would be safer to do:
   ```C#
-  Meter explicitMeters = Meter.From(implicitSize);  // exception if implicitSize is not 
-                                                    // a quantity in the Meter family unit
+  Meter unboxedSize = Meter.From(boxedSize);  // exception if boxedSize is not 
+                                              // a quantity in the Meter family unit
   ```
-  This will work for `implicitSize` in any unit of the Meter family
+  This will work for `boxedSize` in any unit of the Meter family
   (but an `InvalidOperationException` will be reported for all other units).
 
 
@@ -451,7 +460,7 @@ To make use of them:
   public QuantityParser(IEnumerable<Unit<T>> allowedUnits)
   public LevelParser(IEnumerable<Scale<T>> allowedScales)
   ```
-* use `TryParse` method to get a result of type `IQuantity<T>` (`ILevel<T>`) when the parser finds a valid number with a valid unit symbol in the input text:
+* use `TryParse` method to get the result of type `IQuantity<T>` (`ILevel<T>`) when the parser finds a valid number with a valid unit symbol in the input text:
   ```C#
   public bool TryParse(string input, out IQuantity<T>? result)
   public bool TryParse(string input, out ILevel<T>? result)
@@ -468,8 +477,8 @@ string? input = ReadLine();
 
 if ((input is not null) && parser.TryParse(input, out IQuantity<double>? length))
 {
-    // Note: here, you can either stay with the received "IQuantity" value,
-    // or convert it to an explicit unit (preferred for some reason), or both:
+    // Note: here, you can either stay with the received "IQuantity" value, or
+    // convert it to an explicit unit (preferred for some reason), or do both:
     WriteLine($"Length = {length} ({Meter.From(length!)})");
 }
 else
@@ -493,7 +502,7 @@ Note that `QuantityParser<double>` in the example above uses `Meter.Family` in t
 
 ## RuntimeLoader (C# only)
 
-You can use this functionality to extend the `Catalog` with "late" units/scales  at runtime; "late" means units/scales that have not been included at compile time.
+You can use this functionality to extend the `Catalog` with "late" units/scales at runtime; "late" means units/scales that have not been included at compile time.
 
 Late units/scales see compile-time units/scales as if they were defined at compile time. This is completely sufficient for conversions in both directions: from late units/scales to compile-time units/scales and vice versa (even though compile-time units/scales remain unaware of late units/scales).
 
@@ -536,7 +545,7 @@ else
 //   Length = 10 yd (5 ftm; 9,144 m)
 ```
 The `TranslationContext` (used above) provides output settings for the `RuntimeLoader`:
-output folders, output file names, dump options and methods for logging errors that may occur when loading late units.
+output folders, file names, dump options and methods for logging errors that may occur when loading late units.
 
 See [Demo/RuntimeUnits](https://github.com/mangh/Metrology/tree/main/Demo/RuntimeUnits) example for more details.
 
@@ -546,18 +555,39 @@ See [Demo/RuntimeUnits](https://github.com/mangh/Metrology/tree/main/Demo/Runtim
 
 ### C++
 
-C++ optimizing compilers (such as: GCC, MSVC, CLANG) provide code of no runtime overhead for quantity computations relative to the same code without unit checking.  
-You don't need to take any additional steps in the source code to get faster binaries - just enable the compiler's optimization options.
+
+Algorithms (in C++) using units of measure are just as efficient as their counterparts using only "plain" numbers.
+There is no noticeable drop in performance. No additional steps in the source code are needed to get this. Just use the compiler's optimization options.
+
+To test this, run a simple performance test ([Bullet](https://github.com/mangh/CALINE3.CPP/tree/main/TestBullet)) that measures the ratio of execution times of the two types of applications:
+
+```TXT
+              execution time of application with units
+  ratio = ────────────────────────────────────────────────
+          execution time of application with plain numbers
+```
+
+The table below shows the test results that were obtained using several popular C++ compilers:
+
+| Benchmark | gcc | clang | MSVC |
+| --------- | :-: | :---: | :--: |
+| [Bullet Benchmark](https://github.com/mangh/CALINE3.CPP/tree/main/TestBullet) | `0.99 (+-3%)` | `0.93 (+-5%)` | `0.92 (+-8%)` |
+|           | (Debian WSL) | (Windows 11) | (Windows 11) |
+
+
+Ratios less than 1.0 could suggest that an application with units might even be faster, but this is not true.
+Such good coefficients are due to the simplified concept of the test (too simple to capture the complexity of time measurements and their statistics).
+We can only conclude that both types of applications are equally efficient.
 
 ### C#
 
-Algorithms formulated in units of measure are slower than their counterparts using "plain" numbers only.
+Algorithms (in C#) that use units of measure are slower than their counterparts that use only "plain" numbers.
 The table below shows the ratio of the execution times (application with units / application with plain numbers) measured in two benchmark tests (built for .NET 6 and .NET 7):
 
 | Benchmark | .NET 6 | .NET 7 |
-| --------- | ----------------------------------- | ----------------------------------- |
-| [Bullet Benchmark](https://github.com/mangh/Metrology/tree/main/Demo/Bullet) | `5.45`                               | `2.43`                    |
-| [CALINE3 Benchmark](https://github.com/mangh/CALINE3.CS/tree/main/Benchmark) | `1.24` (&#8776; 2.701 ms / 2.177 ms) | `1.13` (&#8776; 958.5 μs / 849.7 μs) |
+| --------- | :---------------------------------: | :---------------------------------: |
+| [Bullet Benchmark](https://github.com/mangh/Metrology/tree/main/Demo/Bullet) | `≈ 5.45`                               | `≈ 2.43`                    |
+| [CALINE3 Benchmark](https://github.com/mangh/CALINE3.CS/tree/main/Benchmark) | `≈ 1.24`<br/>(&#8776; 2.701 ms / 2.177 ms) | `≈ 1.13`<br/>(&#8776; 958.5 μs / 849.7 μs) |
 
 The lower the ratio, the better.
 These results can also be seen in the comments pasted at the end of the source code of the main benchmark modules.
@@ -566,9 +596,9 @@ The first benchmark (Bullet) focuses on a single, somewhat artificial method ([B
 This can be considered the maximum performance drop.
 
 The second (CALINE3) is closer to real-world applications but, interestingly, is not as restrained in the use of units, as a much better result (1.24 versus 5.45) would suggest.
-In this case, the benchmark measures the execution time of the entire algorithm, which includes both the use of units and standard operations (such as object creation, collection handling, etc.) that are performed regardless of whether units are used or not, and also contribute to the overall execution time.
+In this case, the benchmark measures the execution time of the entire algorithm, which includes both the use of units and standard operations (such as object creation, collection handling, etc.) that are performed regardless of whether units are used or not, but also contribute to the overall execution time.
 Measuring unit usage alone in isolation from its context would not make much sense here.
-As you can see in the profiler screenshot below, these operations make only a small contribution (cca. 6%) to the overall execution time and this is what accounts for a much better benchmark result, even if the units themselves are 5 times slower:
+As you can see in the profiler screenshot below, unit-related operations make only a small contribution (cca. 6%) to the overall execution time and this is what accounts for a much better benchmark result, even if the units themselves are 5 times slower:
 
 ![profiling](image/Profiling.png)
 
@@ -576,7 +606,7 @@ As you can see in the profiler screenshot below, these operations make only a sm
 
 As you may have noticed in the source code of previous examples, there is a way to completely eliminate the performance degradation without major changes to the source code - albeit at the cost of not being able to detect dimensional inconsistencies.
 
-The key idea of this solution is to force the compiler to replace - on the fly - all references to unit structures with references to the corresponding primitive number types, so that, for example, the following excerpt:
+The key idea here is to force the compiler to replace - on the fly - all references to unit structures with references to the corresponding primitive numeric types, so that, for example, the following excerpt:
 ```C#
 Meter distance = (Meter)306.0;          // 306 m
 Second duration = (Second)8.5;          // 8,5 s
@@ -589,9 +619,12 @@ double duration = (double)8.5;          // 8,5
 double speed = distance / duration;     // 36
 ```
 This is achieved by:
-* `DIMENSIONAL_ANALYSIS` symbol - to be used in dependent projects to control conditional compilation,
-* `./Templates/Aliases.inc` file - built automatically at compile-time to provide unit structures or a map to the corresponding primitive number types, for example:
+* `DIMENSIONAL_ANALYSIS` preprocessor symbol - for use (as a defined or undefined symbol) in dependent projects to control conditional compilation,
+
+* `./Templates/Aliases.inc` file - generated automatically at compile-time, along with units, to import the appropriate types (i.e. either generated unit types or corresponding numeric types) in the dependent project(s):
+
   ```C#
+  // Sample Aliases.inc
   // Note: the "global using" directives require C# 10
   #if DIMENSIONAL_ANALYSIS
       global using Demo.UnitsOfMeasurement;
@@ -607,8 +640,10 @@ This is achieved by:
   #endif
   ```
 
-* `./Directory.Build.targets` file - to export/copy `Aliases.inc` to dependent project(s), for example:
+* `./Directory.Build.targets` file - to automatically export `Aliases.inc` to dependent project(s):
+
   ```XML
+  <!-- Sample Directory.Build.targets -->
   <Project>
     <ItemGroup>
       <SourceAliases Include="Templates\Aliases.inc"/>
@@ -620,9 +655,10 @@ This is achieved by:
   </Project>
   ```
 
-* `./Math.cs` file - to enable uniform use of `System.Math` methods, for example:
+* `./Math.cs` file - to unify references to `System.Math` methods:
+
   ```C#
-  // Math.cs
+  // Sample Math.cs
   namespace Demo.UnitsOfMeasurement
   {
       public static class Math
@@ -636,8 +672,10 @@ This is achieved by:
   }
   ```
 
-* conversions - as an exception - require special treatment, directly in the source code, to provide the appropriate (dimensional or dimensionless) version:
+* Conversions - as an exception - require special treatment, directly in the source code, to ensure the correct (dimensional or dimensionless) version:
+
   ```C#
+  // Sample conversion that supports both units and plain numbers:
   #if DIMENSIONAL_ANALYSIS
     Radian angle = Radian.From(slope);
   #else
@@ -645,14 +683,15 @@ This is achieved by:
   #endif
   ```
 
-When all these components are ready, just define --or-- remove the `DIMENSIONAL_ANALYSIS` symbol in the dependent project to compile it in the appropriate mode: *with units and reduced performance* --or-- *without units and maximum performance*.
+When all these components are ready, just define (or undefine) the `DIMENSIONAL_ANALYSIS` symbol in the dependent project and compile it: 
+you will get binaries running in the appropriate mode: *with unit control and reduced performance* (or *with maximum performance, but insensitive to dimensional issues*).
 
 <br/>
 
 ## Customizing
 In addition to modifying the `definitions.txt` file - in which you specify units and scales - you can also:
 * modify XSLT templates to change the structure and/or functionality of (all) generated units/scales,
-* create extensions to the generated _partial structs_ for an additional functionality that is required only for selected units/scales and cannot be put in XSLT templates as that would make unwanted changes in all other units/scales. 
+* (C# only) create extensions to the generated _partial structs_ for an additional functionality that is required only for selected units/scales (and cannot be put in XSLT templates as that would make unwanted changes in all other units/scales). 
   
   For example, you can create the following extensions for the units `Ohm` and `Siemens` to include the relationship `Ohm = 1/Siemens` that applies for these two units only:
   ```C#
@@ -664,7 +703,7 @@ In addition to modifying the `definitions.txt` file - in which you specify units
   // SiemensExt.cs (extension for Siemens.cs)
   public partial struct Siemens { public Ohm Resistance => new(1.0 / Value); }
   ```
-* modify the source code provided with the project template.
+* modify the source code in files provided (as finished) with the project template.
 
 <br/>
 
