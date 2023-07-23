@@ -36,12 +36,11 @@ which provides a [C++ Project](Docs/ProjectCPP.md) template
   replaces the `XsltGeneratorApp` _console application_ available in the source code of the previous version.
 
 
-### Selected string literals are recognized
+### Special string literals used in definitions
 
-* Parser recognizes `"System.Math.PI"` and `"System.Math.E"` literals to validate
- factors in `"unit<double>"` and `"scale<double>"` definitions that make use of
- these literals. (Other literals or in other definition types are still taken as
- numbers of unknown value - factor validation cannot be made).
+* The definition parser again recognizes the literals `"Math.PI"` and `"Math.E"`
+(as well as `"System.Math.PI"` and `"System.Math.E"`).
+Now the literals can be used regardless of the numeric type underlying the unit (and not just for `unit<double>` definitions).
 
 
 ## Release 1.0.4 (12/27/2021)
