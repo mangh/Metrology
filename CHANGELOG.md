@@ -16,7 +16,7 @@ As part of the new solution, you get:
 which can generate C++ (as well as C#) units from console,
 * [CPPUnits](https://www.nuget.org/packages/Mangh.Metrology.CPPUnits) package,
 which provides a [C++ Project](Docs/ProjectCPP.md) template
-(see also: [C++ Project Setup](Docs/SetupCPP.md)).
+(see also: [Using C++ projects](Docs/UsingCPP.md)).
 
 
 ### NuGet packages renamed
