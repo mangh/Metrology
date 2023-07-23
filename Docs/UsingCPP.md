@@ -7,7 +7,7 @@ Before creating a C++ project, install the following tools:
 * install the [CPPUnits](https://www.nuget.org/packages/Mangh.Metrology.CPPUnits) package,
 which provides project template for C++ unit of measurement library:
 
-  ```PS
+  ```sh
   dotnet new install Mangh.Metrology.CPPUnits
   ```
 
@@ -15,7 +15,7 @@ which provides project template for C++ unit of measurement library:
 which provides a standalone [dotnet tool](https://learn.microsoft.com/en-us/dotnet/core/tools/global-tools)
 for generating unit structures in C++ (as well as C#):
 
-  ```PS
+  ```sh
   dotnet tool install --global Mangh.Metrology.UnitGenerator
   ```
 
@@ -25,7 +25,7 @@ The above steps only need to be done once (you don't need to repeat them for eac
 
 * Use the following command to create a project `<PROJECT_NAME>` in `<PROJECT_FOLDER>` for units of measurement in namespace `<PROJECT_NAMESPACE>`:
 
-   ```PS
+   ```sh
    dotnet new cppunits -n <PROJECT_NAME> -o <PROJECT_FOLDER> -ns <PROJECT_NAMESPACE>
    ```
  
