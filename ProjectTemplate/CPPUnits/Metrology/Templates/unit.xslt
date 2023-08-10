@@ -46,7 +46,8 @@ namespace <xsl:value-of select="@ns"/>
     </xsl:for-each>
     <!-- fellows -->
     <xsl:for-each select="fellow/operation/lhs|fellow/operation/rhs|fellow/operation/ret">
-      <xsl:if test="not(.=$Unit) and not(@builtin='yes') and not(.=../preceding-sibling::*/lhs) and not(.=../preceding-sibling::*/rhs) and not(.=../preceding-sibling::*/ret)">
+      <xsl:variable name="arg" select="." />
+      <xsl:if test="not(.=$Unit) and not(@builtin='yes') and not(preceding-sibling::*[.=$arg]) and not(../preceding-sibling::*/*[.=$arg])">
         <xsl:text>/*fellow*/ template&lt;typename T&gt; struct </xsl:text>
         <xsl:value-of select="concat('_', .)"/>
         <xsl:text>;
