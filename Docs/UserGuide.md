@@ -557,27 +557,21 @@ See [Demo/RuntimeUnits](https://github.com/mangh/Metrology/tree/main/Demo/Runtim
 
 
 Algorithms (in C++) using units of measure are just as efficient as their counterparts using only "plain" numbers.
-There is no noticeable drop in performance. No additional steps in the source code are needed to get this. Just use the compiler's optimization options.
+There is no noticeable drop in performance. No additional steps in the source code are needed to get this.
+Just use the compiler's optimization options.
 
-To test this, run a simple performance test ([Bullet](https://github.com/mangh/CALINE3.CPP/tree/main/TestBullet)) that measures the ratio of execution times of the two types of applications:
+To check this, you can run [Bullet Benchmark](https://github.com/mangh/CALINE3.CPP/tree/main/Benchmark).
+It allows you to measure the execution times of two types of applications and then calculate their ratio.
+The table below shows [sample results](https://github.com/mangh/CALINE3.CPP/tree/main/Benchmark) obtained using several popular C++ compilers:
 
-```TXT
-              execution time of application with units
-  ratio = ────────────────────────────────────────────────
-          execution time of application with plain numbers
-```
+| Bullet Benchmark         | gcc<br/>Debian WSL | clang<br/>Windows 11 | MSVC<br/>Windows 11 |
+| :----------------------- | :----------------: | :------------------: | :-----------------: |
+| plain                    | 128.622 (±2.9%) μs | 124.856 (±2.3%) μs   | 126.343 (±1.2%) μs  |
+| measured                 | 129.350 (±3.7%) μs | 121.440 (±1.8%) μs   | 126.556 (±2.3%) μs  |
+| ratio = measured / plain | __1,0057__         | __0,9726__           | __1,0017__          |
 
-The table below shows the test results that were obtained using several popular C++ compilers:
-
-| Benchmark | gcc | clang | MSVC |
-| --------- | :-: | :---: | :--: |
-| [Bullet Benchmark](https://github.com/mangh/CALINE3.CPP/tree/main/TestBullet) | `0.99 (+-3%)` | `0.93 (+-5%)` | `0.92 (+-8%)` |
-|           | (Debian WSL) | (Windows 11) | (Windows 11) |
-
-
-Ratios less than 1.0 could suggest that an application with units might even be faster, but this is not true.
-Such good coefficients are due to the simplified concept of the test (too simple to capture the complexity of time measurements and their statistics).
-We can only conclude that both types of applications are equally efficient.
+You may get results that differ from the above (due to a different CPU, compiler version, etc.),
+but the "ratio" is usually close to 1.0 (there is no clear drop in performance).
 
 ### C#
 
