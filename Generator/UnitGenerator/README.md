@@ -49,15 +49,16 @@
 
 * The tool requires the following templates in the `templateFolder` directory:
 
-  C#              |  C++            | purpose
-  --------------- | --------------- | -----------------------------
-  Definitions.txt | definitions.txt | _units and scales definitions_
-  Unit.xslt       | unit.xslt       | _unit template_
-  Scale.xslt      | scale.xslt      | _scale template_
-  `n/a`           | math.xslt       | _math constants_
-  Catalog.xslt    | `n/a`           | _catalog template_
-  Aliases.xslt    | `n/a`           | _aliases template_
-  Report.xslt     | report.xslt     | _report template_
+  C#              |  C++                | purpose
+  --------------- | ------------------- | -----------------------------
+  Definitions.txt | definitions.txt     | _units and scales definitions_
+  Unit.xslt       | unit.xslt           | _unit template_
+  Scale.xslt      | scale.xslt          | _scale template_
+  `n/a`           | math-constants.xslt | _math constants_
+  `n/a`           | replace-string.xslt | _replace function_
+  Catalog.xslt    | `n/a`               | _catalog template_
+  Aliases.xslt    | `n/a`               | _aliases template_
+  Report.xslt     | report.xslt         | _report template_
 
   Sample templates can be found on the [project website](https://github.com/mangh/Metrology).
 

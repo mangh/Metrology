@@ -1,3 +1,9 @@
+## Release 2.0.1 (03/04/2024)
+
+### .NET 8 as a target framework
+
+* No functional changes, but now all projects target .NET 8 (to benefit from .NET 8 performance gain).
+
 ## Release 2.0 (07/21/2023)
 
 ### Redesigned solution

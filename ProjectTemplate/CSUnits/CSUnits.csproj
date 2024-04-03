@@ -25,13 +25,15 @@
     <PackageTags>unit;scale;measure;metrology</PackageTags>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <Version>2.0.0</Version>
+    <Version>2.0.1</Version>
     <PackageReleaseNotes>
-      Version 2.x
-      * supporting packages restructured,
-      * packages renamed.
-      Version 1.x (named: Mangh.Metrology.UnitsOfMeasurement)
-      * deprecated.
+        Version 2.0.1
+        * no functional changes, but all projects target .NET 8 (to improve performance).
+        Version 2.x
+        * supporting packages restructured,
+        * packages renamed.
+        Version 1.x (named: Mangh.Metrology.UnitsOfMeasurement)
+        * deprecated.
     </PackageReleaseNotes>
   </PropertyGroup>
 

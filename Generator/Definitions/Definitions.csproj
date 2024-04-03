@@ -10,16 +10,16 @@
     <AssemblyName>Mangh.Metrology.Definitions</AssemblyName>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <SignAssembly>True</SignAssembly>
-    <AssemblyOriginatorKeyFile>C:\Users\Marek\source\repos\MetrologyAsync\Metrology.snk</AssemblyOriginatorKeyFile>
-    <AssemblyVersion>2.0.0.0</AssemblyVersion>
-    <FileVersion>2.0.0.0</FileVersion>
+    <AssemblyOriginatorKeyFile>$(SolutionDir)metrology.snk</AssemblyOriginatorKeyFile>
+    <AssemblyVersion>2.0.1.0</AssemblyVersion>
+    <FileVersion>2.0.1.0</FileVersion>
     <DebugType>embedded</DebugType>
   </PropertyGroup>
 
   <!-- NuGet properties -->
   <PropertyGroup>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <Version>2.0.0</Version>
+    <Version>2.0.1</Version>
     <Authors>MAN</Authors>
     <Company>MAN</Company>
     <Description>Metrology Unit Definition Parser</Description>
@@ -33,12 +33,14 @@
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
     <ApplicationIcon>Icon.ico</ApplicationIcon>
     <PackageReleaseNotes>
-      Version 2.x
-      * C++ support (new),
-      * source code heavily restructured,
-      * packages renamed.
-      Version 1.x (named: Mangh.Metrology.DefinitionParser)
-      * deprecated.
+        Version 2.0.1
+        * no functional changes, but all projects target .NET 8 (to improve performance).
+        Version 2.x
+        * C++ support (new),
+        * source code heavily restructured,
+        * packages renamed.
+        Version 1.x (named: Mangh.Metrology.DefinitionParser)
+        * deprecated.
     </PackageReleaseNotes>
   </PropertyGroup>
 
@@ -61,7 +63,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.CodeAnalysis.Common" Version="4.6.0" />
+    <PackageReference Include="Microsoft.CodeAnalysis.Common" Version="4.9.2" />
   </ItemGroup>
 
   <ItemGroup>

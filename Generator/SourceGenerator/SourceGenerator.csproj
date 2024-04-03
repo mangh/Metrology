@@ -11,8 +11,8 @@
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <SignAssembly>True</SignAssembly>
     <AssemblyOriginatorKeyFile>$(SolutionDir)\metrology.snk</AssemblyOriginatorKeyFile>
-    <AssemblyVersion>2.0.0.0</AssemblyVersion>
-    <FileVersion>2.0.0.0</FileVersion>
+    <AssemblyVersion>2.0.1.0</AssemblyVersion>
+    <FileVersion>2.0.1.0</FileVersion>
     <!-- Debug symbols embedded in DLL (portable across platforms) -->
     <DebugType>embedded</DebugType>
   </PropertyGroup>
@@ -35,14 +35,16 @@
     <PackageTags>unit;scale;measure;metrology</PackageTags>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <Version>2.0.0</Version>
+    <Version>2.0.1</Version>
     <ApplicationIcon>Icon.ico</ApplicationIcon>
     <PackageReleaseNotes>
-      Version 2.x
-      * source code heavily restructured,
-      * packages renamed.
-      Version 1.x (named: Mangh.Metrology.SourceGeneratorXslt)
-      * deprecated.
+        Version 2.0.1
+        * no functional changes, but all projects target .NET 8 (to improve performance).
+        Version 2.x
+        * source code heavily restructured,
+        * packages renamed.
+        Version 1.x (named: Mangh.Metrology.SourceGeneratorXslt)
+        * deprecated.
     </PackageReleaseNotes>
   </PropertyGroup>
 
@@ -72,8 +74,8 @@
     <!-- Generator dependencies:
         * PrivateAssets="none": all assets (apart of being consumed by the generator) can flow to the parent project,
         * GeneratePathProperty="true": dependencies can be referenced via the "global-packages" folder (i.e. via Pkg... property) -->
-    <PackageReference Include="Mangh.Metrology.Model" Version="2.0.0" GeneratePathProperty="true" PrivateAssets="none" />
-    <PackageReference Include="Mangh.Metrology.Definitions" Version="2.0.0" GeneratePathProperty="true" PrivateAssets="none" />
+    <PackageReference Include="Mangh.Metrology.Model" Version="2.0.1" GeneratePathProperty="true" PrivateAssets="none" />
+    <PackageReference Include="Mangh.Metrology.Definitions" Version="2.0.1" GeneratePathProperty="true" PrivateAssets="none" />
 
     <!-- The dependencies must be in the same location as the generator i.e. in the "analyzers" folder -->
     <None Include="$(PkgMangh_Metrology_Model)\lib\netstandard2.0\*.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
@@ -98,7 +100,7 @@
          for symbols from the "Microsoft.CodeAnalysis.Common" package. The build itself can succeed
          without that reference (explicitly specified) as the package is referenced anyway as a
          dependency of the "Mangh.Metrology.Definitions". -->
-    <PackageReference Include="Microsoft.CodeAnalysis.Common" Version="4.6.0" PrivateAssets="none" />
+    <PackageReference Include="Microsoft.CodeAnalysis.Common" Version="4.9.2" PrivateAssets="none" />
   </ItemGroup>
 
 </Project>

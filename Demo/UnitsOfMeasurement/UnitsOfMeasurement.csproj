@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>disable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <!-- The RootNamespace (required) property specifies the target namespace for generated units: -->
@@ -10,7 +10,7 @@
          disabled (false) by default: the source generator silently exits
          without notifying of the missing required files: -->
     <ReportMissingAdditionalFiles>true</ReportMissingAdditionalFiles>
-    <AssemblyVersion>2.0.0.0</AssemblyVersion>
+    <AssemblyVersion>2.0.1.0</AssemblyVersion>
   </PropertyGroup>
 
   <!-- Uncomment the following "PropertyGroup" and its associated "ItemGroup" to save the generated files in the Units folder:
@@ -42,8 +42,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Mangh.Metrology.SourceGenerator" Version="2.0.0" />
-    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.6.0" />
+    <PackageReference Include="Mangh.Metrology.SourceGenerator" Version="2.0.1" />
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.9.2" />
   </ItemGroup>
 
 </Project>

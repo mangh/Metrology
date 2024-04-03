@@ -11,15 +11,15 @@
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <SignAssembly>True</SignAssembly>
     <AssemblyOriginatorKeyFile>C:\Users\Marek\source\repos\Metrology\metrology.snk</AssemblyOriginatorKeyFile>
-    <AssemblyVersion>2.0.0.0</AssemblyVersion>
-    <FileVersion>2.0.0.0</FileVersion>
+    <AssemblyVersion>2.0.1.0</AssemblyVersion>
+    <FileVersion>2.0.1.0</FileVersion>
     <DebugType>embedded</DebugType>
   </PropertyGroup>
 
   <!-- NuGet properties -->
   <PropertyGroup>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <Version>2.0.0</Version>
+    <Version>2.0.1</Version>
     <Authors>MAN</Authors>
     <Company>MAN</Company>
     <Description>Metrology source code generation model</Description>
@@ -32,12 +32,14 @@
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
     <PackageReleaseNotes>
-      Version 2.x
-      * C++ support (new),
-      * source code heavily restructured,
-      * packages renamed.
-      Version 1.x (named: Mangh.Metrology.UnitTranslatorXslt)
-      * deprecated.
+        Version 2.0.1
+        * no functional changes, but all projects target .NET 8 (to improve performance).
+        Version 2.x
+        * C++ support (new),
+        * source code heavily restructured,
+        * packages renamed.
+        Version 1.x (named: Mangh.Metrology.UnitTranslatorXslt)
+        * deprecated.
     </PackageReleaseNotes>
   </PropertyGroup>
 
@@ -50,7 +52,7 @@
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>
-    <PackageReference Include="Mangh.Metrology.Definitions" Version="2.0.0" />
+    <PackageReference Include="Mangh.Metrology.Definitions" Version="2.0.1" />
     <None Update="README.md">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>

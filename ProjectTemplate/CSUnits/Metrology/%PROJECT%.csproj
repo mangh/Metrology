@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>disable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <!-- The RootNamespace (required) property specifies the target namespace for generated units -->
@@ -24,7 +24,7 @@
     <Compile Remove="$(CompilerGeneratedFilesOutputPath)/*/**/*.cs" />
   </ItemGroup>
   -->
-  
+
   <ItemGroup>
     <Folder Include="Core\" />
     <Folder Include="Parsers\" />
@@ -43,8 +43,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Mangh.Metrology.SourceGenerator" Version="2.0.0" />
-    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.6.0" />
+    <PackageReference Include="Mangh.Metrology.SourceGenerator" Version="2.0.1" />
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.9.2" />
   </ItemGroup>
 
 </Project>
