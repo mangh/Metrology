@@ -146,9 +146,7 @@ namespace Mangh.Metrology
             (DimExpr dimExpr, NumExpr<T> numExpr) = _stack.Pop();
             _stack.Push((
                 dimExpr,
-                node.Plus ?
-                    new(numExpr.IsReal, numExpr.Value, $"{numExpr.SimpleCode}") :
-                    new(numExpr.IsReal, -numExpr.Value, $"-{numExpr.SimpleCode}")
+                new(numExpr.IsReal, numExpr.Value, (node.Plus ? "+" : "-") + numExpr.SimpleCode)
             ));
         }
 
@@ -156,14 +154,32 @@ namespace Mangh.Metrology
         {
             (DimExpr dimExpr, NumExpr<T> numExpr) = _stack.Pop();
             _stack.Push((
-                new(dimExpr.Value, $"({dimExpr.SimpleCode})"),
-                new(numExpr.IsReal, numExpr.Value, $"({numExpr.SimpleCode})")
+                new(dimExpr.Value, Parenthesize(dimExpr.SimpleCode), Parenthesize(dimExpr.UnfoldedCode)),
+                new(numExpr.IsReal, numExpr.Value, Parenthesize(numExpr.SimpleCode), Parenthesize(numExpr.UnfoldedCode))
             ));
+
+            // Encloses expression string within parentheses (if neccessary).
+            static string Parenthesize(string expr)
+            {
+                int pcount = 0;
+                foreach (char c in expr)
+                {
+                    if (c == '(')
+                        ++pcount;
+                    else if (c == ')')
+                        --pcount;
+                    else if ((c != ' ') && (pcount == 0))
+                        return '(' + expr + ')';
+                }
+                return expr;
+            }
         }
         public void Visit(ASTProduct node)
         {
             (DimExpr rhsDim, NumExpr<T> rhsNum) = _stack.Pop();
             (DimExpr lhsDim, NumExpr<T> lhsNum) = _stack.Pop();
+
+            string op = " * ";
 
             DimExpr resultDim =
                 lhsDim.Value == Dimension.None ?
@@ -172,15 +188,15 @@ namespace Mangh.Metrology
                     lhsDim :
                     new(
                         lhsDim.Value * rhsDim.Value,
-                        $"{lhsDim.SimpleCode} * {rhsDim.SimpleCode}",
-                        $"({lhsDim.UnfoldedCode} * {rhsDim.UnfoldedCode})"
+                        lhsDim.SimpleCode + op + rhsDim.SimpleCode,
+                        "(" + lhsDim.UnfoldedCode + op + rhsDim.UnfoldedCode + ")"
                     );
 
             NumExpr<T> resultNum = new(
                     lhsNum.IsReal && rhsNum.IsReal,
                     lhsNum.Value * rhsNum.Value,
-                    $"{lhsNum.SimpleCode} * {rhsNum.SimpleCode}",
-                    $"({lhsNum.UnfoldedCode} * {rhsNum.UnfoldedCode})"
+                    lhsNum.SimpleCode + op + rhsNum.SimpleCode,
+                    "(" + lhsNum.UnfoldedCode + op + rhsNum.UnfoldedCode + ")"
             );
 
             _stack.Push((resultDim, resultNum));
@@ -191,20 +207,22 @@ namespace Mangh.Metrology
             (DimExpr rhsDim, NumExpr<T> rhsNum) = _stack.Pop();
             (DimExpr lhsDim, NumExpr<T> lhsNum) = _stack.Pop();
 
+            string op = " / ";
+
             DimExpr resultDim =
                 rhsDim.Value == Dimension.None ?
                     lhsDim :
                     new(
                         lhsDim.Value / rhsDim.Value,
-                        $"{lhsDim.SimpleCode} / {rhsDim.SimpleCode}",
-                        $"({lhsDim.UnfoldedCode} / {rhsDim.UnfoldedCode})"
+                        lhsDim.SimpleCode + op + rhsDim.SimpleCode,
+                        "(" + lhsDim.UnfoldedCode + op + rhsDim.UnfoldedCode + ")"
                     );
 
             NumExpr<T> resultNum = new(
                 lhsNum.IsReal && rhsNum.IsReal,
                 lhsNum.Value / rhsNum.Value,
-                $"{lhsNum.SimpleCode} / {rhsNum.SimpleCode}",
-                $"({lhsNum.UnfoldedCode} / {rhsNum.UnfoldedCode})"
+                lhsNum.SimpleCode + op + rhsNum.SimpleCode,
+                "(" + lhsNum.UnfoldedCode + op + rhsNum.UnfoldedCode + ")"
             );
 
             _stack.Push((resultDim, resultNum));
@@ -215,6 +233,8 @@ namespace Mangh.Metrology
             (DimExpr rhsDim, NumExpr<T> rhsNum) = _stack.Pop();
             (DimExpr lhsDim, NumExpr<T> lhsNum) = _stack.Pop();
 
+            string op = " + ";
+
             DimExpr resultDim = rhsDim.Value == lhsDim.Value ?
                 rhsDim :
                 throw new InvalidOperationException(
@@ -224,8 +244,8 @@ namespace Mangh.Metrology
             NumExpr<T> resultNum = new(
                 lhsNum.IsReal && rhsNum.IsReal,
                 lhsNum.Value + rhsNum.Value,
-                $"{lhsNum.SimpleCode} + {rhsNum.SimpleCode}",
-                $"({lhsNum.UnfoldedCode} + {rhsNum.UnfoldedCode})"
+                lhsNum.SimpleCode + op + rhsNum.SimpleCode,
+                "(" + lhsNum.UnfoldedCode + op + rhsNum.UnfoldedCode + ")"
             );
 
             _stack.Push((resultDim, resultNum));
@@ -236,6 +256,8 @@ namespace Mangh.Metrology
             (DimExpr rhsDim, NumExpr<T> rhsNum) = _stack.Pop();
             (DimExpr lhsDim, NumExpr<T> lhsNum) = _stack.Pop();
 
+            string op = " - ";
+
             DimExpr resultDim = rhsDim.Value == lhsDim.Value ?
                 rhsDim :
                 throw new InvalidOperationException(
@@ -245,8 +267,8 @@ namespace Mangh.Metrology
             NumExpr<T> resultNum = new(
                 lhsNum.IsReal && rhsNum.IsReal,
                 lhsNum.Value - rhsNum.Value,
-                $"{lhsNum.SimpleCode} - {rhsNum.SimpleCode}",
-                $"({lhsNum.UnfoldedCode} - {rhsNum.UnfoldedCode})"
+                lhsNum.SimpleCode + op + rhsNum.SimpleCode,
+                "(" + lhsNum.UnfoldedCode + op + rhsNum.UnfoldedCode + ")"
             );
 
             _stack.Push((resultDim, resultNum));
