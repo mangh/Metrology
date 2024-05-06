@@ -6,7 +6,7 @@
     <ImplicitUsings>disable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <AssemblyName>UnitGenerator</AssemblyName>
-    <AssemblyVersion>2.0.1.0</AssemblyVersion>
+    <AssemblyVersion>2.0.2.0</AssemblyVersion>
     <FileVersion>$(AssemblyVersion)</FileVersion>
     <Version>$(AssemblyVersion)</Version>
     <RootNamespace>Mangh.Metrology.UnitGenerator</RootNamespace>
@@ -26,6 +26,8 @@
     <RepositoryUrl>https://github.com/mangh/Metrology</RepositoryUrl>
     <PackageTags>unit;scale;measure;metrology</PackageTags>
     <PackageReleaseNotes>
+        Version 2.0.2
+        * fixed "(expr)" encoding bug: some C++ units could be generated with an invalid conversion factor, detected as an invalid expression during compilation. C# units were free of this bug.
         Version 2.0.1
         * no functional changes, but all projects target .NET 8 (to improve performance).
         Version 2.x
@@ -49,7 +51,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Mangh.Metrology.Model" Version="2.0.1" />
+    <PackageReference Include="Mangh.Metrology.Model" Version="2.0.2" />
   </ItemGroup>
 
   <ItemGroup>

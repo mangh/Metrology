@@ -11,8 +11,8 @@
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <SignAssembly>True</SignAssembly>
     <AssemblyOriginatorKeyFile>$(SolutionDir)\metrology.snk</AssemblyOriginatorKeyFile>
-    <AssemblyVersion>2.0.1.0</AssemblyVersion>
-    <FileVersion>2.0.1.0</FileVersion>
+    <AssemblyVersion>2.0.2.0</AssemblyVersion>
+    <FileVersion>2.0.2.0</FileVersion>
     <!-- Debug symbols embedded in DLL (portable across platforms) -->
     <DebugType>embedded</DebugType>
   </PropertyGroup>
@@ -35,9 +35,11 @@
     <PackageTags>unit;scale;measure;metrology</PackageTags>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <Version>2.0.1</Version>
+    <Version>2.0.2</Version>
     <ApplicationIcon>Icon.ico</ApplicationIcon>
     <PackageReleaseNotes>
+        Version 2.0.2
+        * fixed "(expr)" encoding bug: some C++ units could be generated with an invalid conversion factor, detected as an invalid expression during compilation. C# units were free of this bug.
         Version 2.0.1
         * no functional changes, but all projects target .NET 8 (to improve performance).
         Version 2.x
@@ -74,8 +76,8 @@
     <!-- Generator dependencies:
         * PrivateAssets="none": all assets (apart of being consumed by the generator) can flow to the parent project,
         * GeneratePathProperty="true": dependencies can be referenced via the "global-packages" folder (i.e. via Pkg... property) -->
-    <PackageReference Include="Mangh.Metrology.Model" Version="2.0.1" GeneratePathProperty="true" PrivateAssets="none" />
-    <PackageReference Include="Mangh.Metrology.Definitions" Version="2.0.1" GeneratePathProperty="true" PrivateAssets="none" />
+    <PackageReference Include="Mangh.Metrology.Model" Version="2.0.2" GeneratePathProperty="true" PrivateAssets="none" />
+    <PackageReference Include="Mangh.Metrology.Definitions" Version="2.0.2" GeneratePathProperty="true" PrivateAssets="none" />
 
     <!-- The dependencies must be in the same location as the generator i.e. in the "analyzers" folder -->
     <None Include="$(PkgMangh_Metrology_Model)\lib\netstandard2.0\*.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />

@@ -11,15 +11,15 @@
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <SignAssembly>True</SignAssembly>
     <AssemblyOriginatorKeyFile>$(SolutionDir)metrology.snk</AssemblyOriginatorKeyFile>
-    <AssemblyVersion>2.0.1.0</AssemblyVersion>
-    <FileVersion>2.0.1.0</FileVersion>
+    <AssemblyVersion>2.0.2.0</AssemblyVersion>
+    <FileVersion>2.0.2.0</FileVersion>
     <DebugType>embedded</DebugType>
   </PropertyGroup>
 
   <!-- NuGet properties -->
   <PropertyGroup>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <Version>2.0.1</Version>
+    <Version>2.0.2</Version>
     <Authors>MAN</Authors>
     <Company>MAN</Company>
     <Description>Metrology Unit Definition Parser</Description>
@@ -33,6 +33,8 @@
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
     <ApplicationIcon>Icon.ico</ApplicationIcon>
     <PackageReleaseNotes>
+        Version 2.0.2
+        * fixed "(expr)" encoding bug: some C++ units could be generated with an invalid conversion factor, detected as an invalid expression during compilation. C# units were free of this bug.
         Version 2.0.1
         * no functional changes, but all projects target .NET 8 (to improve performance).
         Version 2.x

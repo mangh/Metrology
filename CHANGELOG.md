@@ -1,3 +1,23 @@
+## Release 2.0.2 (05/06/2024)
+
+### Fixed "(expr)" encoding bug
+
+* Some C++ units could be generated with an invalid conversion factor, detected as an invalid expression during compilation.
+For example, for a Degree unit defined as:
+  ```txt
+  unit Degree "deg" : "%f%s" = (180 * Radian) / "Math.PI";
+  ```
+  the conversion factor was encoded as:
+  ```c++
+  static constexpr T factor{ ((180.0 * Radian::factor) / 3.141592653589793238462643383279502884L) };
+  ```
+  whereas it should be:
+  ```c++
+  static constexpr T factor{ ((180.0 * 1.0) / 3.141592653589793238462643383279502884L) };
+  ```
+
+* C# units were free of this bug.
+
 ## Release 2.0.1 (03/04/2024)
 
 ### .NET 8 as a target framework
