@@ -1,3 +1,10 @@
+## Release 2.0.3 (03/09/2025)
+
+### No functional changes, but:
+
+* `.NET 9` is the target platform (all projects and project templates target `.NET 9`).
+* `Mangh.Metrology.SourceGenerator` implements the `IIncrementalGenerator` interface (instead of the `ISourceGenerator`, which has been deprecated).
+
 ## Release 2.0.2 (05/06/2024)
 
 ### Fixed "(expr)" encoding bug

@@ -278,4 +278,56 @@ namespace Benchmark
  * Run time: 00:03:47 (227.14 sec), executed benchmarks: 14
  * Global total time: 00:03:51 (231.93 sec), executed benchmarks: 14
  * 
+ * 
+ * Summary (DIMENSIONAL_ANALYSIS: ON, .NET 9):
+ * 
+ * BenchmarkDotNet v0.14.0, Windows 11 (10.0.26100.3194)
+ * 11th Gen Intel Core i7-1165G7 2.80GHz, 1 CPU, 8 logical and 4 physical cores
+ * .NET SDK 9.0.200
+ *   [Host]     : .NET 9.0.2 (9.0.225.6610), X64 RyuJIT AVX-512F+CD+BW+DQ+VL+VBMI
+ *   DefaultJob : .NET 9.0.2 (9.0.225.6610), X64 RyuJIT AVX-512F+CD+BW+DQ+VL+VBMI
+ * 
+ * | Method  | DimensionalAnalysis | Mean       | Error     | StdDev    | Ratio |
+ * |-------- |-------------------- |-----------:|----------:|----------:|------:|
+ * | Add     | On                  |  10.774 μs | 0.0209 μs | 0.0196 μs |  1.00 |
+ * | QAdd    | On                  |  10.535 μs | 0.0092 μs | 0.0081 μs |  0.98 |
+ * |         |                     |            |           |           |       |
+ * | Bullet  | On                  | 127.681 μs | 0.8655 μs | 0.8096 μs |  1.00 |
+ * | QBullet | On                  | 129.448 μs | 0.9318 μs | 0.8260 μs |  1.01 |
+ * |         |                     |            |           |           |       |
+ * | Cvt     | On                  |  10.722 μs | 0.0119 μs | 0.0111 μs |  1.00 |
+ * | QCvt    | On                  |  10.660 μs | 0.0229 μs | 0.0214 μs |  0.99 |
+ * |         |                     |            |           |           |       |
+ * | Div     | On                  |   8.632 μs | 0.0131 μs | 0.0123 μs |  1.00 |
+ * | QDiv    | On                  |   8.763 μs | 0.0222 μs | 0.0197 μs |  1.02 |
+ * |         |                     |            |           |           |       |
+ * | Mix     | On                  |  17.945 μs | 0.0995 μs | 0.0931 μs |  1.00 |
+ * | QMix    | On                  |  18.453 μs | 0.1294 μs | 0.1211 μs |  1.03 |
+ * |         |                     |            |           |           |       |
+ * | Mul     | On                  |  10.782 μs | 0.0135 μs | 0.0126 μs |  1.00 |
+ * | QMul    | On                  |  10.540 μs | 0.0227 μs | 0.0201 μs |  0.98 |
+ * |         |                     |            |           |           |       |
+ * | Sub     | On                  |  10.779 μs | 0.0126 μs | 0.0118 μs |  1.00 |
+ * | QSub    | On                  |  10.533 μs | 0.0135 μs | 0.0120 μs |  0.98 |
+ * 
+ * // * Hints *
+ * Outliers
+ *   Arithmetic.QAdd: Default    -> 1 outlier  was  removed (10.57 μs)
+ *   Arithmetic.QBullet: Default -> 1 outlier  was  removed (142.90 μs)
+ *   Arithmetic.QDiv: Default    -> 1 outlier  was  removed (8.92 μs)
+ *   Arithmetic.QMul: Default    -> 1 outlier  was  removed (10.64 μs)
+ *   Arithmetic.QSub: Default    -> 1 outlier  was  removed (10.61 μs)
+ * 
+ * // * Legends *
+ *   DimensionalAnalysis : Value of the 'DimensionalAnalysis' parameter
+ *   Mean                : Arithmetic mean of all measurements
+ *   Error               : Half of 99.9% confidence interval
+ *   StdDev              : Standard deviation of all measurements
+ *   Ratio               : Mean of the ratio distribution ([Current]/[Baseline])
+ *   1 μs                : 1 Microsecond (0.000001 sec)
+ * 
+ * // ***** BenchmarkRunner: End *****
+ * Run time: 00:03:49 (229.77 sec), executed benchmarks: 14
+ * Global total time: 00:03:58 (238.89 sec), executed benchmarks: 14
+ * 
  */

@@ -270,4 +270,23 @@ namespace Bullet
  * Average performance ratio for 32 run(s): 2087+177(8%) / 2007+175(9%) = 1,04+0,03(3%).
  *
  *
+ ********************************************************************************************
+ *
+ * Sample output (.NET 9.0, dimensional analysis: ON):
+ *
+ *  angle |  tmax |  xmax   |  ymax
+ * -------+-------+---------+--------
+ *  0,00° |   0 s |     0 m |     0 m
+ *  0,10° |   0 s |   182 m |     0 m
+ *  0,20° |   1 s |   364 m |     0 m
+ * ...
+ * 89,80° | 146 s |   364 m |  6515 m
+ * 89,90° | 146 s |   182 m |  6515 m
+ * 90,00° | 146 s |     0 m |  6515 m
+ *
+ * 32. quantity/plain performance ratio: 2120 / 2539 = 0,83 (dimensional analysis: ON)
+ * Press Esc to conclude, any other key to retry...
+ * 
+ * Average performance ratio for 32 run(s): 1789+332(19%) / 1753+349(20%) = 1,02+0,05(5%).
+ * 
  */

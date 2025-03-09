@@ -578,17 +578,18 @@ but the "ratio" is usually close to 1.0 (there is no clear drop in performance).
 Algorithms (in C#) that use units of measure can be slower than their counterparts that use only "plain" numbers but the performance degradation depends very much on the version of .NET platform being used.
 The table below shows the ratio of the execution times (application with units / application with plain numbers) measured in two benchmark tests (built for .NET 6, .NET 7 and .NET 8):
 
-| Benchmark | .NET 6 | .NET 7 | .NET 8 |
-| --------- | :---------------------------------: | :---------------------------------: | :---------------------------------: |
-| [Bullet Benchmark](https://github.com/mangh/Metrology/tree/main/Demo/Bullet) | `≈ 5.45`                                   | `≈ 2.43`                                   | `≈ 1.04`                                   |
-| [CALINE3 Benchmark](https://github.com/mangh/CALINE3.CS/tree/main/Benchmark) | `≈ 1.24`<br/>(&#8776; 2.701 ms / 2.177 ms) | `≈ 1.13`<br/>(&#8776; 958.5 μs / 849.7 μs) | `≈ 1.09`<br/>(&#8776; 812.9 μs / 747.1 μs) |
+| Benchmark | .NET 6 | .NET 7 | .NET 8 | .NET 9 |
+| --------- | :---------------------------------: | :---------------------------------: | :---------------------------------: | :---------------------------------: |
+| [Bullet](https://github.com/mangh/Metrology/tree/main/Demo/Bullet) | `≈ 5.45`                                   | `≈ 2.43`                                   | `≈ 1.04`                                   | `≈ 1.02`                                   |
+| [CALINE3](https://github.com/mangh/CALINE3.CS/tree/main/Benchmark) | `≈ 1.24`<br/>(&#8776; 2.701 ms / 2.177 ms) | `≈ 1.13`<br/>(&#8776; 958.5 μs / 849.7 μs) | `≈ 1.09`<br/>(&#8776; 812.9 μs / 747.1 μs) | `≈ 1.25`<br/>(&#8776; 699.0 μs / 558.5 μs) |
 
 The lower the ratio, the better.
 These results can also be seen in the comments pasted at the end of the source code of the main benchmark modules.
 
 As you can see, the degradation for the .NET 8 drops to such a level that the question is whether it needs to and can still be reduced.
-If you can live with it, you can stop reading this section here.
-Otherwise - if you can't switch to .NET 8 or need to reduce the degradation even further - continue reading below.
+With .NET 9, the ratio deteriorates again, but the overall execution time has decreased significantly.
+If such results are enough for you, you can stop reading this section here.
+Otherwise - if you want to reduce the degradation even further - continue reading below.
 
 The first benchmark (Bullet) focuses on a single, somewhat artificial method ([Bullet.Measured.Calculator.CalculateRange](https://github.com/mangh/Metrology/blob/main/Demo/Bullet/Bullet.Measured.cs)), which is formulated entirely in units of measurement - there is not a single expression that is free from units. As can be seen, such characteristics translates into a large drop in performance: 2.43 for .NET 7 (or even 5.45 for .NET 6).
 This can be considered the maximum performance drop.
