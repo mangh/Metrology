@@ -17,30 +17,23 @@ using System.Threading;
 namespace Mangh.Metrology
 {
     /// <summary>
-    /// Translation context<br/>
-    /// (target language, standard filenames, error logging).
+    /// Translation context (target language, filenames, error logging).
     /// </summary>
     public abstract class TranslationContext
     {
-        #region Properties 
-
-        ///////////////////////////////////////////////////////////////////////
-        //
-        //      Translation Settings
-        //
-
+        #region Translation settings
         /// <summary>
-        /// Target language context.
+        /// Target language.
         /// </summary>
         public Language.Context Language { get; }
 
         /// <summary>
-        /// Target namespace (to be used in the target language) for units, scales and related structures.
+        /// Target namespace for units, scales and related structures.
         /// </summary>
         public abstract string TargetNamespace { get; }
 
         /// <summary>
-        /// Options to dump intermediate translation objects to files.
+        /// Options to dump intermediate objects to files.
         /// </summary>
         public DumpOption DumpOptions { get; set; }
 
@@ -53,61 +46,26 @@ namespace Mangh.Metrology
         /// Translation timestamp.
         /// </summary>
         public DateTime Timestamp { get; }
+        #endregion
 
-        ///////////////////////////////////////////////////////////////////////
-        //
-        //      Standard file extensions
-        //
-
-        /// <summary>Aliases (import) file extension.</summary>
-        public virtual string IMPORT_EXT { get; } = "inc";
-
-        /// <summary>Model file extension.</summary>
-        public abstract string MODEL_EXT { get; }
-
-        /// <summary>Source file extension.</summary>
-        public virtual string SOURCE_EXT => Language[Phrase.SOURCE_EXT];
-
+        #region Input file names
         /// <summary>Template file extension.</summary>
         public abstract string TEMPLATE_EXT { get; }
 
         /// <summary>Text file extension.</summary>
         public virtual string TEXT_EXT { get; } = "txt";
 
-        ///////////////////////////////////////////////////////////////////////
-        //
-        //      Standard file names
-        //
-
         /// <summary>Definitions filename (with extension).</summary>
         public virtual string DefinitionsFileName
             => FilePath.ChangeExtension(Language[Phrase.DEFINITIONS], TEXT_EXT);
-
-        /// <summary>Aliases filename (with extension).</summary>
-        public virtual string AliasesFileName
-            => FilePath.ChangeExtension(Language[Phrase.ALIASES], IMPORT_EXT);
 
         /// <summary>Aliases template filename (with extension).</summary>
         public virtual string AliasesTemplateFileName
             => FilePath.ChangeExtension(Language[Phrase.ALIASES], TEMPLATE_EXT);
 
-        /// <summary>Catalog filename (with extension).</summary>
-        public virtual string CatalogFileName
-            => FilePath.ChangeExtension(Language[Phrase.CATALOG], SOURCE_EXT);
-
         /// <summary>Catalog template filename (with extension).</summary>
         public virtual string CatalogTemplateFileName
             => FilePath.ChangeExtension(Language[Phrase.CATALOG], TEMPLATE_EXT);
-
-        /// <summary>Report filename (with extension).</summary>
-        /// <remarks>
-        /// NOTE:<br/>
-        /// Report filename should not collide with unit and scale filenames<br/>
-        /// (saved in the same folder). Therefore, the function adds a long<br/>
-        /// prefix to the default name.
-        /// </remarks>
-        public virtual string ReportFileName
-            => FilePath.ChangeExtension("generator_" + Language[Phrase.REPORT].ToLower(), TEXT_EXT);
 
         /// <summary>Report template filename (with extension).</summary>
         public virtual string ReportTemplateFileName
@@ -122,25 +80,31 @@ namespace Mangh.Metrology
             => FilePath.ChangeExtension(Language[Phrase.UNIT], TEMPLATE_EXT);
         #endregion
 
-        #region Constructor(s)
-        /// <summary>
-        /// <see cref="TranslationContext"/> constructor.
-        /// </summary>
-        /// <param name="lc">Target language context.</param>
-        public TranslationContext(Language.Context lc)
-        {
-            Timestamp = DateTime.Now;
-            Language = lc;
-            DumpOptions = DumpOption.None;
-        }
-        #endregion
+        #region Output file names
+        /// <summary>Aliases (import) file extension.</summary>
+        public virtual string IMPORT_EXT { get; } = "inc";
 
-        #region Methods
+        /// <summary>Model file extension.</summary>
+        public abstract string MODEL_EXT { get; }
 
-        ///////////////////////////////////////////////////////////////////////
-        //
-        //      Standard file names (continued)
-        //
+        /// <summary>Source file extension.</summary>
+        public virtual string SOURCE_EXT => Language[Phrase.SOURCE_EXT];
+        /// <summary>Aliases filename (with extension).</summary>
+        public virtual string AliasesFileName
+            => FilePath.ChangeExtension(Language[Phrase.ALIASES], IMPORT_EXT);
+
+        /// <summary>Catalog filename (with extension).</summary>
+        public virtual string CatalogFileName
+            => FilePath.ChangeExtension(Language[Phrase.CATALOG], SOURCE_EXT);
+
+        /// <summary>Report filename (with extension).</summary>
+        /// <remarks>
+        /// NOTE:<br/>
+        /// The name of the report file should not conflict with the names of other files.<br/>
+        /// Therefore, the function adds the prefix <c>"generator_"</c>.
+        /// </remarks>
+        public virtual string ReportFileName
+            => FilePath.ChangeExtension("generator_" + Language[Phrase.REPORT].ToLower(), TEXT_EXT);
 
         /// <summary>
         /// Source code filename (with extension) for the <see cref="Measure"/>
@@ -149,11 +113,22 @@ namespace Mangh.Metrology
         /// <param name="m"><see cref="Unit"/> or <see cref="Scale"/> object.</param>
         public virtual string SourceFileName(Measure m)
             => FilePath.ChangeExtension(m.TargetKeyword, SOURCE_EXT);
+        #endregion
 
-        ///////////////////////////////////////////////////////////////////////
-        //
-        //      Error logging
-        //
+        #region Constructor(s)
+        /// <summary>
+        /// <see cref="TranslationContext"/> constructor.
+        /// </summary>
+        /// <param name="lc">Target language context.</param>
+        public TranslationContext(Language.Context lc)
+        {
+            Language = lc;
+            DumpOptions = DumpOption.None;
+            Timestamp = DateTime.Now;
+        }
+        #endregion
+
+        #region Reporting errors
 
         /// <summary>
         /// Reports an error.
@@ -170,8 +145,8 @@ namespace Mangh.Metrology
         /// Reports an error and its position.
         /// </summary>
         /// <param name="path">Path to the file affected by the error.</param>
-        /// <param name="extent">Text span (as a text boundary positions in the input stream).</param>
-        /// <param name="span">Text span (as a line/character positions of the text boundaries).</param>
+        /// <param name="extent">Text position (start and end, both as offset from the beginning).</param>
+        /// <param name="span">Text position (start and end, both as a pair: line index and character index within the line).</param>
         /// <param name="message">Error message.</param>
         /// <param name="ex">
         /// The exception that caused the reported error<br/>
