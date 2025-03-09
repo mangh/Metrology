@@ -1,7 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<Project>
-  <ItemGroup>
-    <!-- Check that required additional files have been provided (default: false). -->
-    <CompilerVisibleProperty Include="ReportMissingAdditionalFiles" />
-  </ItemGroup>
-</Project>

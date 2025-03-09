@@ -10,9 +10,11 @@
 
 ********************************************************************************/
 using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.Diagnostics;
 using Microsoft.CodeAnalysis.Text;
 using System;
 using System.Linq;
+using System.Text;
 using System.Threading;
 
 namespace Mangh.Metrology
@@ -22,58 +24,24 @@ namespace Mangh.Metrology
         internal class TranslationContext : XML.TranslationContext
         {
             #region Constants
-            private const string METROLOGY_ID = "METROLOGY";            // Diagnostic identifier
+            private const string METROLOGY_ID = "Metrology";            // Diagnostic identifier
             private const string CATEGORY = "SourceGenerator";          // Diagnostic category
             private const string DEFAULT_NAMESPACE = "Metrology.Units"; // Default namespace
             #endregion
 
             #region Fields
-            private readonly GeneratorExecutionContext _gc;
-            private readonly TemplateName _templateName;
-            private readonly AdditionalText[] _templateText;
-            private string? _targetDirectory = null;
-            private readonly bool _reportMissingAdditionalFiles = false;
+            private string? _targetNamespace;
+            private readonly TemplateNames _templateNames;
+            private string? _templateDirectory = null;
+            private SourceProductionContext? _spc = null;
             #endregion
 
             #region Properties
 
-            ///////////////////////////////////////////////////////////////////////
-            //
-            //      Translation Settings
-            //
-
-            public GeneratorExecutionContext GeneratorContext => _gc;
-
-            /// <summary>
-            /// Path to the template directory<br/>
-            /// (only to save the alias file and the report file; the source code goes directly to the compiler).
-            /// </summary>
-            /// <exception cref="InvalidOperationException">
-            /// The template directory is retrieved from the definition file path; 
-            /// it will be left unset if the definition file has not been specified in the project file.
-            /// </exception>
-            public string TemplateDirectory => (_targetDirectory is not null) ? _targetDirectory :
-                throw new InvalidOperationException($"{nameof(TranslationContext)}.{nameof(TemplateDirectory)} property not set.");
-
             /// <summary>
             /// Target namespace for the generated source code structures.
             /// </summary>
-            public override string TargetNamespace { get; }
-
-            /// <summary>
-            /// Cancellation notification.
-            /// </summary>
-            public override CancellationToken CancellationToken => _gc.CancellationToken;
-
-            /// <summary>
-            /// Returns the <see cref="AdditionalText"/> object for the selected template.
-            /// </summary>
-            /// <param name="template">Template index.</param>
-            public AdditionalText this[Template template]
-            {
-                get { return _templateText[(int)template]; }
-                private set { _templateText[(int)template] = value; }
-            }
+            public override string TargetNamespace => _targetNamespace ?? DEFAULT_NAMESPACE;
 
             ///////////////////////////////////////////////////////////////////////
             //
@@ -81,14 +49,56 @@ namespace Mangh.Metrology
             //
 
             /// <summary>
-            /// Path to the (output) aliases file.
+            /// Template directory.
+            /// </summary>
+            public string TemplateDirectory
+            {
+                set { _templateDirectory = value; }
+                get => (_templateDirectory is not null) ? _templateDirectory :
+                    throw new InvalidOperationException($"{nameof(TranslationContext)}.{nameof(TemplateDirectory)} property not set.");
+            }
+
+            /// <summary>
+            /// Returns the name of the template file (without the path).
+            /// </summary>
+            /// <param name="template">Template index.</param>
+            public string this[Template template] => _templateNames[template];
+
+            /// <summary>
+            /// Returns the path to the template file.
+            /// </summary>
+            /// <param name="template">Template index.</param>
+            public string Path(Template template) => FilePath.Combine(TemplateDirectory, _templateNames[template]);
+
+            /// <summary>
+            /// Returns the path to the (output) Aliases file.
             /// </summary>
             public string AliasesFilePath => FilePath.Combine(TemplateDirectory, AliasesFileName);
 
             /// <summary>
-            /// Path to the (output) report file.
+            /// Returns the path to the (output) report file.
             /// </summary>
             public string ReportFilePath => FilePath.Combine(TemplateDirectory, ReportFileName);
+
+            ///////////////////////////////////////////////////////////////////////
+            //
+            //      Source generator context settings
+            //
+
+            /// <summary>
+            /// Source production context.
+            /// </summary>
+            public SourceProductionContext SourcePool
+            {
+                set => _spc = value;
+                get => (_spc is SourceProductionContext spc) ? spc :
+                    throw new InvalidOperationException($"{nameof(TranslationContext)}.{nameof(SourcePool)} property not set.");
+            }
+
+            /// <summary>
+            /// Cancellation notification.
+            /// </summary>
+            public override CancellationToken CancellationToken => SourcePool.CancellationToken;
 
             #endregion
 
@@ -96,150 +106,93 @@ namespace Mangh.Metrology
             /// <summary>
             /// <see cref="TranslationContext"/> constructor.
             /// </summary>
-            /// <param name="gc">Generator execution context.</param>
+            /// <param name="context"></param>
             /// <exception cref="InvalidOperationException">Thrown when the C# language context is not available.</exception>
-            public TranslationContext(GeneratorExecutionContext gc)
+            public TranslationContext(IncrementalGeneratorInitializationContext context)
                 : base(Definitions.Contexts.First(c => c.Id == Metrology.Language.ID.CS))
             {
-                _gc = gc;
+                // Template file names:
+                _templateNames = new TemplateNames(this);
 
-                // The project file has to provide <RootNamespace> property
-                // specyfying the target namespace for the generated source code:
-                _gc.AnalyzerConfigOptions.GlobalOptions.TryGetValue(
-                    "build_property.RootNamespace", out string? rootNamespace);
-
-                TargetNamespace = rootNamespace ?? DEFAULT_NAMESPACE;
-
-                // Is it required to report AdditionalText files missing in the project file?
-                if (_gc.AnalyzerConfigOptions.GlobalOptions.TryGetValue(
-                    "build_property.ReportMissingAdditionalFiles", out string? reportMissingAdditionalFilesSwitch))
-                {
-                    _reportMissingAdditionalFiles = reportMissingAdditionalFilesSwitch.Equals("true", StringComparison.OrdinalIgnoreCase);
-                }
-
-                // Do not dump intermediate objects (models, source text duplicates):
+                // Do not dump intermediate results (models, source texts) to files:
                 DumpOptions = DumpOption.None;
 
-                _templateName = new TemplateName(this);
-                _templateText = new AdditionalText[TemplateName.SIZE];
+                // Get target namespace
+                IncrementalValueProvider<string?> rootNamespace = context.AnalyzerConfigOptionsProvider.Select(
+                    (AnalyzerConfigOptionsProvider provider, CancellationToken _) =>
+                        provider.GlobalOptions.TryGetValue("build_property.RootNamespace", out string? ns) ? ns : null);
 
-                // Arrange the templates (in AdditionalText objects)
-                foreach (AdditionalText text in _gc.AdditionalFiles)
+                context.RegisterSourceOutput(rootNamespace, (SourceProductionContext spc, string? ns) =>
                 {
-                    if (_gc.CancellationToken.IsCancellationRequested)
-                        break;
-
-                    if (AssignAdditionalText(text, Template.ALIASES)) continue;
-                    if (AssignAdditionalText(text, Template.CATALOG)) continue;
-                    if (AssignAdditionalText(text, Template.DEFINITIONS)) continue;
-                    if (AssignAdditionalText(text, Template.REPORT)) continue;
-                    if (AssignAdditionalText(text, Template.SCALE)) continue;
-                    if (AssignAdditionalText(text, Template.UNIT)) continue;
-                }
-
-                bool AssignAdditionalText(AdditionalText text, Template template)
-                {
-                    bool match = text.Path.EndsWith(_templateName[template], StringComparison.OrdinalIgnoreCase);
-                    if (match) this[template] = text;
-                    return match;
-                }
+                    _targetNamespace = ns;
+                });
             }
             #endregion
 
             #region Methods
-            /// <summary>
-            /// Checks whether the translation context is ready to run the generator<br/>
-            /// (i.e. whether all required templates have been provided in the project file).
-            /// </summary>
-            /// <returns><see langword="true"/> when the context is ready, otherwise <see langword="false"/>.</returns>
-            /// <remarks>
-            /// NOTE:<br/>The report template is the only one that may not be specified in the project file<br/>
-            /// (in this case, the final report will simply not be generated).
-            /// </remarks>
-            public bool IsReady()
-            {
-                // Check the template list for completeness (only the generator report may be missing):
-                bool ready = true;
-                for (int t = 0; t < _templateText.Length; ++t)
-                {
-                    if ((_templateText[t] is null) && (t != (int)Template.REPORT))
-                    {
-                        ReportMissingAdditionalFile((Template)t);
-                        ready = false;
-                    }
-                }
-
-                if (ready)
-                {
-                    _targetDirectory = FilePath.GetDirectoryName(this[Template.DEFINITIONS].Path);
-                }
-
-                return ready;
-            }
 
             ///////////////////////////////////////////////////////////////////////
             //
-            //      Error logging
+            //      Reporting errors
             //
 
-#pragma warning disable RS2008  // Enable analyzer release tracking for the analyzer project containing rule 'METROLOGY'
-                                // mangh: should I need such a bookkeeping?
-
-            private readonly DiagnosticDescriptor _missingAdditionalFile = new(
-                id: METROLOGY_ID,
-                title: "Missing additional file",
-                messageFormat: "\"{0}\": required file has been not specified in the project file",
-                category: CATEGORY,
-                DiagnosticSeverity.Error,
-                isEnabledByDefault: true
-            );
-
-            private void ReportMissingAdditionalFile(Template t)
+            private static string ComposeErrorMessage(string intro, Exception? ex)
             {
-                if (_reportMissingAdditionalFiles)
+                if (ex is null)
+                    return intro;
+
+                StringBuilder sb = new(intro);
+                while (ex is not null)
                 {
-                    _gc.ReportDiagnostic(
-                        Diagnostic.Create(_missingAdditionalFile, Location.None, _templateName[t])
-                    );
+                    sb.Append(" ").Append(ex.GetType().Name).Append(": ").Append(ex.Message);
+                    ex = ex.InnerException;
                 }
+                return sb.ToString();
             }
 
             public override void Report(string path, string message, Exception? ex)
             {
-                _gc.ReportDiagnostic(
+                SourcePool.ReportDiagnostic(
                     Diagnostic.Create(
                         id: METROLOGY_ID,
                         category: CATEGORY,
-                        message: $"{path}: {message}",
+                        message: $"{path}: {ComposeErrorMessage(message, ex)}",
                         severity: DiagnosticSeverity.Error,
                         defaultSeverity: DiagnosticSeverity.Error,
                         isEnabledByDefault: true,
-                        warningLevel: 0,
-                        title: null,
-                        description: ex?.ToString(),
-                        helpLink: null,
-                        location: Location.None
+                        warningLevel: 0
                     )
                 );
             }
 
             public override void Report(string path, TextSpan extent, LinePositionSpan span, string message, Exception? ex)
             {
-                _gc.ReportDiagnostic(
+                SourcePool.ReportDiagnostic(
                     Diagnostic.Create(
                         id: METROLOGY_ID,
                         category: CATEGORY,
-                        message: $"{path} {span}: {message}",
+                        message: $"{path} ({LinePositionSpanString(span)}): {ComposeErrorMessage(message, ex)}",
                         severity: DiagnosticSeverity.Error,
                         defaultSeverity: DiagnosticSeverity.Error,
                         isEnabledByDefault: true,
                         warningLevel: 0,
-                        title: null,
-                        description: ex?.ToString(),
-                        helpLink: null,
-                        location: Location.Create(path, extent, span)
+                        location: Location.Create(path, extent, ToInternalLinePositionSpan(span))
                     )
                 );
+
+                // In the generator, line and column numbers start at 1,
+                // while for Microsoft they start at 0:
+                static LinePosition ToInternalLinePosition(LinePosition p)
+                    => (p.Line > 0) && (p.Character > 0) ? new(p.Line - 1, p.Character - 1) : p;
+
+                static LinePositionSpan ToInternalLinePositionSpan(LinePositionSpan s)
+                    => new(ToInternalLinePosition(s.Start), ToInternalLinePosition(s.End));
+
+                // Formatting LinePositionSpan:
+                static string LinePositionSpanString(LinePositionSpan s) =>
+                    s.Start.Equals(s.End) ? $"{s.Start}" :
+                        !s.Start.Line.Equals(s.End.Line) ? $"({s.Start})-({s.End})" :
+                            $"{s.Start.Line},{s.Start.Character}-{s.End.Character}";
             }
             #endregion
         }

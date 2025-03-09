@@ -13,7 +13,7 @@
 namespace Mangh.Metrology
 {
     /// <summary>
-    /// <see cref="TemplateName"/> array index.
+    /// <see cref="TemplateNames"/> array index.
     /// </summary>
     internal enum Template
     {
@@ -53,7 +53,7 @@ namespace Mangh.Metrology
         //
 
         /// <summary>
-        /// Number of <see cref="TemplateName"/> entries.
+        /// Number of <see cref="TemplateNames"/> entries.
         /// </summary>
         COUNT
     }
@@ -62,11 +62,11 @@ namespace Mangh.Metrology
     /// Template file names
     /// (in the template paths expected to be provided in the project file).
     /// </summary>
-    internal class TemplateName
+    internal class TemplateNames
     {
         #region Constants
         /// <summary>
-        /// Number of <see cref="TemplateName"/> entries.
+        /// Number of <see cref="TemplateNames"/> entries.
         /// </summary>
         public const int SIZE = (int)Template.COUNT;
         #endregion
@@ -77,22 +77,22 @@ namespace Mangh.Metrology
 
         #region Properties
         /// <summary>
-        /// Gets the <see cref="TemplateName"/> entry.
+        /// Gets the <see cref="TemplateNames"/> entry.
         /// </summary>
-        /// <param name="tidx"><see cref="TemplateName"/> entry index.</param>
+        /// <param name="idx"><see cref="TemplateNames"/> entry index.</param>
         /// <returns></returns>
-        public string this[Template tidx]
+        public string this[Template idx]
         {
-            get { return _name[(int)tidx]; }
-            private set { _name[(int)tidx] = value; }
+            get { return _name[(int)idx]; }
+            private set { _name[(int)idx] = value; }
         }
         #endregion
 
         #region Constructor(s)
         /// <summary>
-        /// <see cref="TemplateName"/> constructor.
+        /// <see cref="TemplateNames"/> constructor.
         /// </summary>
-        public TemplateName(TranslationContext tc)
+        public TemplateNames(TranslationContext tc)
         {
             this[Template.ALIASES] = tc.AliasesTemplateFileName;
             this[Template.CATALOG] = tc.CatalogTemplateFileName;

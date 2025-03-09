@@ -11,6 +11,9 @@
 ********************************************************************************/
 using Mangh.Metrology.XML;
 using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.Diagnostics;
+using System;
+using System.Threading;
 
 //#if DEBUG
 //using System.Diagnostics;
@@ -22,37 +25,68 @@ namespace Mangh.Metrology
     /// Metrology Source Generator (for the C# language).
     /// </summary>
     [Generator]
-    public partial class SourceGenerator : ISourceGenerator
+    public partial class SourceGenerator : IIncrementalGenerator
     {
-        #region Methods
         /// <summary>
         /// Initializes the generator.
         /// </summary>
         /// <param name="context">Source generator context.</param>
-        public void Initialize(GeneratorInitializationContext context)
+        public void Initialize(IncrementalGeneratorInitializationContext context)
         {
-            // No initialization required for this one
 //#if DEBUG
 //            if (!Debugger.IsAttached)
 //            {
 //                Debugger.Launch();
 //            }
 //#endif
-        }
-
-        /// <summary>
-        /// Generates source code for <c>Unit</c> and <c>Scale</c> structs, their <c>Catalog</c> as well as <c>Aliases</c> and a summary <c>Report</c>.
-        /// </summary>
-        /// <param name="context">Source generator context.</param>
-        public void Execute(GeneratorExecutionContext context)
-        {
             TranslationContext tc = new(context);
-            if (tc.IsReady())
+
+            IncrementalValuesProvider<string> defsPath = context.AdditionalTextsProvider
+                .Where((AdditionalText text) => text.Path.EndsWith(tc[Template.DEFINITIONS], StringComparison.OrdinalIgnoreCase))
+                .Select((AdditionalText text, CancellationToken ct) =>
+                {
+                    ct.ThrowIfCancellationRequested();
+                    return text.Path;
+                });
+
+            context.RegisterSourceOutput(defsPath, (SourceProductionContext spc, string path) =>
             {
-                Generator generator = new(tc);
-                generator.Execute();
-            }
+                tc.SourcePool = spc;
+                tc.TemplateDirectory = FilePath.GetDirectoryName(path);
+
+                Definitions definitions = new(path, tc);
+                bool done = definitions.Load();
+
+                if (done)
+                {
+                    using UnitModel model = new(tc.Path(Template.UNIT), tc, late: false);
+                    done = model.ToSourceText(definitions, targetDirectory: string.Empty, spc.AddSource);
+                }
+
+                if (done)
+                {
+                    using ScaleModel model = new(tc.Path(Template.SCALE), tc, late: false);
+                    done = model.ToSourceText(definitions, targetDirectory: string.Empty, spc.AddSource);
+                }
+
+                if (done)
+                {
+                    using CatalogModel model = new(tc.Path(Template.CATALOG), tc);
+                    done = model.ToSourceText(definitions, hintPath: tc.CatalogFileName, spc.AddSource);
+                }
+
+                if (done)
+                {
+                    using AliasingModel model = new(tc.Path(Template.ALIASES), tc, global: true);
+                    done = model.ToFile(definitions, tc.AliasesFilePath);
+                }
+
+                if (done)
+                {
+                    using ReportModel model = new(tc.Path(Template.REPORT), tc);
+                    done = model.ToFile(definitions, tc.ReportFilePath);
+                }
+            });
         }
-        #endregion
     }
 }
