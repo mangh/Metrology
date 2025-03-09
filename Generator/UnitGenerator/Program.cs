@@ -71,6 +71,7 @@ namespace Mangh.Metrology.UnitGenerator
             if (args.Length > 0)
             {
                 string targetLang = args[0].ToUpper();
+
                 Language.Context? targetContext = 
                     Definitions.Contexts.FirstOrDefault(c => c.Id.ToString() == targetLang);
 
@@ -87,7 +88,7 @@ namespace Mangh.Metrology.UnitGenerator
                     {
                         return tc;
                     }
-                    else if (args[4].ToLower() == "--with-models")
+                    else if (args[4].Equals("--with-models", System.StringComparison.CurrentCultureIgnoreCase))
                     {
                         tc.DumpOptions = DumpOption.Model;
                         return tc;

@@ -99,7 +99,7 @@ namespace Mangh.Metrology.UnitGenerator
 
         ///////////////////////////////////////////////////////////////////////
         //
-        //      Error logging
+        //      Reporting errors
         //
 
         public override void Report(string path, string message, Exception? ex)
@@ -114,19 +114,18 @@ namespace Mangh.Metrology.UnitGenerator
 
         public override void Report(string path, TextSpan extent, LinePositionSpan span, string message, Exception? ex)
         {
-            WriteLine($"{path}{LinePositionString(span)}: {message}");
+            WriteLine($"{path} ({LinePositionSpanString(span)}): {message}");
             if (ex is not null)
             {
                 WriteLine();
                 WriteLine(ex.ToString());
             }
 
-            static string LinePositionString(LinePositionSpan lp) =>
-                (!lp.Start.Equals(lp.End)) ? $", {lp}" :
-                (!lp.Start.Equals(LinePosition.Zero)) ? $", ({lp.Start})" :
-                // LinePosition.Zero actually means that
-                // there is no information about the error position:
-                string.Empty;
+            // Formatting LinePositionSpan:
+            static string LinePositionSpanString(LinePositionSpan s) =>
+                s.Start.Equals(s.End) ? $"{s.Start}" :
+                    !s.Start.Line.Equals(s.End.Line) ? $"({s.Start})-({s.End})" :
+                        $"{s.Start.Line},{s.Start.Character}-{s.End.Character}";
         }
         #endregion
     }
