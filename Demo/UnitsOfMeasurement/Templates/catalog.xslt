@@ -20,6 +20,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
+#nullable enable
+
 namespace <xsl:value-of select="@ns"/>
 {
     /// &lt;summary&gt;

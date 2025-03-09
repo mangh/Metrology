@@ -1,24 +1,19 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net9.0</TargetFramework>
     <ImplicitUsings>disable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <!-- The RootNamespace (required) property specifies the target namespace for generated units: -->
+    <!-- The RootNamespace (required) property specifies the target namespace for generated units -->
     <RootNamespace>Demo.UnitsOfMeasurement</RootNamespace>
-    <!-- Enable/disable diagnostics for missing additional files;
-         disabled (false) by default: the source generator silently exits
-         without notifying of the missing required files: -->
-    <ReportMissingAdditionalFiles>true</ReportMissingAdditionalFiles>
-    <AssemblyVersion>2.0.2.0</AssemblyVersion>
+    <AssemblyVersion>2.0.3.0</AssemblyVersion>
   </PropertyGroup>
 
-  <!-- Uncomment the following "PropertyGroup" and its associated "ItemGroup" to save the generated files in the Units folder:
+  <!-- To save the generated files in the "Units" folder, uncomment the following "PropertyGroup" and "ItemGroup"
   <PropertyGroup>
     <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
     <CompilerGeneratedFilesOutputPath>Units</CompilerGeneratedFilesOutputPath>
   </PropertyGroup>
-
   <ItemGroup>
     <Compile Remove="$(CompilerGeneratedFilesOutputPath)/*/**/*.cs" />
   </ItemGroup>
@@ -32,18 +27,18 @@
   </ItemGroup>
 
   <ItemGroup>
+    <!-- All of the following AdditionalFiles are required and must be in the same directory. -->
     <AdditionalFiles Include="Templates\Definitions.txt" />
     <AdditionalFiles Include="Templates\Unit.xslt" CopyToOutputDirectory="PreserveNewest" />
     <AdditionalFiles Include="Templates\Scale.xslt" CopyToOutputDirectory="PreserveNewest" />
     <AdditionalFiles Include="Templates\Catalog.xslt" />
     <AdditionalFiles Include="Templates\Aliases.xslt" />
-    <!-- Report.xslt is not required: if it is missing, no report will be generated: -->
     <AdditionalFiles Include="Templates\Report.xslt" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Mangh.Metrology.SourceGenerator" Version="2.0.2" />
-    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.9.2" />
+    <PackageReference Include="Mangh.Metrology.SourceGenerator" Version="2.0.3" />
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.13.0" />
   </ItemGroup>
 
 </Project>

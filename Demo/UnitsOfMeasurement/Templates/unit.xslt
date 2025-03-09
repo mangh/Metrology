@@ -31,6 +31,9 @@
 <xsl:variable name="VALUE_T">
   <xsl:value-of select="valuetype/@keywd"/>
 </xsl:variable>
+
+#nullable enable
+
 namespace <xsl:value-of select="@ns"/>
 {
     using Mangh.Metrology;
