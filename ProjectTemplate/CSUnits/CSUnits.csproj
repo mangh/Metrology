@@ -25,8 +25,10 @@
     <PackageTags>unit;scale;measure;metrology</PackageTags>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <Version>2.0.2</Version>
+    <Version>2.0.3</Version>
     <PackageReleaseNotes>
+        Version 2.0.3
+        * no functional changes, but the project template targets .NET 9 and SourceGenerator 2.0.3.
         Version 2.0.2
         * moving to Definitions 2.0.2 (which fixed the "(expr)" encoding bug relevant only to C++ units) - C# units were free of this bug.
         Version 2.0.1
