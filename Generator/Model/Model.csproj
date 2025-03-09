@@ -11,15 +11,15 @@
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <SignAssembly>True</SignAssembly>
     <AssemblyOriginatorKeyFile>C:\Users\Marek\source\repos\Metrology\metrology.snk</AssemblyOriginatorKeyFile>
-    <AssemblyVersion>2.0.2.0</AssemblyVersion>
-    <FileVersion>2.0.2.0</FileVersion>
+    <AssemblyVersion>2.0.3.0</AssemblyVersion>
+    <FileVersion>2.0.3.0</FileVersion>
     <DebugType>embedded</DebugType>
   </PropertyGroup>
 
   <!-- NuGet properties -->
   <PropertyGroup>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <Version>2.0.2</Version>
+    <Version>2.0.3</Version>
     <Authors>MAN</Authors>
     <Company>MAN</Company>
     <Description>Metrology source code generation model</Description>
@@ -32,6 +32,8 @@
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
     <PackageReleaseNotes>
+        Version 2.0.3
+        * no functional changes, but requires the updated Mangh.Metrology.Definitions package version 2.0.3.
         Version 2.0.2
         * fixed "(expr)" encoding bug: some C++ units could be generated with an invalid conversion factor, detected as an invalid expression during compilation. C# units were free of this bug.
         Version 2.0.1
@@ -54,7 +56,7 @@
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>
-    <PackageReference Include="Mangh.Metrology.Definitions" Version="2.0.2" />
+    <PackageReference Include="Mangh.Metrology.Definitions" Version="2.0.3" />
     <None Update="README.md">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>

@@ -20,42 +20,32 @@ namespace Mangh.Metrology.XML
     /// </summary>
     public abstract class TranslationContext : Metrology.TranslationContext
     {
-        #region Properties
-
-        ///////////////////////////////////////////////////////////////////////
-        //
-        //      Translation settings (model-specific)
-        //
-
-        /// <summary>
-        /// XML Resolver.
-        /// </summary>
+        #region Translation settings (model-specific)
+        /// <summary>XML Resolver.</summary>
         public XmlResolver XmlResolver { get; set; }
 
-        /// <summary>
-        /// XML reader settings
-        /// </summary>
+        /// <summary>XML reader settings</summary>
         public XmlReaderSettings XmlReaderSettings { get; set; }
 
-        /// <summary>
-        /// XSLT settings.
-        /// </summary>
+        /// <summary>XSLT settings.</summary>
         public XsltSettings XsltSettings { get; set; }
+        #endregion
 
-        ///////////////////////////////////////////////////////////////////////
-        //
-        //      File extensions (model-specific)
-        //
-
-        /// <summary>
-        /// Template file extension.
-        /// </summary>
+        #region Input file names (model-specific)
+        /// <summary>Template file extension.</summary>
         public override string TEMPLATE_EXT => "xslt";
+        #endregion
+
+        #region Output file names (model-specific)
+        /// <summary>Model file extension.</summary>
+        public override string MODEL_EXT => "xml";
 
         /// <summary>
-        /// Model file extension.
+        /// Model file path (made from the path to the source code file).
         /// </summary>
-        public override string MODEL_EXT => "xml";
+        /// <param name="sourcepath">Source code file path.</param>
+        public virtual string ModelFilePath(string sourcepath)
+            => FilePath.ChangeExtension(sourcepath, MODEL_EXT);
         #endregion
 
         #region Constructor(s)
@@ -79,22 +69,6 @@ namespace Mangh.Metrology.XML
                 XmlResolver = XmlResolver
             };
         }
-        #endregion
-
-        #region Methods
-
-        ///////////////////////////////////////////////////////////////////////
-        //
-        //      File names
-        //
-
-        /// <summary>
-        /// Model file path (made from the path to the source code file).
-        /// </summary>
-        /// <param name="sourcepath">Source code file path.</param>
-        public virtual string ModelFilePath(string sourcepath)
-            => FilePath.ChangeExtension(sourcepath, MODEL_EXT);
-
         #endregion
     }
 }
