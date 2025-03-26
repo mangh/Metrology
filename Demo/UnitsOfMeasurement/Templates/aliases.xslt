@@ -13,30 +13,56 @@
         </xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
-   
+
     <xsl:text>#if DIMENSIONAL_ANALYSIS
 </xsl:text>
 
-    <xsl:value-of select="$GLOBAL"/><xsl:text>using </xsl:text><xsl:value-of select="@ns"/><xsl:text>;
+    <xsl:value-of select="$GLOBAL"/>
+    <xsl:text>using </xsl:text>
+    <xsl:value-of select="@ns"/>
+    <xsl:text>;
 </xsl:text>
 
-    <xsl:value-of select="$GLOBAL"/><xsl:text>using static </xsl:text><xsl:value-of select="@ns"/><xsl:text>.Math;
+    <xsl:for-each select="unit">
+      <xsl:value-of select="$GLOBAL"/>
+      <xsl:text>using static </xsl:text>
+      <xsl:value-of select="../@ns"/><xsl:text>.</xsl:text>
+      <xsl:value-of select="@name"/>
+      <xsl:text>;
+</xsl:text>
+    </xsl:for-each>
+
+    <xsl:value-of select="$GLOBAL"/>
+    <xsl:text>using static </xsl:text>
+    <xsl:value-of select="@ns"/>
+    <xsl:text>.Math;
 </xsl:text>
 
     <xsl:text>#else
 </xsl:text>
 
     <xsl:for-each select="unit">
-      <xsl:value-of select="$GLOBAL"/><xsl:text>using </xsl:text><xsl:value-of select="@name"/><xsl:text> = </xsl:text><xsl:value-of select="@alias"/><xsl:text>;
+      <xsl:value-of select="$GLOBAL"/>
+      <xsl:text>using </xsl:text>
+      <xsl:value-of select="@name"/>
+      <xsl:text> = </xsl:text>
+      <xsl:value-of select="@alias"/>
+      <xsl:text>;
 </xsl:text>
     </xsl:for-each>
 
     <xsl:for-each select="scale">
-      <xsl:value-of select="$GLOBAL"/><xsl:text>using </xsl:text><xsl:value-of select="@name"/><xsl:text> = </xsl:text><xsl:value-of select="@alias"/><xsl:text>;
+      <xsl:value-of select="$GLOBAL"/>
+      <xsl:text>using </xsl:text>
+      <xsl:value-of select="@name"/>
+      <xsl:text> = </xsl:text>
+      <xsl:value-of select="@alias"/>
+      <xsl:text>;
 </xsl:text>
     </xsl:for-each>
 
-    <xsl:value-of select="$GLOBAL"/><xsl:text>using static System.Math;
+    <xsl:value-of select="$GLOBAL"/>
+    <xsl:text>using static System.Math;
 </xsl:text>
 
     <xsl:text>#endif

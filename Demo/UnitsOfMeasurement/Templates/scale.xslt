@@ -65,11 +65,11 @@ namespace <xsl:value-of select="@ns"/>
         #endregion
 
         #region Properties / ILevel&lt;<xsl:value-of select="$VALUE_T"/>&gt;
-        public <xsl:value-of select="@unit"/> Level =&gt; m_level;
+        public readonly <xsl:value-of select="@unit"/> Level =&gt; m_level;
 
-        IQuantity&lt;<xsl:value-of select="$VALUE_T"/>&gt; ILevel&lt;<xsl:value-of select="$VALUE_T"/>&gt;.Level =&gt; m_level;
-        IQuantity&lt;<xsl:value-of select="$VALUE_T"/>&gt; ILevel&lt;<xsl:value-of select="$VALUE_T"/>&gt;.ConvertibleLevel =&gt; m_level - Offset;
-        Scale&lt;<xsl:value-of select="$VALUE_T"/>&gt; ILevel&lt;<xsl:value-of select="$VALUE_T"/>&gt;.Scale =&gt; Proxy;
+        readonly IQuantity&lt;<xsl:value-of select="$VALUE_T"/>&gt; ILevel&lt;<xsl:value-of select="$VALUE_T"/>&gt;.Level =&gt; m_level;
+        readonly IQuantity&lt;<xsl:value-of select="$VALUE_T"/>&gt; ILevel&lt;<xsl:value-of select="$VALUE_T"/>&gt;.ConvertibleLevel =&gt; m_level - Offset;
+        readonly Scale&lt;<xsl:value-of select="$VALUE_T"/>&gt; ILevel&lt;<xsl:value-of select="$VALUE_T"/>&gt;.Scale =&gt; Proxy;
         #endregion
 
         #region Constructor(s)
@@ -139,7 +139,7 @@ namespace <xsl:value-of select="@ns"/>
         public static bool operator &gt;(<xsl:value-of select="@name"/> lhs, <xsl:value-of select="@name"/> rhs) =&gt; lhs.<xsl:value-of select="$LEVEL"/> &gt; rhs.<xsl:value-of select="$LEVEL"/>;
         public static bool operator &lt;=(<xsl:value-of select="@name"/> lhs, <xsl:value-of select="@name"/> rhs) =&gt; lhs.<xsl:value-of select="$LEVEL"/> &lt;= rhs.<xsl:value-of select="$LEVEL"/>;
         public static bool operator &gt;=(<xsl:value-of select="@name"/> lhs, <xsl:value-of select="@name"/> rhs) =&gt; lhs.<xsl:value-of select="$LEVEL"/> &gt;= rhs.<xsl:value-of select="$LEVEL"/>;
-        public int /* IComparable&lt;<xsl:value-of select="@name"/>&gt; */ CompareTo(<xsl:value-of select="@name"/> other) =&gt; m_level.CompareTo(other.<xsl:value-of select="$LEVEL"/>);
+        public readonly int /* IComparable&lt;<xsl:value-of select="@name"/>&gt; */ CompareTo(<xsl:value-of select="@name"/> other) =&gt; m_level.CompareTo(other.<xsl:value-of select="$LEVEL"/>);
         #endregion
 
         #region Arithmetic
@@ -156,10 +156,10 @@ namespace <xsl:value-of select="@ns"/>
         public static string String(<xsl:value-of select="$VALUE_T"/> level, string? format = null, IFormatProvider? fp = null) =&gt;
             <xsl:value-of select="@unit"/>.String(level, format ?? <xsl:value-of select="@name"/>.Format, fp);
 
-        public override string ToString() =&gt; String(m_level.m_value);
-        public string ToString(string format) =&gt; String(m_level.m_value, format);
-        public string ToString(IFormatProvider fp) =&gt; String(m_level.m_value, null, fp);
-        public string /* IFormattable */ ToString(string? format, IFormatProvider? fp) =&gt; String(m_level.m_value, format, fp);
+        public override readonly string ToString() =&gt; String(m_level.m_value);
+        public readonly string ToString(string format) =&gt; String(m_level.m_value, format);
+        public readonly string ToString(IFormatProvider fp) =&gt; String(m_level.m_value, null, fp);
+        public readonly string /* IFormattable */ ToString(string? format, IFormatProvider? fp) =&gt; String(m_level.m_value, format, fp);
         #endregion
 
         #region Static fields and properties (DO NOT CHANGE!)

@@ -50,8 +50,8 @@ namespace <xsl:value-of select="@ns"/>
         #endregion
 
         #region Properties / IQuantity&lt;<xsl:value-of select="$VALUE_T"/>&gt;
-        public <xsl:value-of select="$VALUE_T"/> Value =&gt; m_value;
-        Unit&lt;<xsl:value-of select="$VALUE_T"/>&gt; IQuantity&lt;<xsl:value-of select="$VALUE_T"/>&gt;.Unit =&gt; Proxy;
+        public readonly <xsl:value-of select="$VALUE_T"/> Value =&gt; m_value;
+        readonly Unit&lt;<xsl:value-of select="$VALUE_T"/>&gt; IQuantity&lt;<xsl:value-of select="$VALUE_T"/>&gt;.Unit =&gt; Proxy;
         #endregion
 
         #region Constructor(s)
@@ -94,9 +94,9 @@ namespace <xsl:value-of select="@ns"/>
         #endregion
 
         #region Equality / IEquatable&lt;<xsl:value-of select="@name"/>&gt;
-        public override int /* Object */ GetHashCode() =&gt; m_value.GetHashCode();
-        public override bool /* Object */ Equals(object? obj) =&gt; (obj is <xsl:value-of select="@name"/> q) &amp;&amp; Equals(q);
-        public bool /* IEquatable&lt;<xsl:value-of select="@name"/>&gt; */ Equals(<xsl:value-of select="@name"/> other) =&gt; m_value == other.<xsl:value-of select="$VALUE"/>;
+        public override readonly int /* Object */ GetHashCode() =&gt; m_value.GetHashCode();
+        public override readonly bool /* Object */ Equals(object? obj) =&gt; (obj is <xsl:value-of select="@name"/> q) &amp;&amp; Equals(q);
+        public readonly bool /* IEquatable&lt;<xsl:value-of select="@name"/>&gt; */ Equals(<xsl:value-of select="@name"/> other) =&gt; m_value == other.<xsl:value-of select="$VALUE"/>;
         #endregion
 
         #region Comparison / IComparable&lt;<xsl:value-of select="@name"/>&gt;
@@ -106,11 +106,10 @@ namespace <xsl:value-of select="@ns"/>
         public static bool operator &gt;(<xsl:value-of select="@name"/> lhs, <xsl:value-of select="@name"/> rhs) =&gt; lhs.<xsl:value-of select="$VALUE"/> &gt; rhs.<xsl:value-of select="$VALUE"/>;
         public static bool operator &lt;=(<xsl:value-of select="@name"/> lhs, <xsl:value-of select="@name"/> rhs) =&gt; lhs.<xsl:value-of select="$VALUE"/> &lt;= rhs.<xsl:value-of select="$VALUE"/>;
         public static bool operator &gt;=(<xsl:value-of select="@name"/> lhs, <xsl:value-of select="@name"/> rhs) =&gt; lhs.<xsl:value-of select="$VALUE"/> &gt;= rhs.<xsl:value-of select="$VALUE"/>;
-        public int /* IComparable&lt;<xsl:value-of select="@name"/>&gt; */ CompareTo(<xsl:value-of select="@name"/> other) =&gt; m_value.CompareTo(other.<xsl:value-of select="$VALUE"/>);
+        public readonly int /* IComparable&lt;<xsl:value-of select="@name"/>&gt; */ CompareTo(<xsl:value-of select="@name"/> other) =&gt; m_value.CompareTo(other.<xsl:value-of select="$VALUE"/>);
         #endregion
 
-        #region Arithmetic
-        // Inner:
+        #region Math (internal)
         public static <xsl:value-of select="@name"/> operator +(<xsl:value-of select="@name"/> lhs, <xsl:value-of select="@name"/> rhs) =&gt; new(lhs.<xsl:value-of select="$VALUE"/> + rhs.<xsl:value-of select="$VALUE"/>);
         public static <xsl:value-of select="@name"/> operator -(<xsl:value-of select="@name"/> lhs, <xsl:value-of select="@name"/> rhs) =&gt; new(lhs.<xsl:value-of select="$VALUE"/> - rhs.<xsl:value-of select="$VALUE"/>);
         public static <xsl:value-of select="@name"/> operator ++(<xsl:value-of select="@name"/> q) { <xsl:value-of select="$VALUE_T"/> v = q.<xsl:value-of select="$VALUE"/>; return new(++v); }
@@ -120,22 +119,29 @@ namespace <xsl:value-of select="@ns"/>
         public static <xsl:value-of select="@name"/> operator *(<xsl:value-of select="@name"/> lhs, <xsl:value-of select="$VALUE_T"/> rhs) =&gt; new(lhs.<xsl:value-of select="$VALUE"/> * rhs);
         public static <xsl:value-of select="@name"/> operator /(<xsl:value-of select="@name"/> lhs, <xsl:value-of select="$VALUE_T"/> rhs) =&gt; new(lhs.<xsl:value-of select="$VALUE"/> / rhs);
         public static <xsl:value-of select="$VALUE_T"/> operator /(<xsl:value-of select="@name"/> lhs, <xsl:value-of select="@name"/> rhs) =&gt; lhs.<xsl:value-of select="$VALUE"/> / rhs.<xsl:value-of select="$VALUE"/>;
-        <xsl:if test="count(fellow/operation)>0">
-        <xsl:text>// Outer:</xsl:text>
-        <xsl:apply-templates select="fellow/operation">
+
+        public static <xsl:value-of select="@name"/> Abs(<xsl:value-of select="@name"/> q) =&gt; new(System.Math.Abs(q.<xsl:value-of select="$VALUE"/>));
+        public static <xsl:value-of select="@name"/> Ceiling(<xsl:value-of select="@name"/> q) =&gt; new(System.Math.Ceiling(q.<xsl:value-of select="$VALUE"/>));
+        public static <xsl:value-of select="@name"/> Floor(<xsl:value-of select="@name"/> q) =&gt; new(System.Math.Floor(q.<xsl:value-of select="$VALUE"/>));
+        public static <xsl:value-of select="@name"/> Min(<xsl:value-of select="@name"/> p, <xsl:value-of select="@name"/> q) =&gt; new(System.Math.Min(p.<xsl:value-of select="$VALUE"/>, q.<xsl:value-of select="$VALUE"/>));
+        public static <xsl:value-of select="@name"/> Max(<xsl:value-of select="@name"/> p, <xsl:value-of select="@name"/> q) =&gt; new(System.Math.Max(p.<xsl:value-of select="$VALUE"/>, q.<xsl:value-of select="$VALUE"/>));
+        public static <xsl:value-of select="@name"/> Round(<xsl:value-of select="@name"/> q, int digits) =&gt; new(System.Math.Round(q.<xsl:value-of select="$VALUE"/>, digits));
+        public static <xsl:value-of select="@name"/> Truncate(<xsl:value-of select="@name"/> q) =&gt; new(System.Math.Truncate(q.<xsl:value-of select="$VALUE"/>));
+        #endregion
+        
+        #region Math (external)<xsl:apply-templates select="fellow/operation">
           <xsl:with-param name="VALUE" select="$VALUE"/>
         </xsl:apply-templates>
-        </xsl:if>
         #endregion
 
         #region Formatting
         public static string String(<xsl:value-of select="$VALUE_T"/> q, string? format = null, IFormatProvider? fp = null)
             =&gt; string.Format(fp, format ?? Format, q, Symbol.Default);
 
-        public override string ToString() =&gt; String(m_value);
-        public string ToString(string format) =&gt; String(m_value, format);
-        public string ToString(IFormatProvider fp) =&gt; String(m_value, null, fp);
-        public string /* IFormattable */ ToString(string? format, IFormatProvider? fp) =&gt; String(m_value, format, fp);
+        public override readonly string ToString() =&gt; String(m_value);
+        public readonly string ToString(string format) =&gt; String(m_value, format);
+        public readonly string ToString(IFormatProvider fp) =&gt; String(m_value, null, fp);
+        public readonly string /* IFormattable */ ToString(string? format, IFormatProvider? fp) =&gt; String(m_value, format, fp);
         #endregion
 
         #region Static fields and properties (DO NOT CHANGE!)
